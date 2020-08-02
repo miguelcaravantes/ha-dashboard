@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  font-family: 'Roboto', 'sans-serif';
+}
+
+html {
+ min-height: 100%;
+ display: flex;
+}
+
+react-panel {
+  height: 100%;
+  display: flex;
+}
