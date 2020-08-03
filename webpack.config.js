@@ -37,7 +37,7 @@ module.exports = {
     chunkFilename: '[name].chunk.js',
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   devtool: 'inline-source-maps',
 };
