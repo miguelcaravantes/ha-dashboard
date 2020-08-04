@@ -1,0 +1,40 @@
+import React from 'react';
+import useEntity from '../hooks/useEntity';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    height: '100px',
+    width: '100px',
+    background: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '50%',
+  },
+  icon: {
+    height: '64px',
+    width: '64px',
+  },
+}));
+
+export default function Entity(props) {
+  const classes = useStyles();
+  const { entityId } = props;
+  const {
+    stateObj,
+    name,
+    isToggleable,
+    isExecutable,
+    toggle,
+    execute,
+    Icon,
+  } = useEntity(entityId);
+
+  return (
+    <ButtonBase focusRipple className={classes.button} onClick={toggle}>
+      <Icon className={classes.icon} />
+      {name}
+    </ButtonBase>
+  );
+}
