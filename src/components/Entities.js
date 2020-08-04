@@ -9,7 +9,6 @@ import EntityRow from './shared/EntityRow'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 600,
     backgroundColor: theme.palette.background.paper,
     color: 'white'
   },
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Entities() {
   const classes = useStyles();
   const hass = useHass();
-
   return (
     <Paper className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">

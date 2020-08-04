@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Box } from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
@@ -16,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     background: theme.palette.background.default,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  swipeableView: {
+    flexGrow: 1,
   },
 }));
 
@@ -32,6 +38,10 @@ export default function Panel(props) {
     setValue(newValue);
   };
 
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
   return (
     <div className={classes.root}>
       <Tabs
@@ -44,15 +54,20 @@ export default function Panel(props) {
         <Tab icon={<FavoriteIcon />} aria-label="favorite" />
         <Tab icon={<PersonPinIcon />} aria-label="person" />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <Home />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Entities />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
+      <SwipeableViews
+        className={classes.swipeableView}
+        index={value}
+        onChangeIndex={handleChangeIndex}>
+        <TabPanel value={value} index={0}>
+          <Home />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Entities />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          Item Three
+        </TabPanel>
+      </SwipeableViews>
     </div>
   );
 }
