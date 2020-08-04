@@ -21,15 +21,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Entity(props) {
   const classes = useStyles();
   const { entityId } = props;
-  const {
-    stateObj,
-    name,
-    isToggleable,
-    isExecutable,
-    toggle,
-    execute,
-    Icon,
-  } = useEntity(entityId);
+  const { name, toggle, Icon } = useEntity(entityId);
 
   return (
     <ButtonBase focusRipple className={classes.button} onClick={toggle}>

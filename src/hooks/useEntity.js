@@ -142,9 +142,10 @@ export default function useEntity(entityId) {
   };
 
   return {
-    stateObj,
     domain,
     name: stateObj.attributes.friendly_name ?? entityId,
+    state: stateObj.state,
+    stateObj,
     isToggleable,
     isExecutable,
     toggle,

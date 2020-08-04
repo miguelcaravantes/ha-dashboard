@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 export default function EntityRow(props) {
   const { entityId } = props;
   const {
-    stateObj,
+    state,
+    name,
     isToggleable,
     isExecutable,
     toggle,
@@ -25,24 +26,20 @@ export default function EntityRow(props) {
   if (isToggleable) {
     action = (
       <ListItemSecondaryAction>
-        <Switch
-          edge="end"
-          onChange={handleToggle}
-          checked={stateObj.state === 'on'}
-        />
+        <Switch edge="end" onChange={handleToggle} checked={state === 'on'} />
       </ListItemSecondaryAction>
     );
   } else if (isExecutable) {
     action = <Button onClick={handleExecute}>Execute</Button>;
   } else {
-    action = <span>{stateObj.state}</span>;
+    action = <span>{state}</span>;
   }
   return (
     <ListItem>
       <ListItemIcon>
         <Icon />
       </ListItemIcon>
-      <ListItemText primary={stateObj.attributes.friendly_name} />
+      <ListItemText primary={name} />
       {action}
     </ListItem>
   );
