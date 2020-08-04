@@ -45,6 +45,9 @@ var config = {
   plugins: [
     // new BundleAnalyzerPlugin(),
   ],
+  devServer: {
+    disableHostCheck: true,
+  },
 };
 
 module.exports = (env, argv) => {
