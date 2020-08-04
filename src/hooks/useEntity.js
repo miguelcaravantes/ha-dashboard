@@ -98,8 +98,6 @@ const domainMapping = {
   sensor: EyeIcon,
 };
 
-const overridableDomains = ['switch', 'sensor', 'binary_sensor'];
-
 export default function useEntity(entityId) {
   const { states, callService } = useHass();
 
@@ -144,7 +142,7 @@ export default function useEntity(entityId) {
 
   return {
     domain,
-    name: stateObj.attributes.friendly_name ?? entityId,
+    name: stateObj.attributes.friendly_name,
     state: stateObj.state,
     stateObj,
     isToggleable,
