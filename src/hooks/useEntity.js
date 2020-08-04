@@ -100,9 +100,9 @@ const domainMapping = {
 const overridableDomains = ['switch', 'sensor', 'binary_sensor'];
 
 export default function useEntity(entityId) {
-  const hass = useHass();
+  const { states, callService } = useHass();
 
-  const stateObj = hass.states[entityId];
+  const stateObj = states[entityId];
   const domain = entityId.split('.')[0];
 
   const isToggleable = ['switch', 'fan', 'light'].includes(domain);
@@ -130,17 +130,16 @@ export default function useEntity(entityId) {
   };
 
   const toggle = () => {
-    hass.callService(domain, 'toggle', {
+    callService(domain, 'toggle', {
       entity_id: entityId,
     });
   };
 
   const execute = () => {
-    hass.callService(domain, 'turn_on', {
+    callService(domain, 'turn_on', {
       entity_id: entityId,
     });
   };
-
 
   return {
     stateObj,
