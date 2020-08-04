@@ -6,9 +6,7 @@ export default function useEntity(entityId) {
   const stateObj = hass.states[entityId];
   const domain = entityId.split('.')[0];
 
-  const isToggleable =
-    'toggle' in (hass.services[domain] || {}) &&
-    ['switch', 'fan', 'light'].includes(domain);
+  const isToggleable = ['switch', 'fan', 'light'].includes(domain);
 
   const isExecutable = ['scene', 'script'].includes(domain);
 
