@@ -9,7 +9,7 @@ import 'fontsource-roboto/latin-500.css';
 import 'fontsource-roboto/latin-700.css';
 import App from './App';
 
-class XSearch extends HTMLElement {
+class ReactWrapper extends HTMLElement {
   set hass(value) {
     this._hass = value;
     this.render();
@@ -21,4 +21,4 @@ class XSearch extends HTMLElement {
     ReactDOM.render(<App hass={this._hass} />, this);
   }
 }
-customElements.define('react-panel', XSearch);
+customElements.define('react-panel', ReactWrapper);
