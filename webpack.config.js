@@ -1,12 +1,10 @@
-
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
-module.exports = {
+var config = {
   module: {
     rules: [
       {
@@ -15,7 +13,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              ['@babel/preset-env', { targets: { chrome: 75 } }],
+              '@babel/preset-react',
+            ],
           },
         },
       },
@@ -33,8 +34,9 @@ module.exports = {
       },
     ],
   },
+
   optimization: {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new TerserPlugin()],
   },
   output: {
     filename: '[name].js',
@@ -43,5 +45,12 @@ module.exports = {
   plugins: [
     // new BundleAnalyzerPlugin(),
   ],
-  devtool: 'inline-source-maps',
+};
+
+module.exports = (env, argv) => {
+  if (argv === 'development') {
+    config.devtool = 'inline-source-maps';
+  }
+
+  return config;
 };
