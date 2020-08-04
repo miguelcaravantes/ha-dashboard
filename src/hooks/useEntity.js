@@ -127,9 +127,8 @@ export default function useEntity(entityId) {
     if (Icon === GoogleDownasaurIcon && stateObj.attributes.icon) {
       console.log(entityId, stateObj);
     }
-
     return Icon;
-  }, [entityId]);
+  }, [entityId, stateObj.attributes.icon]);
 
   const toggle = useCallback(() => {
     callService(domain, 'toggle', {
