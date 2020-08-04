@@ -110,7 +110,7 @@ export default function useEntity(entityId) {
 
   const isExecutable = ['scene', 'script'].includes(domain);
 
-  const icon = useMemo(() => {
+  const Icon = useMemo(() => {
     let Icon = GoogleDownasaurIcon;
 
     const DomainIcon = domainMapping[domain];
@@ -152,6 +152,6 @@ export default function useEntity(entityId) {
     isExecutable,
     toggle,
     execute,
-    Icon: icon,
+    Icon,
   };
 }
