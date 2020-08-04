@@ -4,13 +4,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Switch from '@material-ui/core/Switch';
-import EntityIcon from './EntityIcon';
 import useEntity from '../../hooks/useEntity';
 import Button from '@material-ui/core/Button';
 
 export default function EntityRow(props) {
   const { entityId } = props;
-  const { stateObj, isToggleable, isExecutable, toggle, execute } = useEntity(entityId);
+  const { stateObj, isToggleable, isExecutable, toggle, execute, Icon } = useEntity(entityId);
 
   const handleToggle = () => toggle();
   const handleExecute = () => execute();
@@ -36,7 +35,7 @@ export default function EntityRow(props) {
   return (
     <ListItem >
       <ListItemIcon>
-        <EntityIcon entityId={entityId} />
+        <Icon />
       </ListItemIcon>
       <ListItemText primary={stateObj.attributes.friendly_name} />
        { action }
