@@ -9,11 +9,17 @@ import Button from '@material-ui/core/Button';
 
 export default function EntityRow(props) {
   const { entityId } = props;
-  const { stateObj, isToggleable, isExecutable, toggle, execute, Icon } = useEntity(entityId);
+  const {
+    stateObj,
+    isToggleable,
+    isExecutable,
+    toggle,
+    execute,
+    Icon,
+  } = useEntity(entityId);
 
   const handleToggle = () => toggle();
   const handleExecute = () => execute();
-
 
   let action;
   if (isToggleable) {
@@ -31,14 +37,13 @@ export default function EntityRow(props) {
   } else {
     action = <span>{stateObj.state}</span>;
   }
-
   return (
-    <ListItem >
+    <ListItem>
       <ListItemIcon>
         <Icon />
       </ListItemIcon>
       <ListItemText primary={stateObj.attributes.friendly_name} />
-       { action }
+      {action}
     </ListItem>
   );
 }
