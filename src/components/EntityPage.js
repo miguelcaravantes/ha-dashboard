@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Entities() {
+export default function EntityPage() {
   const classes = useStyles();
   const hass = useHass();
   return (

@@ -15,7 +15,7 @@ import HomeIcon from 'mdi-material-ui/Home';
 import MenuIcon from 'mdi-material-ui/Menu';
 import HeartIcon from 'mdi-material-ui/Heart';
 
-import Entities from './Entities';
+import EntityPage from './EntityPage';
 import Home from './home/Home';
 
 const useStyles = makeStyles((theme) => ({
@@ -95,7 +95,7 @@ export default function Panel(props) {
           <Home />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Entities />
+          <EntityPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
           Item Three
