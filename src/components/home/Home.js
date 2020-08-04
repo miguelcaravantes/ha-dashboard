@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   room: {
     padding: theme.spacing(2),
-    color: 'white',
+    color: theme.palette.text.primary,
   },
   control: {
     padding: theme.spacing(2),
