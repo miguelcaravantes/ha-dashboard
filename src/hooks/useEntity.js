@@ -45,6 +45,7 @@ import TimelapseIcon from 'mdi-material-ui/Timelapse';
 import RestartIcon from 'mdi-material-ui/Restart';
 import AccessPointNetworkIcon from 'mdi-material-ui/AccessPointNetwork';
 import EyeIcon from 'mdi-material-ui/Eye';
+import { useCallback, useMemo } from 'react';
 
 const hassMappings = {
   'mdi:home': HomeIcon,
@@ -109,7 +110,7 @@ export default function useEntity(entityId) {
 
   const isExecutable = ['scene', 'script'].includes(domain);
 
-  const getIcon = () => {
+  const icon = useMemo(() => {
     let Icon = GoogleDownasaurIcon;
 
     const DomainIcon = domainMapping[domain];
@@ -126,20 +127,21 @@ export default function useEntity(entityId) {
     if (Icon === GoogleDownasaurIcon && stateObj.attributes.icon) {
       console.log(entityId, stateObj);
     }
-    return Icon;
-  };
 
-  const toggle = () => {
+    return Icon;
+  }, [entityId]);
+
+  const toggle = useCallback(() => {
     callService(domain, 'toggle', {
       entity_id: entityId,
     });
-  };
+  }, [entityId]);
 
-  const execute = () => {
+  const execute = useCallback(() => {
     callService(domain, 'turn_on', {
       entity_id: entityId,
     });
-  };
+  }, [entityId]);
 
   return {
     domain,
@@ -150,6 +152,6 @@ export default function useEntity(entityId) {
     isExecutable,
     toggle,
     execute,
-    Icon: getIcon(),
+    Icon: icon,
   };
 }
