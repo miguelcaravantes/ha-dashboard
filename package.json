@@ -7,7 +7,7 @@
     "@material-ui/core": "^5.0.0-alpha.5",
     "@mdi/js": "^5.4.55",
     "css-loader": "^4.2.0",
-    "fontsource-roboto": "^2.2.6",
+    "fontsource-roboto": "^3.0.3",
     "mdi-material-ui": "^6.17.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
