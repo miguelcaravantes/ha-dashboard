@@ -6,7 +6,7 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Grid
+  Grid,
 } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Home(props) {
+export default function Home() {
   const classes = useStyles();
+  const { callService } = useHass();
 
   const handleNightMode = () => {
-    props.hass.callService('script', 'night_mode');
+    callService('script', 'night_mode');
   };
 
   return (
@@ -149,7 +150,6 @@ export default function Home(props) {
             <Grid item>
               <Entity entityId="light.garden_lights"></Entity>
             </Grid>
-
           </Grid>
         </Box>
       </Grid>
