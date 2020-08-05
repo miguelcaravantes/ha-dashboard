@@ -68,7 +68,6 @@ export default function Panel(props) {
         <Toolbar>
           <IconButton
             edge="start"
-            color="inherit"
             aria-label="menu"
             className={classes.menu}
             onClick={handleMenuClick}>
