@@ -1,4 +1,3 @@
-import { useHass } from './useHass';
 import {
   Lightbulb as LightbulbIcon,
   LightbulbGroup as LightbulbGroupIcon,
@@ -48,7 +47,6 @@ import {
   Thermometer as ThermometerIcon,
   WaterPercent as WaterPercentIcon,
 } from 'mdi-material-ui';
-import { useCallback, useMemo } from 'react';
 
 const hassMappings = {
   'mdi:home': HomeIcon,
@@ -84,82 +82,28 @@ const hassMappings = {
   'mdi:google': GoogleIcon,
   'mdi:thermometer': ThermometerIcon,
   'mdi:water-percent': WaterPercentIcon,
+  'mdi:lightbulb': LightbulbIcon,
+  'mdi:lightbulb-group': LightbulbGroupIcon,
+  'mdi:power-socket-us': PowerSocketUsIcon,
+  'mdi:cast': CastIcon,
+  'mdi:palette': PaletteIcon,
+  'mdi:account': AccountIcon,
+  'mdi:device_tracker': AccountIcon,
+  'mdi:fan': FanIcon,
+  'mdi:script-text': ScriptTextIcon,
+  'mdi:toggle-switch': ToggleSwitchIcon,
+  'mdi:format-list-bulleted': FormatListBulletedIcon,
+  'mdi:remote': RemoteIcon,
+  'mdi:weather-sunny': WeatherSunnyIcon,
+  'mdi:weather-cloudy': WeatherCloudyIcon,
+  'mdi:eye': EyeIcon,
+  'mdi:google-downasaur': GoogleDownasaurIcon,
 };
 
-const domainMapping = {
-  light: 'mdi:lightbulb',
-  switch: 'mdi:power-socket-us',
-  media_player: 'mdi:cast',
-  scene: 'mdi:palette',
-  person: 'mdi:account',
-  device_tracker: 'mdi:account',
-  fan: 'mdi:fan',
-  script: 'mdi:script-text',
-  input_boolean: 'mdi:toggle-switch',
-  input_select: 'mdi:format-list-bulleted',
-  remote: 'mdi:remote',
-  sun: 'mdi:weather-sunny',
-  weather: 'mdi:weather-cloudy',
-  sensor: 'mdi:eye',
-};
-
-export default function useEntity(entityId) {
-  const { states, callService } = useHass();
-
-  const stateObj = states[entityId];
-  const domain = entityId.split('.')[0];
-
-  const isToggleable = ['switch', 'fan', 'light'].includes(domain);
-
-  const isExecutable = ['scene', 'script'].includes(domain);
-
-  const children =
-    stateObj.attributes.entity_id && stateObj.attributes.entity_id.length;
-  const isGroup = children > 1;
-
-  const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
-
-  const icon = useMemo(() => {
-    let icon = '';
-
-    const domainIcon = domainMapping[domain];
-    if (domainIcon) {
-      if (domain === 'light' && isGroup) {
-        icon = 'mdi:lightbulb-group';
-      } else {
-        icon = domainIcon;
-      }
-    }
-
-    icon = stateObj.attributes.icon || icon;
-
-    return icon;
-  }, [domain, stateObj.attributes.icon]);
-
-  const toggle = useCallback(() => {
-    callService(domain, 'toggle', {
-      entity_id: entityId,
-    });
-  }, [entityId]);
-
-  const execute = useCallback(() => {
-    callService(domain, 'turn_on', {
-      entity_id: entityId,
-    });
-  }, [entityId]);
-
-  return {
-    domain,
-    name: stateObj.attributes.friendly_name,
-    state: stateObj.state,
-    stateObj,
-    isGroup,
-    groupCount: isGroup ? children : undefined,
-    unitOfMeasurement: unitOfMeasurement,
-    isToggleable,
-    isExecutable,
-    toggle,
-    execute,
-    icon,
-  };
+export default function getIcon(iconTag) {
+  const Icon = hassMappings[iconTag];
+  if (!Icon && iconTag && iconTag.startsWith('mdi:')) {
+    alert(`Icon not found "${iconTag}"`);
+  }
+  return Icon || GoogleDownasaurIcon;
 }

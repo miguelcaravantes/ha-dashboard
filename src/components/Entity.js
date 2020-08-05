@@ -3,6 +3,7 @@ import useEntity from '../hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Fan as FanIcon } from 'mdi-material-ui';
+import getIcon from './getIcon';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -33,11 +34,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Entity(props) {
   const classes = useStyles();
   const { entityId } = props;
-  const { name, state, isGroup, groupCount, toggle, Icon } = useEntity(
+  const { name, state, isGroup, groupCount, toggle, icon } = useEntity(
     entityId
   );
 
-  let icon = (
+  const Icon = getIcon(icon);
+
+  let buttonIcon = (
     <Icon
       className={`${classes.icon} ${state === 'on' ? classes.iconActive : ''} ${
         Icon === FanIcon ? classes.fan : ''
@@ -46,16 +49,16 @@ export default function Entity(props) {
   );
 
   if (isGroup) {
-    icon = (
+    buttonIcon = (
       <Badge badgeContent={groupCount} color="primary">
-        {icon}
+        {buttonIcon}
       </Badge>
     );
   }
 
   return (
     <ButtonBase focusRipple className={classes.button} onClick={toggle}>
-      {icon}
+      {buttonIcon}
       {name}
     </ButtonBase>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import useEntity from '../hooks/useEntity';
+import getIcon from './getIcon';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sensor(props) {
   const { entityId } = props;
-  const { state, Icon, unitOfMeasurement } = useEntity(entityId);
+  const { state, icon, unitOfMeasurement } = useEntity(entityId);
+  const Icon = getIcon(icon);
   const classes = useStyles();
   const roundedValue = Math.round(state * 10) / 10;
   const display = roundedValue;
