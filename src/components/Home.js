@@ -19,11 +19,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   room: {
-    padding: theme.spacing(2),
     color: theme.palette.text.primary,
   },
   control: {
-    padding: theme.spacing(2),
+    padding: `0 ${theme.spacing(2)}px`,
   },
 }));
 
@@ -36,18 +35,14 @@ export default function Home() {
   };
 
   return (
-    <Grid container className={classes.root} spacing={5}>
+    <Grid container className={classes.root} spacing={4}>
       <Grid item xs={12}>
         <Paper className={classes.control}>
-          <Grid container>
-            <Grid item>
-              <Tooltip title="Mode Noche">
-                <IconButton onClick={handleNightMode}>
-                  <WeatherNightIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
+          <Tooltip title="Mode Noche">
+            <IconButton onClick={handleNightMode}>
+              <WeatherNightIcon />
+            </IconButton>
+          </Tooltip>
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
