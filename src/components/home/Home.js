@@ -135,13 +135,7 @@ export default function Home(props) {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.living_room_light"></Entity>
-            </Grid>
-            <Grid item>
-              <Entity entityId="light.dinning_room_light"></Entity>
-            </Grid>
-            <Grid item>
-              <Entity entityId="light.receiver_light"></Entity>
+              <Entity entityId="light.living_room_lights"></Entity>
             </Grid>
           </Grid>
         </Box>
@@ -153,11 +147,9 @@ export default function Home(props) {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.exterior_light_1"></Entity>
+              <Entity entityId="light.garden_lights"></Entity>
             </Grid>
-            <Grid item>
-              <Entity entityId="light.exterior_light_2"></Entity>
-            </Grid>
+
           </Grid>
         </Box>
       </Grid>

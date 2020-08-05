@@ -1,6 +1,7 @@
 import { useHass } from './useHass';
 import {
   Lightbulb as LightbulbIcon,
+  LightbulbGroup as LightbulbGroupIcon,
   PowerSocketUs as PowerSocketUsIcon,
   Cast as CastIcon,
   Palette as PaletteIcon,
@@ -108,13 +109,20 @@ export default function useEntity(entityId) {
 
   const isExecutable = ['scene', 'script'].includes(domain);
 
+  const children =
+    stateObj.attributes.entity_id && stateObj.attributes.entity_id.length;
+  const isGroup = children > 1;
+
   const Icon = useMemo(() => {
     let Icon = GoogleDownasaurIcon;
 
     const DomainIcon = domainMapping[domain];
-
     if (DomainIcon) {
-      Icon = DomainIcon;
+      if (domain === 'light' && isGroup) {
+        Icon = LightbulbGroupIcon;
+      } else {
+        Icon = DomainIcon;
+      }
     }
 
     const HassIcon = hassMappings[stateObj.attributes.icon];
@@ -145,6 +153,8 @@ export default function useEntity(entityId) {
     name: stateObj.attributes.friendly_name,
     state: stateObj.state,
     stateObj,
+    isGroup,
+    groupCount: isGroup ? children : undefined,
     isToggleable,
     isExecutable,
     toggle,
