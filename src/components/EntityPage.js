@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import Paper from '@material-ui/core/Paper';
+import { List, Paper } from '@material-ui/core/List';
 
 import { useHass } from '../hooks/useHass';
 import EntityRow from './shared/EntityRow';

@@ -6,9 +6,11 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Grid,
-  makeStyles,
+  Grid
 } from '@material-ui/core';
+
+import { makeStyles } from '@material-ui/core/styles';
+
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 const useStyles = makeStyles((theme) => ({
   root: {
