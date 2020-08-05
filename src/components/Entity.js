@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: '64px',
   },
   iconActive: {
-    filter: 'drop-shadow(0 0 35px #FFFFdd)',
+    filter: 'drop-shadow(0 0 35px #FFFFAA)',
     '&$fan': {
       animation: '$spin 1s linear infinite',
     },
