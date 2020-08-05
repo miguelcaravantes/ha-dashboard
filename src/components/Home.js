@@ -1,5 +1,5 @@
 import React from 'react';
-import Entity from '../Entity';
+import Entity from './Entity';
 import {
   Box,
   Paper,
@@ -12,8 +12,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
-import { useHass } from '../../hooks/useHass';
-import Sensor from '../Sensor';
+import { useHass } from '../hooks/useHass';
+import Sensor from './Sensor';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

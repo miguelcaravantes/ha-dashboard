@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { List, Paper } from '@material-ui/core';
 
 import { useHass } from '../hooks/useHass';
-import EntityRow from './shared/EntityRow';
+import EntityRow from './EntityRow';
 
 const useStyles = makeStyles((theme) => ({
   root: {
