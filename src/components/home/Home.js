@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 import { useHass } from '../../hooks/useHass';
+import Sensor from '../Sensor';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -63,6 +64,12 @@ export default function Home() {
             </Grid>
             <Grid item>
               <Entity entityId="switch.bedroom_diffuser"></Entity>
+            </Grid>
+            <Grid item>
+              <Sensor entityId="sensor.bedroom_temperature"></Sensor>
+            </Grid>{' '}
+            <Grid item>
+              <Sensor entityId="sensor.bedroom_humidity"></Sensor>
             </Grid>
           </Grid>
         </Box>

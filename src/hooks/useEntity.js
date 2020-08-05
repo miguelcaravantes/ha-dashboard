@@ -45,6 +45,8 @@ import {
   Restart as RestartIcon,
   AccessPointNetwork as AccessPointNetworkIcon,
   Eye as EyeIcon,
+  Thermometer as ThermometerIcon,
+  WaterPercent as WaterPercentIcon
 } from 'mdi-material-ui';
 import { useCallback, useMemo } from 'react';
 
@@ -80,6 +82,8 @@ const hassMappings = {
   'mdi:restart': RestartIcon,
   'mdi:access-point-network': AccessPointNetworkIcon,
   'mdi:google': GoogleIcon,
+  'mdi:thermometer': ThermometerIcon,
+  'mdi:water-percent': WaterPercentIcon
 };
 
 const domainMapping = {
@@ -112,6 +116,8 @@ export default function useEntity(entityId) {
   const children =
     stateObj.attributes.entity_id && stateObj.attributes.entity_id.length;
   const isGroup = children > 1;
+
+  const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
 
   const Icon = useMemo(() => {
     let Icon = GoogleDownasaurIcon;
@@ -155,6 +161,7 @@ export default function useEntity(entityId) {
     stateObj,
     isGroup,
     groupCount: isGroup ? children : undefined,
+    unitOfMeasurement: unitOfMeasurement,
     isToggleable,
     isExecutable,
     toggle,
