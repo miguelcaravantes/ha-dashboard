@@ -12,6 +12,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
+import { useHass } from '../../hooks/useHass';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
