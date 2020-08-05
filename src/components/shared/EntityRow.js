@@ -1,11 +1,13 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Switch from '@material-ui/core/Switch';
 import useEntity from '../../hooks/useEntity';
-import Button from '@material-ui/core/Button';
+import {
+  Button,
+  ListItemSecondaryAction,
+  Switch,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 
 export default function EntityRow(props) {
   const { entityId } = props;

@@ -1,14 +1,15 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import NightsStayIcon from '@material-ui/icons/NightsStay';
 import Entity from '../Entity';
-import Box from '@material-ui/core/Box';
-
+import {
+  Box,
+  Paper,
+  Typography,
+  IconButton,
+  Tooltip,
+  Grid,
+  makeStyles,
+} from '@material-ui/core';
+import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -41,7 +42,7 @@ export default function Home(props) {
             <Grid item>
               <Tooltip title="Mode Noche">
                 <IconButton onClick={handleNightMode}>
-                  <NightsStayIcon />
+                  <WeatherNightIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
@@ -72,9 +73,15 @@ export default function Home(props) {
             <Typography variant="h5">Studio</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-             <Grid item><Entity entityId="light.studio_lights"></Entity></Grid>
-             <Grid item><Entity entityId="switch.studio_fan"></Entity></Grid>
-             <Grid item><Entity entityId="switch.desktop_charger"></Entity></Grid>
+            <Grid item>
+              <Entity entityId="light.studio_lights"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="switch.studio_fan"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="switch.desktop_charger"></Entity>
+            </Grid>
           </Grid>
         </Box>
       </Grid>
@@ -84,7 +91,9 @@ export default function Home(props) {
             <Typography variant="h5">Girls' Room</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-             <Grid item><Entity entityId="light.girls_ceiling_light"></Entity></Grid>
+            <Grid item>
+              <Entity entityId="light.girls_ceiling_light"></Entity>
+            </Grid>
           </Grid>
         </Box>
       </Grid>
@@ -95,7 +104,9 @@ export default function Home(props) {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-               <Grid item><Entity entityId="light.corridor_light"></Entity></Grid>
+              <Grid item>
+                <Entity entityId="light.corridor_light"></Entity>
+              </Grid>
             </Grid>
           </Grid>
         </Box>
@@ -106,8 +117,12 @@ export default function Home(props) {
             <Typography variant="h5">Kitchen</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-             <Grid item><Entity entityId="light.kitchen_light"></Entity></Grid>
-             <Grid item><Entity entityId="switch.kitchen_diffuser"></Entity></Grid>
+            <Grid item>
+              <Entity entityId="light.kitchen_light"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="switch.kitchen_diffuser"></Entity>
+            </Grid>
           </Grid>
         </Box>
       </Grid>
@@ -117,9 +132,15 @@ export default function Home(props) {
             <Typography variant="h5">Living Room</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-             <Grid item><Entity entityId="light.living_room_light"></Entity></Grid>
-             <Grid item><Entity entityId="light.dinning_room_light"></Entity></Grid>
-             <Grid item><Entity entityId="light.receiver_light"></Entity></Grid>
+            <Grid item>
+              <Entity entityId="light.living_room_light"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="light.dinning_room_light"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="light.receiver_light"></Entity>
+            </Grid>
           </Grid>
         </Box>
       </Grid>
@@ -129,8 +150,12 @@ export default function Home(props) {
             <Typography variant="h5">Garden</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
-             <Grid item><Entity entityId="light.exterior_light_1"></Entity></Grid>
-             <Grid item><Entity entityId="light.exterior_light_2"></Entity></Grid>
+            <Grid item>
+              <Entity entityId="light.exterior_light_1"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="light.exterior_light_2"></Entity>
+            </Grid>
           </Grid>
         </Box>
       </Grid>

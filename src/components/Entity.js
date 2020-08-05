@@ -1,7 +1,6 @@
 import React from 'react';
 import useEntity from '../hooks/useEntity';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, ButtonBase } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   button: {
