@@ -9,6 +9,8 @@ import {
   Toolbar,
   Tabs,
   Tab,
+  useTheme,
+  useMediaQuery,
 } from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 
@@ -56,6 +58,8 @@ function TabPanel(props) {
 }
 
 export default function Panel(props) {
+  const theme = useTheme();
+  const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -96,6 +100,7 @@ export default function Panel(props) {
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
+          variant={matchesUpSm ? 'standard' : 'fullWidth'}
           centered>
           <Tab icon={<HomeIcon />} aria-label="Home" />
           <Tab icon={<HeartIcon />} aria-label="favorite" />
