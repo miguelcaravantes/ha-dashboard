@@ -24,10 +24,8 @@ import ProfileImg from './ProfileImg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    width: '100%',
     background: theme.palette.background.default,
-    display: 'flex',
-    flexDirection: 'column',
   },
   header: {
     background: theme.palette.background.default,
@@ -39,9 +37,7 @@ const useStyles = makeStyles((theme) => ({
     width: '36px',
     borderRadius: '100%',
   },
-  swipeableView: {
-    flexGrow: 1,
-  },
+
   menu: {
     visibility: 'hidden',
   },
