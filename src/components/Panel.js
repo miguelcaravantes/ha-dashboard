@@ -1,13 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Toolbar from '@material-ui/core/Toolbar';
 
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-
-import { Box } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+  AppBar,
+  IconButton,
+  Toolbar,
+  Tabs,
+  Tab,
+} from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 
 import HomeIcon from 'mdi-material-ui/Home';
@@ -16,6 +18,7 @@ import HeartIcon from 'mdi-material-ui/Heart';
 
 import EntityPage from './EntityPage';
 import Home from './Home';
+import ProfileImg from './ProfileImg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
     display: 'flex',
     flexDirection: 'column',
+  },
+  header: {
+    background: theme.palette.background.default,
+  },
+  title: {
+    flexGrow: 1,
+  },
+  profile: {
+    width: '36px',
+    borderRadius: '100%',
   },
   swipeableView: {
     flexGrow: 1,
@@ -63,7 +76,7 @@ export default function Panel(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="inherit">
+      <AppBar position="static" color="default" className={classes.header}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -72,6 +85,10 @@ export default function Panel(props) {
             onClick={handleMenuClick}>
             <MenuIcon />
           </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Home
+          </Typography>
+          <ProfileImg />
         </Toolbar>
 
         <Tabs
