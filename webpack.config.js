@@ -47,6 +47,7 @@ var config = {
   ],
   devServer: {
     disableHostCheck: true,
+    liveReload: false
   },
 };
 
