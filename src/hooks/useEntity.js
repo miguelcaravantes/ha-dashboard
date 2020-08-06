@@ -113,8 +113,7 @@ export default function useEntity(entityId) {
 
   const isExecutable = ['scene', 'script'].includes(domain);
 
-  const children =
-    stateObj.attributes.entity_id && stateObj.attributes.entity_id.length;
+  const children = stateObj.attributes.entity_id?.length;
   const isGroup = children > 1;
 
   const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
