@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   room: {
+    padding: theme.spacing(1),
     color: theme.palette.text.primary,
   },
   control: {
-    padding: `0 ${theme.spacing(2)}px`,
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
   },
 }));
 
