@@ -11,7 +11,8 @@ const EntityButton = styled(ButtonBase)`
   background: none;
   display: flex;
   flex-direction: column;
-  border-radius: 50%;
+  border-radius: 100%;
+  justify-content: start;
 `;
 
 const rotate = keyframes`
@@ -29,7 +30,7 @@ const fanAnimation = css`
   animation: ${rotate} 1s linear infinite;
 `;
 const activeEffect = css`
-  filter: drop-shadow(0 0 35px #ffffaa);
+  filter: drop-shadow(0 0 25px #ffffaa);
 `;
 
 const ButtonIcon = styled(IconWrapper)`
