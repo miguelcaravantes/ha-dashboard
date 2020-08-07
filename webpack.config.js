@@ -14,7 +14,7 @@ var config = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: { chrome: 75 }, debug: true }],
+              ['@babel/preset-env', { targets: { chrome: 75 } }],
               '@babel/preset-react',
             ],
           },
@@ -47,7 +47,7 @@ var config = {
   ],
   devServer: {
     disableHostCheck: true,
-    liveReload: false
+    liveReload: false,
   },
 };
 
