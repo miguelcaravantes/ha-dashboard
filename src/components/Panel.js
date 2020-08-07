@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-
+import styled from 'styled-components';
 import {
   Box,
   Typography,
@@ -22,41 +21,39 @@ import EntityPage from './EntityPage';
 import Home from './Home';
 import ProfileImg from './ProfileImg';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    background: theme.palette.background.default,
-  },
-  header: {
-    background: theme.palette.background.default,
-  },
-  title: {
-    flexGrow: 1,
-  },
-  profile: {
-    width: '36px',
-    borderRadius: '100%',
-  },
+const Container = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.palette.background.default};
+`;
 
-  menu: {
-    visibility: 'hidden',
-  },
-  '@media (max-width: 870px)': {
-    menu: {
-      visibility: 'visible',
-    },
-  },
-}));
+const Header = styled(AppBar)`
+  background: ${({ theme }) => theme.palette.background.default};
+`;
+
+const Title = styled(Typography)`
+  flex-grow: 1;
+`;
+
+const Menu = styled(IconButton)`
+  display: none;
+  @media (max-width: 870px) {
+    display: block;
+  }
+`;
+
+const Profile = styled(ProfileImg)`
+  width: 36px;
+  border-radius: 100%;
+`;
 
 function TabPanel(props) {
   const { children, value, index } = props;
   return value === index && <Box p={3}>{children}</Box>;
 }
 
-export default function Panel(props) {
+export default function Panel() {
   const theme = useTheme();
   const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -75,20 +72,17 @@ export default function Panel(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="default" className={classes.header}>
+    <Container>
+      <Header position="static" color="default">
         <Toolbar>
-          <IconButton
+          <Menu
             edge="start"
             aria-label="menu"
-            className={classes.menu}
             onClick={handleMenuClick}>
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Home
-          </Typography>
-          <ProfileImg />
+          </Menu>
+          <Title variant="h6">Home</Title>
+          <Profile />
         </Toolbar>
 
         <Tabs
@@ -102,9 +96,8 @@ export default function Panel(props) {
           <Tab icon={<HeartIcon />} aria-label="favorite" />
           <Tab icon={<HeartIcon />} aria-label="person" />
         </Tabs>
-      </AppBar>
+      </Header>
       <SwipeableViews
-        className={classes.swipeableView}
         index={value}
         onChangeIndex={handleChangeIndex}>
         <TabPanel value={value} index={0}>
@@ -117,6 +110,6 @@ export default function Panel(props) {
           Item Three
         </TabPanel>
       </SwipeableViews>
-    </div>
+    </Container>
   );
 }

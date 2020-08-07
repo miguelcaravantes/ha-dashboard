@@ -1,23 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { List, Paper } from '@material-ui/core';
 
 import { useHass } from '../hooks/useHass';
 import EntityRow from './EntityRow';
+import styled from 'styled-components';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    color: 'white',
-  },
-}));
+const Root = styled(Paper)`
+  width: 100%;
+`;
 
 export default function EntityPage() {
-  const classes = useStyles();
   const { states } = useHass();
   return (
-    <Paper className={classes.root}>
+    <Root>
       <List component="nav" aria-label="main mailbox folders">
         {Object.keys(states)
           .filter((key) => !states[key].attributes.hidden)
@@ -25,6 +20,6 @@ export default function EntityPage() {
             <EntityRow key={key} entityId={key} />
           ))}
       </List>
-    </Paper>
+    </Root>
   );
 }

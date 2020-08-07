@@ -8,27 +8,26 @@ import {
   Tooltip,
   Grid,
 } from '@material-ui/core';
-
-import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 import { useHass } from '../hooks/useHass';
 import Sensor from './Sensor';
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  room: {
-    padding: theme.spacing(1),
-    color: theme.palette.text.primary,
-  },
-  control: {
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
-  },
-}));
+
+const RootGrid = styled(Grid)`
+  flex-grow: 1;
+`;
+
+const Room = styled.div`
+  padding: ${({ theme }) => theme.spacing(1)};
+  color: ${({ theme }) => theme.palette.text.primary};
+`;
+
+const Bar = styled(Paper)`
+  padding: ${({ theme }) => theme.spacing(1, 2)};
+`;
 
 export default function Home() {
-  const classes = useStyles();
   const { callService } = useHass();
 
   const handleNightMode = () => {
@@ -36,18 +35,18 @@ export default function Home() {
   };
 
   return (
-    <Grid container className={classes.root} spacing={4}>
+    <RootGrid container spacing={4}>
       <Grid item xs={12}>
-        <Paper className={classes.control}>
+        <Bar>
           <Tooltip title="Mode Noche">
             <IconButton onClick={handleNightMode}>
               <WeatherNightIcon />
             </IconButton>
           </Tooltip>
-        </Paper>
+        </Bar>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Bedroom</Typography>
           </Box>
@@ -68,10 +67,10 @@ export default function Home() {
               <Sensor entityId="sensor.bedroom_humidity"></Sensor>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Studio</Typography>
           </Box>
@@ -86,10 +85,10 @@ export default function Home() {
               <Entity entityId="switch.desktop_charger"></Entity>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Girls' Room</Typography>
           </Box>
@@ -98,10 +97,10 @@ export default function Home() {
               <Entity entityId="light.girls_ceiling_light"></Entity>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Corridor</Typography>
           </Box>
@@ -112,10 +111,10 @@ export default function Home() {
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Kitchen</Typography>
           </Box>
@@ -127,10 +126,10 @@ export default function Home() {
               <Entity entityId="switch.kitchen_diffuser"></Entity>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Living Room</Typography>
           </Box>
@@ -139,10 +138,10 @@ export default function Home() {
               <Entity entityId="light.living_room_lights"></Entity>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
-        <Box className={classes.room}>
+        <Room>
           <Box textAlign="center" m={1}>
             <Typography variant="h5">Garden</Typography>
           </Box>
@@ -151,8 +150,8 @@ export default function Home() {
               <Entity entityId="light.garden_lights"></Entity>
             </Grid>
           </Grid>
-        </Box>
+        </Room>
       </Grid>
-    </Grid>
+    </RootGrid>
   );
 }
