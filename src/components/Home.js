@@ -61,11 +61,15 @@ export default function Home() {
               <Entity entityId="switch.bedroom_diffuser"></Entity>
             </Grid>
             <Grid item>
+              <Entity entityId="binary_sensor.bedroom_window"></Entity>
+            </Grid>
+            <Grid item>
               <Sensor entityId="sensor.bedroom_temperature"></Sensor>
             </Grid>{' '}
             <Grid item>
               <Sensor entityId="sensor.bedroom_humidity"></Sensor>
             </Grid>
+            
           </Grid>
         </Room>
       </Grid>
@@ -83,6 +87,9 @@ export default function Home() {
             </Grid>
             <Grid item>
               <Entity entityId="switch.desktop_charger"></Entity>
+            </Grid>
+            <Grid item>
+              <Entity entityId="binary_sensor.studio_window"></Entity>
             </Grid>
           </Grid>
         </Room>

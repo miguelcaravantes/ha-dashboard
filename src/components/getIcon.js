@@ -67,6 +67,10 @@ import {
   Eye as EyeIcon,
   Thermometer as ThermometerIcon,
   WaterPercent as WaterPercentIcon,
+  WindowClosed as WindowClosedIcon,
+  WindowOpen as WindowOpenIcon,
+  WindowClosedVariant as WindowClosedVariantIcon,
+  WindowOpenVariant as WindowOpenVariantIcon,
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -140,6 +144,10 @@ const hassMappings = {
   'mdi:weather-cloudy': WeatherCloudyIcon,
   'mdi:eye': EyeIcon,
   'mdi:google-downasaur': GoogleDownasaurIcon,
+  'mdi:window-closed-variant': WindowClosedVariantIcon,
+  'mdi:window-open-variant': WindowOpenVariantIcon,
+  'mdi:window-closed': WindowClosedIcon,
+  'mdi:window-open': WindowOpenIcon,
 };
 
 export default function getIcon(iconTag) {

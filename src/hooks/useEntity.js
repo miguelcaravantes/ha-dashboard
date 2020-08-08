@@ -103,6 +103,13 @@ const domainMapping = {
   sensor: 'mdi:eye',
 };
 
+const classMapping = {
+  window: {
+    on: 'mdi:window-open-variant',
+    off: 'mdi:window-closed-variant',
+  },
+};
+
 export default function useEntity(entityId) {
   const { states, callService } = useHass();
 
@@ -117,8 +124,11 @@ export default function useEntity(entityId) {
   const isGroup = children > 1;
 
   const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
+  const deviceClass = stateObj.attributes.device_class;
 
-  const icon = useMemo(() => {
+  const state = stateObj.state;
+
+  let icon = useMemo(() => {
     let icon = '';
 
     const domainIcon = domainMapping[domain];
@@ -135,10 +145,14 @@ export default function useEntity(entityId) {
     return icon;
   }, [domain, stateObj.attributes.icon]);
 
+  icon = (classMapping[deviceClass] && classMapping[deviceClass][state]) ?? icon;
+
   const toggle = useCallback(() => {
-    callService(domain, 'toggle', {
-      entity_id: entityId,
-    });
+    if (isToggleable) {
+      callService(domain, 'toggle', {
+        entity_id: entityId,
+      });
+    }
   }, [entityId]);
 
   const execute = useCallback(() => {
