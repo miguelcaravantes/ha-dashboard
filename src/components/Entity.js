@@ -37,7 +37,7 @@ const ButtonIcon = styled(IconWrapper)`
   height: 64px;
   width: 64px;
   ${({ active }) => (active ? activeEffect : '')};
-  ${({ isFan }) => (isFan ? fanAnimation : '')};
+  ${({ isFan, active }) => (isFan && active ? fanAnimation : '')};
 `;
 
 export default function Entity(props) {
