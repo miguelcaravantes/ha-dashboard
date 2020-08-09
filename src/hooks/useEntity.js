@@ -108,6 +108,11 @@ const classMapping = {
     on: 'mdi:window-open-variant',
     off: 'mdi:window-closed-variant',
   },
+  moisture: {
+    on: 'mdi:water',
+    off: 'mdi:water-off',
+  }
+  
 };
 
 export default function useEntity(entityId) {
