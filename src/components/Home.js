@@ -68,10 +68,10 @@ export default function Home() {
               />
             </Grid>
             <Grid item>
-              <Sensor entityId="sensor.bedroom_temperature"/>
+              <Sensor entityId="sensor.bedroom_temperature" />
             </Grid>{' '}
             <Grid item>
-              <Sensor entityId="sensor.bedroom_humidity"/>
+              <Sensor entityId="sensor.bedroom_humidity" />
             </Grid>
           </Grid>
         </Room>
@@ -161,6 +161,27 @@ export default function Home() {
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <Entity entityId="light.garden_lights" name="Lights" />
+            </Grid>
+          </Grid>
+        </Room>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <Room>
+          <Box textAlign="center" m={1}>
+            <Typography variant="h5">Backyard</Typography>
+          </Box>
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item>
+              <BinarySensor
+                entityId="binary_sensor.backyard_door_1"
+                name="Door 1"
+              />
+            </Grid>
+            <Grid item>
+              <BinarySensor
+                entityId="binary_sensor.backyard_door_2"
+                name="Door 2"
+              />
             </Grid>
           </Grid>
         </Room>

@@ -73,7 +73,9 @@ import {
   WindowClosedVariant as WindowClosedVariantIcon,
   WindowOpenVariant as WindowOpenVariantIcon,
   Water as WaterIcon,
-  WaterOff as WaterOffIcon
+  WaterOff as WaterOffIcon,
+  DoorOpen as DoorOpenIcon,
+  DoorClosed as DoorClosedIcon
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -153,6 +155,9 @@ const hassMappings = {
   'mdi:window-open': WindowOpenIcon,
   'mdi:water': WaterIcon,
   'mdi:water-off': WaterOffIcon,
+  'mdi:door-open': DoorOpenIcon,
+  'mdi:door-closed': DoorClosedIcon,
+
 };
 
 export default function Icon({ icon, ...props }) {
