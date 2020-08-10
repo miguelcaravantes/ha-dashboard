@@ -150,8 +150,8 @@ const hassMappings = {
   'mdi:window-open-variant': WindowOpenVariantIcon,
   'mdi:window-closed': WindowClosedIcon,
   'mdi:window-open': WindowOpenIcon,
-  'mdi:watter': WaterIcon,
-  'mdi:watter-off': WaterOffIcon,
+  'mdi:water': WaterIcon,
+  'mdi:water-off': WaterOffIcon,
 };
 
 export default function getIcon(iconTag) {
