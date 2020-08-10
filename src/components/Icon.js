@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Lightbulb as LightbulbIcon,
   LightbulbGroup as LightbulbGroupIcon,
@@ -154,10 +155,10 @@ const hassMappings = {
   'mdi:water-off': WaterOffIcon,
 };
 
-export default function getIcon(iconTag) {
-  const Icon = hassMappings[iconTag];
-  if (!Icon && iconTag?.startsWith('mdi:')) {
-    alert(`Icon not found "${iconTag}"`);
+export default function Icon({ icon, ...props }) {
+  const Icon = hassMappings[icon] || GoogleDownasaurIcon;
+  if (!hassMappings[icon] && icon?.startsWith('mdi:')) {
+    alert(`Icon not found "${icon}"`);
   }
-  return Icon || GoogleDownasaurIcon;
+  return <Icon {...props} />;
 }

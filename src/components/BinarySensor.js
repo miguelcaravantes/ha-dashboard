@@ -1,8 +1,7 @@
 import React from 'react';
 import useEntity from '../hooks/useEntity';
-import IconWrapper from './IconWrapper';
+import Icon from './Icon';
 import styled from 'styled-components';
-import getIcon from './getIcon';
 
 const Root = styled.div`
   height: ${({ theme }) => theme.spacing(12)};
@@ -13,7 +12,7 @@ const Root = styled.div`
   align-items: center;
 `;
 
-const SensorIcon = styled(IconWrapper)`
+const SensorIcon = styled(Icon)`
   width: ${({ theme }) => theme.spacing(8)};
   height: ${({ theme }) => theme.spacing(8)};
 `;
@@ -21,12 +20,11 @@ const SensorIcon = styled(IconWrapper)`
 export default function BinarySensor(props) {
   const { name: overrideName, entityId } = props;
   const { name: entityName, icon } = useEntity(entityId);
-  const Icon = getIcon(icon);
 
   const name = overrideName ?? entityName;
   return (
     <Root>
-      <SensorIcon Icon={Icon} />
+      <SensorIcon icon={icon} />
       { name }
     </Root>
   );

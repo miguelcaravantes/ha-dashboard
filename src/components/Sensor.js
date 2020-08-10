@@ -1,8 +1,7 @@
 import React from 'react';
 import useEntity from '../hooks/useEntity';
-import getIcon from './getIcon';
 import styled from 'styled-components';
-import IconWrapper from './IconWrapper';
+import Icon from './Icon';
 
 const Root = styled.div`
   height: ${({ theme }) => theme.spacing(12)};
@@ -14,7 +13,7 @@ const Root = styled.div`
   justify-content: center;
 `;
 
-const SensorIcon = styled(IconWrapper)`
+const SensorIcon = styled(Icon)`
   width: 1.5em;
   height: 1.5em;
 `;
@@ -31,13 +30,12 @@ const LabelUnit = styled.span`
 export default function Sensor(props) {
   const { entityId } = props;
   const { state, icon, unitOfMeasurement } = useEntity(entityId);
-  const Icon = getIcon(icon);
   const roundedValue = Math.round(state * 10) / 10;
   const display = roundedValue;
 
   return (
     <Root>
-      <SensorIcon Icon={Icon} />
+      <SensorIcon icon={icon} />
       <Label>
         {display}
         <LabelUnit>{unitOfMeasurement}</LabelUnit>

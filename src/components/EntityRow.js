@@ -8,7 +8,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
-import getIcon from './getIcon';
 
 export default function EntityRow(props) {
   const { entityId } = props;
@@ -21,8 +20,6 @@ export default function EntityRow(props) {
     execute,
     icon,
   } = useEntity(entityId);
-
-  const Icon = getIcon(icon);
 
   const handleToggle = () => toggle();
   const handleExecute = () => execute();
@@ -42,7 +39,7 @@ export default function EntityRow(props) {
   return (
     <ListItem>
       <ListItemIcon>
-        <Icon />
+        <Icon icon={icon} />
       </ListItemIcon>
       <ListItemText primary={name} />
       {action}
