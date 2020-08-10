@@ -14,7 +14,7 @@ var config = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: { chrome: 75 } }],
+              ['@babel/preset-env', { targets: { chrome: 79 } }],
               '@babel/preset-react',
             ],
           },

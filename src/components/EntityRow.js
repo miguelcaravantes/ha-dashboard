@@ -8,6 +8,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
+import Icon from './Icon';
 
 export default function EntityRow(props) {
   const { entityId } = props;
