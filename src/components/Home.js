@@ -52,16 +52,20 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.bedroom_lights"></Entity>
+              <Entity entityId="light.bedroom_lights" name="Luces"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="fan.bedroom_fan"></Entity>
+              <Entity entityId="fan.bedroom_fan" name="Abanico"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="switch.bedroom_diffuser"></Entity>
+              <Entity
+                entityId="switch.bedroom_diffuser"
+                name="Aromatizante"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="binary_sensor.bedroom_window"></Entity>
+              <Entity
+                entityId="binary_sensor.bedroom_window"
+                name="Ventana"></Entity>
             </Grid>
             <Grid item>
               <Sensor entityId="sensor.bedroom_temperature"></Sensor>
@@ -69,7 +73,6 @@ export default function Home() {
             <Grid item>
               <Sensor entityId="sensor.bedroom_humidity"></Sensor>
             </Grid>
-            
           </Grid>
         </Room>
       </Grid>
@@ -80,16 +83,20 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.studio_lights"></Entity>
+              <Entity entityId="light.studio_lights" name="Luces"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="switch.studio_fan"></Entity>
+              <Entity entityId="switch.studio_fan" name="Abanico"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="switch.desktop_charger"></Entity>
+              <Entity
+                entityId="switch.desktop_charger"
+                name="Cargador"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="binary_sensor.studio_window"></Entity>
+              <Entity
+                entityId="binary_sensor.studio_window"
+                name="Ventana"></Entity>
             </Grid>
           </Grid>
         </Room>
@@ -101,7 +108,7 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.girls_ceiling_light"></Entity>
+              <Entity entityId="light.girls_ceiling_light" name="Luz"></Entity>
             </Grid>
           </Grid>
         </Room>
@@ -114,7 +121,7 @@ export default function Home() {
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
               <Grid item>
-                <Entity entityId="light.corridor_light"></Entity>
+                <Entity entityId="light.corridor_light" name="Luz"></Entity>
               </Grid>
             </Grid>
           </Grid>
@@ -127,10 +134,12 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.kitchen_light"></Entity>
+              <Entity entityId="light.kitchen_light" name="Luz"></Entity>
             </Grid>
             <Grid item>
-              <Entity entityId="switch.kitchen_diffuser"></Entity>
+              <Entity
+                entityId="switch.kitchen_diffuser"
+                name="Aromatizante"></Entity>
             </Grid>
           </Grid>
         </Room>
@@ -142,7 +151,7 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.living_room_lights"></Entity>
+              <Entity entityId="light.living_room_lights" name="Luces"></Entity>
             </Grid>
           </Grid>
         </Room>
@@ -154,7 +163,7 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.garden_lights"></Entity>
+              <Entity entityId="light.garden_lights" name="Luces"></Entity>
             </Grid>
           </Grid>
         </Room>

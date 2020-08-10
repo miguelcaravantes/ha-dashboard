@@ -41,10 +41,17 @@ const ButtonIcon = styled(IconWrapper)`
 `;
 
 export default function Entity(props) {
-  const { entityId } = props;
-  const { name, state, isGroup, groupCount, toggle, icon } = useEntity(
-    entityId
-  );
+  const { entityId, name: overrideName } = props;
+  const {
+    name: entityName,
+    state,
+    isGroup,
+    groupCount,
+    toggle,
+    icon,
+  } = useEntity(entityId);
+
+  const name = overrideName ?? entityName;
 
   const Icon = getIcon(icon);
 
