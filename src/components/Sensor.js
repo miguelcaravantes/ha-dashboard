@@ -2,10 +2,11 @@ import React from 'react';
 import useEntity from '../hooks/useEntity';
 import getIcon from './getIcon';
 import styled from 'styled-components';
+import IconWrapper from './IconWrapper';
 
 const Root = styled.div`
-  height: 100px;
-  width: 100px;
+  height: ${({ theme }) => theme.spacing(12)};
+  width: ${({ theme }) => theme.spacing(12)};
   background: none;
   display: flex;
   flex-direction: column;
@@ -13,9 +14,7 @@ const Root = styled.div`
   justify-content: center;
 `;
 
-const IconTemplate = ({ Icon }) => <Icon />;
-
-const SensorIcon = styled(IconTemplate)`
+const SensorIcon = styled(IconWrapper)`
   width: 1.5em;
   height: 1.5em;
 `;

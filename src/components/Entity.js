@@ -4,10 +4,11 @@ import { ButtonBase, Badge } from '@material-ui/core';
 import { Fan as FanIcon } from 'mdi-material-ui';
 import getIcon from './getIcon';
 import styled, { keyframes, css } from 'styled-components';
+import IconWrapper from './IconWrapper';
 
 const EntityButton = styled(ButtonBase)`
-  height: 100px;
-  width: 100px;
+  height: ${({ theme }) => theme.spacing(12)};
+  width: ${({ theme }) => theme.spacing(12)};
   background: none;
   display: flex;
   flex-direction: column;
@@ -24,8 +25,6 @@ const rotate = keyframes`
   }
 `;
 
-const IconWrapper = ({ className, Icon }) => <Icon className={className} />;
-
 const fanAnimation = css`
   animation: ${rotate} 1s linear infinite;
 `;
@@ -34,10 +33,15 @@ const activeEffect = css`
 `;
 
 const ButtonIcon = styled(IconWrapper)`
-  height: 64px;
-  width: 64px;
+  height: ${({ theme }) => theme.spacing(8)};
+  width: ${({ theme }) => theme.spacing(8)};
   ${({ active }) => (active ? activeEffect : '')};
   ${({ isFan, active }) => (isFan && active ? fanAnimation : '')};
+`;
+
+const Label = styled.span`
+  font-size: 16px;
+  font-family: Roboto;
 `;
 
 export default function Entity(props) {
@@ -70,7 +74,7 @@ export default function Entity(props) {
   return (
     <EntityButton focusRipple onClick={toggle}>
       {buttonIcon}
-      {name}
+      <Label>{name}</Label>
     </EntityButton>
   );
 }
