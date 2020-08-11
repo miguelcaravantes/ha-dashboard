@@ -5,9 +5,51 @@ import { useHass } from '../hooks/useHass';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import styled from 'styled-components';
 import useConstant from 'use-constant';
+import { CirclePicker } from 'react-color';
+import {
+  red,
+  pink,
+  purple,
+  deepPurple,
+  indigo,
+  blue,
+  lightBlue,
+  cyan,
+  teal,
+  green,
+  lightGreen,
+  lime,
+  yellow,
+  amber,
+  orange,
+  deepOrange,
+  brown,
+} from '@material-ui/core/colors';
+
+const colors = ['#ffffff'].concat(
+  [
+    red,
+    pink,
+    purple,
+    deepPurple,
+    indigo,
+    blue,
+    lightBlue,
+    cyan,
+    teal,
+    green,
+    lightGreen,
+    lime,
+    yellow,
+    amber,
+    orange,
+    deepOrange,
+    brown,
+  ].flatMap((i) => [i[200], i[500], i[700]])
+);
 
 const Root = styled(Dialog)`
-    backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   & .MuiDialog-paper {
     width: 80%;
     padding: ${({ theme }) => theme.spacing(2)};
@@ -27,10 +69,18 @@ const StyledSlider = styled(Slider)`
   & .MuiSlider-track {
     height: 40px;
     border-radius: 2px;
-    box-shadow: 0px 0px 10px 0px rgba(255,255,255,.7);
+    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.7);
   }
   & .MuiSlider-thumb {
     display: none;
+  }
+`;
+
+const ColorsContainer = styled.div`
+  & .circle-picker {
+    width: 100% !important;
+    justify-content: center;
+    margin: ${({ theme }) => theme.spacing(2)} !important;
   }
 `;
 
@@ -39,23 +89,42 @@ export default function LightDetail(props) {
 
   const { callService } = useHass();
   const { stateObj } = useEntity(entityId);
-  const [value, setValue] = useState(stateObj.attributes.brightness || 0);
+  const [brightness, setBrightness] = useState(
+    stateObj.attributes.brightness || 0
+  );
 
   const updateBrightness = useConstant(() =>
     AwesomeDebouncePromise(async (brightness) => {
-      console.log(brightness)
       await callService('light', 'turn_on', {
         entity_id: entityId,
         brightness,
       });
     }, 100)
   );
+  const updateColor = useConstant(() =>
+    AwesomeDebouncePromise(async (color) => {
+      const data = {
+        entity_id: entityId,
+        rgb_color: [color.r, color.g, color.b],
+      };
+      if (stateObj.state === 'off') {
+        data.brightness = 255;
+        setBrightness(255);
+      }
 
-  const handleChange = async (event, newValue) => {
-    if (newValue !== value) {
-      setValue(newValue);
+      await callService('light', 'turn_on', data);
+    }, 100)
+  );
+
+  const handleBrightnessChange = async (_, newValue) => {
+    if (newValue !== brightness) {
+      setBrightness(newValue);
       await updateBrightness(newValue);
     }
+  };
+
+  const handleColorChange = async (color) => {
+    await updateColor(color.rgb);
   };
 
   const handleClose = () => {
@@ -64,14 +133,22 @@ export default function LightDetail(props) {
 
   return (
     <Root onClose={handleClose} open={open}>
+      <ColorsContainer>
+        <CirclePicker
+          colors={colors}
+          circleSize={32}
+          circleSpacing={8}
+          onChange={handleColorChange}
+        />
+      </ColorsContainer>
       <StyledSlider
         min={0}
         max={255}
         step={15}
-        value={value}
+        value={brightness}
         valueLabelDisplay="auto"
         // disabled={stateObj.state === 'off'}
-        onChange={handleChange}
+        onChange={handleBrightnessChange}
       />
     </Root>
   );
