@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import useConstant from 'use-constant';
 
 const Root = styled(Dialog)`
+    backdrop-filter: blur(5px);
   & .MuiDialog-paper {
     width: 80%;
     padding: ${({ theme }) => theme.spacing(2)};
