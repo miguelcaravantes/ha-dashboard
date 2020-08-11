@@ -11,7 +11,6 @@ import {
   useTheme,
   useMediaQuery,
 } from '@material-ui/core';
-import SwipeableViews from 'react-swipeable-views';
 
 import HomeIcon from 'mdi-material-ui/Home';
 import MenuIcon from 'mdi-material-ui/Menu';
@@ -20,6 +19,8 @@ import HeartIcon from 'mdi-material-ui/Heart';
 import EntityPage from './EntityPage';
 import Home from './Home';
 import ProfileImg from './ProfileImg';
+import Light from './Light';
+import { DivisionBox } from 'mdi-material-ui';
 
 const Container = styled.div`
   width: 100%;
@@ -60,10 +61,6 @@ export default function Panel() {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
   const handleMenuClick = () => {
     window.parent.customPanel.parentNode.parentNode.offsetParent
       .querySelector('home-assistant')
@@ -97,9 +94,7 @@ export default function Panel() {
           <Tab icon={<HeartIcon />} aria-label="person" />
         </Tabs>
       </Header>
-      <SwipeableViews
-        index={value}
-        onChangeIndex={handleChangeIndex}>
+      <div>
         <TabPanel value={value} index={0}>
           <Home />
         </TabPanel>
@@ -107,9 +102,9 @@ export default function Panel() {
           <EntityPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item Three
+         Item
         </TabPanel>
-      </SwipeableViews>
+      </div>
     </Container>
   );
 }

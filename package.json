@@ -6,12 +6,12 @@
   "dependencies": {
     "@material-ui/core": "^5.0.0-alpha.5",
     "@mdi/js": "^5.5.55",
+    "awesome-debounce-promise": "^2.1.0",
     "css-loader": "^4.2.1",
     "fontsource-roboto": "^3.0.3",
     "mdi-material-ui": "^6.17.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-swipeable-views": "^0.13.9",
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1"
   },
