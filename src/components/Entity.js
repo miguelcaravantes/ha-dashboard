@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useEntity from '../hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
 import styled, { keyframes, css } from 'styled-components';
 import Icon from './Icon';
+import useLongPress from '../hooks/useLongPres';
+import LightDetail from './LightDetail';
 
+const Root = styled.div`
+  height: ${({ theme }) => theme.spacing(12)};
+  width: ${({ theme }) => theme.spacing(12)};
+`;
 const EntityButton = styled(ButtonBase)`
   height: ${({ theme }) => theme.spacing(12)};
   width: ${({ theme }) => theme.spacing(12)};
@@ -34,7 +40,7 @@ const ButtonIcon = styled(({ active, ...props }) => <Icon {...props} />)`
   height: ${({ theme }) => theme.spacing(8)};
   width: ${({ theme }) => theme.spacing(8)};
   ${({ active }) => (active ? activeEffect : '')};
-  ${({ icon, active }) => ( icon === 'mdi:fan' && active ? fanAnimation : '')};
+  ${({ icon, active }) => (icon === 'mdi:fan' && active ? fanAnimation : '')};
 `;
 
 const Label = styled.span`
@@ -46,6 +52,7 @@ export default function Entity(props) {
   const { entityId, name: overrideName } = props;
   const {
     name: entityName,
+    domain,
     state,
     isGroup,
     groupCount,
@@ -53,11 +60,20 @@ export default function Entity(props) {
     icon,
   } = useEntity(entityId);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const name = overrideName ?? entityName;
 
-  let buttonIcon = (
-    <ButtonIcon icon={icon} active={state === 'on'} />
-  );
+  const handleLongPress = () => {
+    if (domain === 'light') setModalOpen(true);
+  };
+  const handleModelClose = () => {
+    setModalOpen(false);
+  };
+
+  const clickHandler = useLongPress(handleLongPress, toggle);
+
+  let buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
 
   if (isGroup) {
     buttonIcon = (
@@ -68,9 +84,12 @@ export default function Entity(props) {
   }
 
   return (
-    <EntityButton focusRipple onClick={toggle}>
-      {buttonIcon}
-      <Label>{name}</Label>
-    </EntityButton>
+    <Root>
+      <EntityButton focusRipple {...clickHandler}>
+        {buttonIcon}
+        <Label>{name}</Label>
+      </EntityButton>
+      <LightDetail entityId={entityId} open={modalOpen} onClose={handleModelClose} />
+    </Root>
   );
 }

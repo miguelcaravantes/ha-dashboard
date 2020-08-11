@@ -19,8 +19,6 @@ import HeartIcon from 'mdi-material-ui/Heart';
 import EntityPage from './EntityPage';
 import Home from './Home';
 import ProfileImg from './ProfileImg';
-import Light from './Light';
-import { DivisionBox } from 'mdi-material-ui';
 
 const Container = styled.div`
   width: 100%;
