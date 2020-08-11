@@ -75,7 +75,7 @@ import {
   Water as WaterIcon,
   WaterOff as WaterOffIcon,
   DoorOpen as DoorOpenIcon,
-  DoorClosed as DoorClosedIcon
+  DoorClosed as DoorClosedIcon,
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -140,7 +140,6 @@ const hassMappings = {
   'mdi:palette': PaletteIcon,
   'mdi:account': AccountIcon,
   'mdi:device_tracker': AccountIcon,
-  'mdi:fan': FanIcon,
   'mdi:script-text': ScriptTextIcon,
   'mdi:toggle-switch': ToggleSwitchIcon,
   'mdi:format-list-bulleted': FormatListBulletedIcon,
@@ -157,7 +156,6 @@ const hassMappings = {
   'mdi:water-off': WaterOffIcon,
   'mdi:door-open': DoorOpenIcon,
   'mdi:door-closed': DoorClosedIcon,
-
 };
 
 export default function Icon({ icon, ...props }) {

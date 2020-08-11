@@ -103,7 +103,7 @@ export default function Home() {
       <Grid item xs={12} sm={6} lg={4} xl={3}>
         <Room>
           <Box textAlign="center" m={1}>
-            <Typography variant="h5">Girls' Room</Typography>
+            <Typography variant="h5">Girls&apos; Room</Typography>
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>

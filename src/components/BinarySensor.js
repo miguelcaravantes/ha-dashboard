@@ -25,7 +25,7 @@ export default function BinarySensor(props) {
   return (
     <Root>
       <SensorIcon icon={icon} />
-      { name }
+      {name}
     </Root>
   );
 }

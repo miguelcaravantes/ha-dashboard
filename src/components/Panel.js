@@ -70,10 +70,7 @@ export default function Panel() {
     <Container>
       <Header position="static" color="default">
         <Toolbar>
-          <Menu
-            edge="start"
-            aria-label="menu"
-            onClick={handleMenuClick}>
+          <Menu edge="start" aria-label="menu" onClick={handleMenuClick}>
             <MenuIcon />
           </Menu>
           <Title variant="h6">Home</Title>
@@ -86,7 +83,8 @@ export default function Panel() {
           indicatorColor="primary"
           textColor="primary"
           variant={matchesUpSm ? 'standard' : 'fullWidth'}
-          centered>
+          centered
+        >
           <Tab icon={<HomeIcon />} aria-label="Home" />
           <Tab icon={<HeartIcon />} aria-label="favorite" />
           <Tab icon={<HeartIcon />} aria-label="person" />
@@ -100,7 +98,7 @@ export default function Panel() {
           <EntityPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-         Item
+          Item
         </TabPanel>
       </div>
     </Container>

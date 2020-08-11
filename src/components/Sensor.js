@@ -26,7 +26,6 @@ const LabelUnit = styled.span`
   vertical-align: super;
 `;
 
-
 export default function Sensor(props) {
   const { entityId } = props;
   const { state, icon, unitOfMeasurement } = useEntity(entityId);
