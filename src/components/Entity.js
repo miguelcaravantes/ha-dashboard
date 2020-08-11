@@ -1,7 +1,6 @@
 import React from 'react';
 import useEntity from '../hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
-import { Fan as FanIcon } from 'mdi-material-ui';
 import styled, { keyframes, css } from 'styled-components';
 import Icon from './Icon';
 
@@ -31,11 +30,11 @@ const activeEffect = css`
   filter: drop-shadow(0 0 25px #ffffaa);
 `;
 
-const ButtonIcon = styled(({ active, isFan, ...props }) => <Icon {...props} />)`
+const ButtonIcon = styled(({ active, ...props }) => <Icon {...props} />)`
   height: ${({ theme }) => theme.spacing(8)};
   width: ${({ theme }) => theme.spacing(8)};
   ${({ active }) => (active ? activeEffect : '')};
-  ${({ isFan, active }) => (isFan && active ? fanAnimation : '')};
+  ${({ icon, active }) => ( icon === 'mdi:fan' && active ? fanAnimation : '')};
 `;
 
 const Label = styled.span`
@@ -57,7 +56,7 @@ export default function Entity(props) {
   const name = overrideName ?? entityName;
 
   let buttonIcon = (
-    <ButtonIcon icon={icon} active={state === 'on'} isFan={Icon === FanIcon} />
+    <ButtonIcon icon={icon} active={state === 'on'} />
   );
 
   if (isGroup) {
