@@ -4,7 +4,7 @@ import { ButtonBase, Badge } from '@material-ui/core';
 import styled, { keyframes, css } from 'styled-components';
 import Icon from './Icon';
 import useLongPress from '../hooks/useLongPres';
-import LightDetail from './LightDetail';
+import EntityDialog from './EntityDialog';
 
 const Root = styled.div`
   height: ${({ theme }) => theme.spacing(12)};
@@ -90,7 +90,7 @@ export default function Entity(props) {
         <Label>{name}</Label>
       </EntityButton>
       {modalOpen ? (
-        <LightDetail
+        <EntityDialog
           entityId={entityId}
           open={modalOpen}
           onClose={handleModelClose}

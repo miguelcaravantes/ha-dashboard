@@ -48,13 +48,7 @@ const colors = ['#ffffff'].concat(
   ].flatMap((i) => [i[200], i[500], i[700]])
 );
 
-const Root = styled(Dialog)`
-  backdrop-filter: blur(5px);
-  & .MuiDialog-paper {
-    width: 80%;
-    padding: ${({ theme }) => theme.spacing(2)};
-  }
-`;
+const Root = styled.div``;
 
 const StyledSlider = styled(Slider)`
   color: ${({ theme }) =>
@@ -85,7 +79,7 @@ const ColorsContainer = styled.div`
 `;
 
 export default function LightDetail(props) {
-  const { onClose, open, entityId } = props;
+  const { entityId } = props;
 
   const { callService } = useHass();
   const { stateObj } = useEntity(entityId);
@@ -127,12 +121,8 @@ export default function LightDetail(props) {
     await updateColor(color.rgb);
   };
 
-  const handleClose = () => {
-    onClose && onClose();
-  };
-
   return (
-    <Root onClose={handleClose} open={open}>
+    <Root>
       <ColorsContainer>
         <CirclePicker
           colors={colors}
