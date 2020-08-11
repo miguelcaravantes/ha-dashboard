@@ -56,7 +56,7 @@ export default function LightDetail(props) {
     <Root onClose={handleClose} open={open}>
       <StyledSlider
         min={1}
-        max={100}
+        max={255}
         value={value}
         valueLabelDisplay="auto"
         disabled={stateObj.state === 'off'}
