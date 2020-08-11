@@ -89,7 +89,13 @@ export default function Entity(props) {
         {buttonIcon}
         <Label>{name}</Label>
       </EntityButton>
-      <LightDetail entityId={entityId} open={modalOpen} onClose={handleModelClose} />
+      {modalOpen ? (
+        <LightDetail
+          entityId={entityId}
+          open={modalOpen}
+          onClose={handleModelClose}
+        />
+      ) : null}
     </Root>
   );
 }
