@@ -43,7 +43,6 @@ export default function LightDetail(props) {
   const updateBrightness = useConstant(() =>
     AwesomeDebouncePromise(async (brightness) => {
       console.log(brightness)
-      if(entityId !== 'light.studio_lights') return;
       await callService('light', 'turn_on', {
         entity_id: entityId,
         brightness,
