@@ -5,6 +5,7 @@ import {
   Button,
   Switch,
   FormControlLabel,
+  Typography,
 } from '@material-ui/core';
 import useEntity from '../hooks/useEntity';
 import { useHass } from '../hooks/useHass';
@@ -50,14 +51,11 @@ export default function FanDetail({ entityId }) {
 
   return (
     <Root>
-      <FormControlLabel
-        labelPlacement="start"
-        control={
-          <Switch checked={oscillating} onChange={handleChangeOscillation} />
-        }
-        label="Oscillate"
-      />
-      <ButtonGroup size="large" color="primary">
+      <Typography variant="h6">Oscillate:</Typography>
+      <Switch checked={oscillating} onChange={handleChangeOscillation} />
+
+      <Typography variant="h6">Speed:</Typography>
+      <ButtonGroup color="primary">
         {speedList.map((s) => (
           <SpeedButton
             key={s}

@@ -18,12 +18,15 @@ export default function EntityDialog(props) {
   const { domain } = useEntity(entityId);
 
   let Detail;
+  let width = 'xs';
   switch (domain) {
     case 'light':
       Detail = LightDetail;
+      width = 'xs';
       break;
     case 'fan':
       Detail = FanDetail;
+      width = 'xs';
       break;
     default:
       Detail = null;
@@ -34,7 +37,7 @@ export default function EntityDialog(props) {
   };
 
   return (
-    <Root onClose={handleClose} open={open}>
+    <Root maxWidth={width} onClose={handleClose} open={open}>
       <Detail entityId={entityId} />
     </Root>
   );
