@@ -57,11 +57,7 @@ export default function FanDetail({ entityId }) {
         }
         label="Oscillate"
       />
-      <ButtonGroup
-        size="large"
-        color="primary"
-        aria-label="large outlined primary button group"
-      >
+      <ButtonGroup size="large" color="primary">
         {speedList.map((s) => (
           <SpeedButton
             key={s}
