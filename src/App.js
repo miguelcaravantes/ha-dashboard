@@ -21,7 +21,7 @@ const theme = createMuiTheme({
 });
 if (prefersDarkMode) {
   theme.palette.background.default = 'black';
-  theme.palette.background.paper = 'rgba(11,11,11,.9)';
+  theme.palette.background.paper = 'rgba(11,11,11,.85)';
 }
 
 export default function App(props) {
