@@ -48,6 +48,8 @@ const Label = styled.span`
   font-family: Roboto;
 `;
 
+const supportedDetails = ['light', 'fan'];
+
 export default function Entity(props) {
   const { entityId, name: overrideName } = props;
   const {
@@ -65,7 +67,7 @@ export default function Entity(props) {
   const name = overrideName ?? entityName;
 
   const handleLongPress = () => {
-    if (domain === 'light') setModalOpen(true);
+    supportedDetails.includes(domain) && setModalOpen(true);
   };
   const handleModelClose = () => {
     setModalOpen(false);

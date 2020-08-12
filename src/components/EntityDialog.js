@@ -3,6 +3,7 @@ import { Dialog } from '@material-ui/core';
 import LightDetail from './LightDetail';
 import useEntity from '../hooks/useEntity';
 import styled from 'styled-components';
+import FanDetail from './FanDetail';
 
 const Root = styled(Dialog)`
   backdrop-filter: blur(5px);
@@ -20,6 +21,9 @@ export default function EntityDialog(props) {
   switch (domain) {
     case 'light':
       Detail = LightDetail;
+      break;
+    case 'fan':
+      Detail = FanDetail;
       break;
     default:
       Detail = null;
