@@ -44,7 +44,7 @@ const ButtonIcon = styled(({ active, ...props }) => <Icon {...props} />)`
 `;
 
 const Label = styled.span`
-  font-size: 16px;
+  font-size: 1rem;
   font-family: Roboto;
 `;
 
