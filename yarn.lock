@@ -6675,6 +6675,11 @@ use-constant@^1.0.0:
   resolved "https://registry.yarnpkg.com/use-constant/-/use-constant-1.0.0.tgz#cfab998e6fc19ddc62b056875709f1420e339a10"
   integrity sha512-HmVrMl3+1tEr64ace4UtP5WTdnLyrvYKwF54JVf7B7lSB76JSERDvvgWkaaxlOM3S0dSl1U3WH1l9PupNnzsvQ==
 
+use-long-press@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/use-long-press/-/use-long-press-1.0.4.tgz#cbff63b391508906c6f375e0ab2b3f3b47acd5d8"
+  integrity sha512-Lw70Sfjut//hEsm/La/ik/5aL042No+4c5AzIb4FhCslLiuVdD8AN2nxRckeJMWBU/88xOwPZ+x+CD5Tjk6sPA==
+
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"

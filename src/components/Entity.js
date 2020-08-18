@@ -3,7 +3,7 @@ import useEntity from '../hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
 import styled, { keyframes, css } from 'styled-components';
 import Icon from './Icon';
-import useLongPress from '../hooks/useLongPres';
+import { useLongPress } from 'use-long-press';
 import EntityDialog from './EntityDialog';
 
 const Root = styled.div`
@@ -73,7 +73,7 @@ export default function Entity(props) {
     setModalOpen(false);
   };
 
-  const clickHandler = useLongPress(handleLongPress, toggle);
+  const longPressHandler = useLongPress(handleLongPress);
 
   let buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
 
@@ -87,7 +87,7 @@ export default function Entity(props) {
 
   return (
     <Root>
-      <EntityButton focusRipple {...clickHandler}>
+      <EntityButton focusRipple onClick={toggle} {...longPressHandler}>
         {buttonIcon}
         <Label>{name}</Label>
       </EntityButton>
