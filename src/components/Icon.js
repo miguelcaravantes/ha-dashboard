@@ -61,6 +61,7 @@ import {
   Television as TelevisionIcon,
   GoogleHome as GoogleHomeIcon,
   Cellphone as CellphoneIcon,
+  Phone as PhoneIcon,
   Update as UpdateIcon,
   Timelapse as TimelapseIcon,
   Restart as RestartIcon,
@@ -76,6 +77,17 @@ import {
   WaterOff as WaterOffIcon,
   DoorOpen as DoorOpenIcon,
   DoorClosed as DoorClosedIcon,
+  Bluetooth as BluetoothIcon,
+  Harddisk as HarddiskIcon,
+  Alarm as AlarmIcon,
+  Brightness1 as Brightness1Icon,
+  Brightness2 as Brightness2Icon,
+  Brightness3 as Brightness3Icon,
+  Brightness4 as Brightness4Icon,
+  Brightness5 as Brightness5Icon,
+  Brightness6 as Brightness6Icon,
+  Brightness7 as Brightness7Icon,
+
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -124,6 +136,7 @@ const hassMappings = {
   'mdi:television': TelevisionIcon,
   'mdi:google-home': GoogleHomeIcon,
   'mdi:cellphone': CellphoneIcon,
+  'mdi:phone': PhoneIcon,
   'mdi:air-filter': AirFilterIcon,
   'mdi:fan': FanIcon,
   'mdi:update': UpdateIcon,
@@ -156,6 +169,16 @@ const hassMappings = {
   'mdi:water-off': WaterOffIcon,
   'mdi:door-open': DoorOpenIcon,
   'mdi:door-closed': DoorClosedIcon,
+  'mdi:bluetooth': BluetoothIcon,
+  'mdi:alarm': AlarmIcon,
+  'mdi:harddisk': HarddiskIcon,
+  'mdi:brightness-1': Brightness1Icon,
+  'mdi:brightness-2': Brightness2Icon,
+  'mdi:brightness-3': Brightness3Icon,
+  'mdi:brightness-4': Brightness4Icon,
+  'mdi:brightness-5': Brightness5Icon,
+  'mdi:brightness-6': Brightness6Icon,
+  'mdi:brightness-7': Brightness7Icon,
 };
 
 export default function Icon({ icon, ...props }) {
