@@ -40,11 +40,6 @@ const Menu = styled(IconButton)`
   }
 `;
 
-const Profile = styled(ProfileImg)`
-  width: 36px;
-  border-radius: 100%;
-`;
-
 function TabPanel(props) {
   const { children, value, index } = props;
   return value === index && <Box p={3}>{children}</Box>;
@@ -74,7 +69,7 @@ export default function Panel() {
             <MenuIcon />
           </Menu>
           <Title variant="h6">Home</Title>
-          <Profile />
+          <ProfileImg />
         </Toolbar>
 
         <Tabs

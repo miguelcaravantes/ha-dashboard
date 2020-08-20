@@ -1,12 +1,6 @@
 import React from 'react';
 import { useHass } from '../hooks/useHass';
-import styled from 'styled-components';
-
-const Image = styled.img`
-  width: 36px;
-  height: 36px;
-  border-radius: 100%;
-`;
+import { Avatar } from '@material-ui/core';
 
 export default function ProfileImg() {
   const { user, states } = useHass();
@@ -18,5 +12,12 @@ export default function ProfileImg() {
     .find((s) => s[1].attributes.user_id === userId)[1];
 
   const imageUrl = person.attributes.entity_picture;
-  return imageUrl ? <Image src={imageUrl} /> : null;
+  const name = person.attributes.friendly_name;
+  const inital = name.substring(0, 1).toUpperCase();
+
+  return (
+    <Avatar alt={name} src={imageUrl + 23}>
+      {inital}
+    </Avatar>
+  );
 }
