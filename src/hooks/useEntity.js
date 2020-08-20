@@ -47,6 +47,7 @@ export default function useEntity(entityId) {
 
   const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
   const deviceClass = stateObj.attributes.device_class;
+  const supportedFeatures = stateObj.attributes.supported_features;
 
   const state = stateObj.state;
 
@@ -91,7 +92,8 @@ export default function useEntity(entityId) {
     stateObj,
     isGroup,
     groupCount: isGroup ? children : undefined,
-    unitOfMeasurement: unitOfMeasurement,
+    unitOfMeasurement,
+    supportedFeatures,
     isToggleable,
     isExecutable,
     toggle,

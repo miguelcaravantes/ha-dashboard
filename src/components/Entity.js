@@ -73,7 +73,9 @@ export default function Entity(props) {
     setModalOpen(false);
   };
 
-  const longPressHandler = useLongPress(handleLongPress);
+  const longPressHandler = useLongPress(handleLongPress, {
+    threshold: 800,
+  });
 
   let buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
 

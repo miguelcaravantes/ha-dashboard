@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import useEntity from '../hooks/useEntity';
-import { Slider, Dialog } from '@material-ui/core';
+import { Slider, Typography } from '@material-ui/core';
 import { useHass } from '../hooks/useHass';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import styled from 'styled-components';
 import useConstant from 'use-constant';
 import { CirclePicker } from 'react-color';
+import { LIGHT_SUPPORT_COLOR, LIGHT_SUPPORT_BRIGHTNESS } from '../constants';
 import {
   red,
   pink,
@@ -48,7 +49,11 @@ const colors = ['#ffffff'].concat(
   ].flatMap((i) => [i[200], i[500], i[700]])
 );
 
-const Root = styled.div``;
+const Root = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
 
 const StyledSlider = styled(Slider)`
   color: ${({ theme }) =>
@@ -82,9 +87,14 @@ export default function LightDetail(props) {
   const { entityId } = props;
 
   const { callService } = useHass();
-  const { stateObj } = useEntity(entityId);
+  const { stateObj, supportedFeatures } = useEntity(entityId);
   const [brightness, setBrightness] = useState(
     stateObj.attributes.brightness || 0
+  );
+
+  const doesSupportColor = Boolean(supportedFeatures & LIGHT_SUPPORT_COLOR);
+  const doesSupportBrightness = Boolean(
+    supportedFeatures & LIGHT_SUPPORT_BRIGHTNESS
   );
 
   const updateBrightness = useConstant(() =>
@@ -123,23 +133,33 @@ export default function LightDetail(props) {
 
   return (
     <Root>
-      <ColorsContainer>
-        <CirclePicker
-          colors={colors}
-          circleSize={32}
-          circleSpacing={8}
-          onChange={handleColorChange}
-        />
-      </ColorsContainer>
-      <StyledSlider
-        min={0}
-        max={255}
-        step={15}
-        value={brightness}
-        valueLabelDisplay="auto"
-        // disabled={stateObj.state === 'off'}
-        onChange={handleBrightnessChange}
-      />
+      {doesSupportColor ? (
+        <>
+          <Typography variant="h6">Color:</Typography>
+          <ColorsContainer>
+            <CirclePicker
+              colors={colors}
+              circleSize={32}
+              circleSpacing={8}
+              onChange={handleColorChange}
+            />
+          </ColorsContainer>
+        </>
+      ) : null}
+      {doesSupportBrightness ? (
+        <>
+          <Typography variant="h6">Brightness:</Typography>
+          <StyledSlider
+            min={0}
+            max={255}
+            step={15}
+            value={brightness}
+            valueLabelDisplay="auto"
+            // disabled={stateObj.state === 'off'}
+            onChange={handleBrightnessChange}
+          />
+        </>
+      ) : null}
     </Root>
   );
 }

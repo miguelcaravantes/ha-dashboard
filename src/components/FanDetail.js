@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import useEntity from '../hooks/useEntity';
 import { useHass } from '../hooks/useHass';
+import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from '../constants';
 
 const Root = styled.div`
   display: flex;
@@ -32,8 +33,13 @@ const SpeedButton = ({ speed, active, ...props }) => {
 
 export default function FanDetail({ entityId }) {
   const { callService } = useHass();
-  const { stateObj } = useEntity(entityId);
+  const { stateObj, supportedFeatures } = useEntity(entityId);
   const { oscillating, speed, speed_list: speedList } = stateObj.attributes;
+
+  const doesSupportSpeed = Boolean(supportedFeatures & FAN_SUPPORT_SET_SPEED);
+  const doesSupportOscillate = Boolean(
+    supportedFeatures & FAN_SUPPORT_OSCILLATE
+  );
 
   const handleChangeOscillation = () => {
     callService('fan', 'oscillate', {
@@ -51,20 +57,27 @@ export default function FanDetail({ entityId }) {
 
   return (
     <Root>
-      <Typography variant="h6">Oscillate:</Typography>
-      <Switch checked={oscillating} onChange={handleChangeOscillation} />
-
-      <Typography variant="h6">Speed:</Typography>
-      <ButtonGroup color="primary">
-        {speedList.map((s) => (
-          <SpeedButton
-            key={s}
-            speed={s}
-            active={speed === s}
-            onClick={() => handleChangeSpeed(s)}
-          />
-        ))}
-      </ButtonGroup>
+      {doesSupportOscillate ? (
+        <>
+          <Typography variant="h6">Oscillate:</Typography>
+          <Switch checked={oscillating} onChange={handleChangeOscillation} />
+        </>
+      ) : null}
+      {doesSupportSpeed ? (
+        <>
+          <Typography variant="h6">Speed:</Typography>
+          <ButtonGroup color="primary">
+            {speedList.map((s) => (
+              <SpeedButton
+                key={s}
+                speed={s}
+                active={speed === s}
+                onClick={() => handleChangeSpeed(s)}
+              />
+            ))}
+          </ButtonGroup>
+        </>
+      ) : null}
     </Root>
   );
 }
