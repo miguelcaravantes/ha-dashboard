@@ -119,9 +119,13 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Grid item>
-                <Entity entityId="light.corridor_light" name="Light" />
-              </Grid>
+              <Entity entityId="light.corridor_light" name="Light" />
+            </Grid>
+            <Grid item>
+              <BinarySensor
+                entityId="binary_sensor.corridor_bathroom_door"
+                name="Bathroom Door"
+              />
             </Grid>
           </Grid>
         </Room>
