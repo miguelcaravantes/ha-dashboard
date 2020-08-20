@@ -4,7 +4,7 @@
   "description": "Home Assistant React Dashboard",
   "main": "index.js",
   "dependencies": {
-    "@material-ui/core": "^5.0.0-alpha.5",
+    "@material-ui/core": "^5.0.0-alpha.6",
     "@mdi/js": "^5.5.55",
     "awesome-debounce-promise": "^2.1.0",
     "css-loader": "^4.2.1",
