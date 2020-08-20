@@ -16,7 +16,7 @@ export default function ProfileImg() {
   const inital = name.substring(0, 1).toUpperCase();
 
   return (
-    <Avatar alt={name} src={imageUrl + 23}>
+    <Avatar alt={name} src={imageUrl}>
       {inital}
     </Avatar>
   );
