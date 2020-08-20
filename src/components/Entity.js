@@ -46,6 +46,7 @@ const ButtonIcon = styled(({ active, ...props }) => <Icon {...props} />)`
 const Label = styled.span`
   font-size: 1rem;
   font-family: Roboto;
+  text-align: center;
 `;
 
 const supportedDetails = ['light', 'fan'];

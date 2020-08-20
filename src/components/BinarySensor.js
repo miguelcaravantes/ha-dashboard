@@ -10,6 +10,7 @@ const Root = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  text-align: center;
 `;
 
 const SensorIcon = styled(Icon)`
