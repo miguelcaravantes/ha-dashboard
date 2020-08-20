@@ -14,6 +14,7 @@ import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 import { useHass } from '../hooks/useHass';
 import Sensor from './Sensor';
 import BinarySensor from './BinarySensor';
+import EntityIcon from './EntityIcon';
 
 const RootGrid = styled(Grid)`
   flex-grow: 1;
@@ -26,6 +27,8 @@ const Room = styled.div`
 
 const Bar = styled(Paper)`
   padding: ${({ theme }) => theme.spacing(1, 2)};
+  display: flex;
+  flex-direction: row;
 `;
 
 export default function Home() {
@@ -44,6 +47,9 @@ export default function Home() {
               <WeatherNightIcon />
             </IconButton>
           </Tooltip>
+          <Box p={1.5}>
+            <EntityIcon entityId="binary_sensor.rain" />
+          </Box>
         </Bar>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
