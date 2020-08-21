@@ -56,10 +56,12 @@ const Root = styled.div`
 `;
 
 const StyledSlider = styled(Slider)`
-  color: ${({ theme }) =>
+  /* color: ${({ theme }) =>
     theme.palette.type === 'dark'
       ? theme.palette.text.primary
-      : theme.palette.primary.light};
+      : theme.palette.primary.light}; */
+  /* workaround for issue in HA */
+  color: #ccc;
   height: 40px;
   & .MuiSlider-rail {
     height: 40px;
