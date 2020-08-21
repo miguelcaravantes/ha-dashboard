@@ -87,7 +87,6 @@ import {
   Brightness5 as Brightness5Icon,
   Brightness6 as Brightness6Icon,
   Brightness7 as Brightness7Icon,
-
 } from 'mdi-material-ui';
 
 const hassMappings = {
