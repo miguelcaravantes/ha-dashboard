@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useEntity from '../hooks/useEntity';
 import { Slider, Typography } from '@material-ui/core';
 import { useHass } from '../hooks/useHass';
@@ -89,10 +89,14 @@ export default function LightDetail(props) {
   const { entityId } = props;
 
   const { callService } = useHass();
-  const { stateObj, supportedFeatures } = useEntity(entityId);
+  const { stateObj, state, supportedFeatures } = useEntity(entityId);
   const [brightness, setBrightness] = useState(
-    stateObj.attributes.brightness || 0
+    stateObj.attributes.brightness ?? 0
   );
+
+  useEffect(() => {
+    setBrightness(stateObj.attributes.brightness ?? 0);
+  }, [state]);
 
   const doesSupportColor = Boolean(supportedFeatures & LIGHT_SUPPORT_COLOR);
   const doesSupportBrightness = Boolean(
