@@ -78,6 +78,14 @@ export default function useEntity(entityId) {
     return icon;
   }, [domain, stateObj.attributes.icon]);
 
+  const openMoreInfo = useCallback(() => {
+    const eventMoreInfo = new Event('hass-more-info');
+    eventMoreInfo.detail = { entityId };
+    window.parent.customPanel.parentNode.parentNode.offsetParent
+      .querySelector('home-assistant')
+      .dispatchEvent(eventMoreInfo);
+  }, [entityId]);
+
   icon =
     (classMapping[deviceClass] && classMapping[deviceClass][state]) ?? icon;
 
@@ -107,6 +115,7 @@ export default function useEntity(entityId) {
     actionType,
     toggle,
     execute,
+    openMoreInfo,
     icon,
   };
 }
