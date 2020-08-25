@@ -61,7 +61,11 @@ const StyledSlider = styled(Slider)`
       ? theme.palette.text.primary
       : theme.palette.primary.light}; */
   /* workaround for issue in HA */
-  color: rgba(205, 205, 205);
+
+  @media (prefers-color-scheme: dark) {
+    color: rgba(255, 255, 255);
+  }
+ /* color: rgba(205, 205, 205); */
   height: 40px;
   & .MuiSlider-rail {
     height: 40px;

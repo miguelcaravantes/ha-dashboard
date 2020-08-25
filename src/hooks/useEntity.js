@@ -32,15 +32,25 @@ const classMapping = {
   },
 };
 
+export const actionTypes = {
+  Execute: 'EXECUTE',
+  Toggle: 'TOGGLE',
+};
+const actionTypesMap = new Map([
+  ['switch', actionTypes.Toggle],
+  ['fan', actionTypes.Toggle],
+  ['light', actionTypes.Toggle],
+  ['scene', actionTypes.Execute],
+  ['script', actionTypes.Execute],
+]);
+
 export default function useEntity(entityId) {
   const { states, callService } = useHass();
 
   const stateObj = states[entityId];
   const domain = entityId.split('.')[0];
 
-  const isToggleable = ['switch', 'fan', 'light'].includes(domain);
-
-  const isExecutable = ['scene', 'script'].includes(domain);
+  const actionType = actionTypesMap.get(domain);
 
   const children = stateObj.attributes.entity_id?.length;
   const isGroup = children > 1;
@@ -72,7 +82,7 @@ export default function useEntity(entityId) {
     (classMapping[deviceClass] && classMapping[deviceClass][state]) ?? icon;
 
   const toggle = useCallback(() => {
-    if (isToggleable) {
+    if (actionType === actionTypes.Toggle) {
       callService(domain, 'toggle', {
         entity_id: entityId,
       });
@@ -94,8 +104,7 @@ export default function useEntity(entityId) {
     groupCount: isGroup ? children : undefined,
     unitOfMeasurement,
     supportedFeatures,
-    isToggleable,
-    isExecutable,
+    actionType,
     toggle,
     execute,
     icon,

@@ -80,13 +80,13 @@ export default function Entity(props) {
 
   let buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
 
-  if (isGroup) {
-    buttonIcon = (
-      <Badge badgeContent={groupCount} color="primary">
-        {buttonIcon}
-      </Badge>
-    );
-  }
+  buttonIcon = isGroup ? (
+    <Badge badgeContent={groupCount} color="primary">
+      {buttonIcon}
+    </Badge>
+  ) : (
+    buttonIcon
+  );
 
   return (
     <Root>

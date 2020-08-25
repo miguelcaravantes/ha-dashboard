@@ -7,7 +7,7 @@ import {
   DialogContent as MuiDialogContent,
 } from '@material-ui/core';
 import LightDetail from './LightDetail';
-import useEntity from '../hooks/useEntity';
+import useEntity, { actionTypes } from '../hooks/useEntity';
 import styled from 'styled-components';
 import FanDetail from './FanDetail';
 
@@ -30,7 +30,7 @@ const DialogContent = styled(MuiDialogContent)`
 
 export default function EntityDialog(props) {
   const { onClose, open, entityId } = props;
-  const { domain, name, state, toggle, isToggleable } = useEntity(entityId);
+  const { domain, name, state, toggle, actionType } = useEntity(entityId);
 
   let Detail;
   let width = 'xs';
@@ -55,7 +55,7 @@ export default function EntityDialog(props) {
     <Root maxWidth={width} onClose={handleClose} open={open}>
       <Toolbar>
         <Title variant="h6">{name}</Title>
-        {isToggleable ? (
+        {actionType === actionTypes.Toggle ? (
           <Switch
             checked={state === 'on'}
             onChange={toggle}

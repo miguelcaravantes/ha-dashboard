@@ -1,5 +1,5 @@
 import React from 'react';
-import useEntity from '../hooks/useEntity';
+import useEntity, { actionTypes } from '../hooks/useEntity';
 import {
   Button,
   ListItemSecondaryAction,
@@ -12,38 +12,32 @@ import Icon from './Icon';
 
 export default function EntityRow(props) {
   const { entityId } = props;
-  const {
-    state,
-    name,
-    isToggleable,
-    isExecutable,
-    toggle,
-    execute,
-    icon,
-  } = useEntity(entityId);
+  const { state, name, actionType, toggle, execute, icon } = useEntity(
+    entityId
+  );
 
-  const handleToggle = () => toggle();
-  const handleExecute = () => execute();
+  const actionMap = new Map([
+    [
+      actionTypes.Toggle,
+      () => (
+        <ListItemSecondaryAction>
+          <Switch edge="end" onChange={toggle} checked={state === 'on'} />
+        </ListItemSecondaryAction>
+      ),
+    ],
+    [actionTypes.Execute, () => <Button onClick={execute}>Execute</Button>],
+    [undefined, () => <span>{state}</span>],
+  ]);
 
-  let action;
-  if (isToggleable) {
-    action = (
-      <ListItemSecondaryAction>
-        <Switch edge="end" onChange={handleToggle} checked={state === 'on'} />
-      </ListItemSecondaryAction>
-    );
-  } else if (isExecutable) {
-    action = <Button onClick={handleExecute}>Execute</Button>;
-  } else {
-    action = <span>{state}</span>;
-  }
+  const Action = actionMap.get(actionType);
+
   return (
     <ListItem>
       <ListItemIcon>
         <Icon icon={icon} />
       </ListItemIcon>
       <ListItemText primary={name} />
-      {action}
+      <Action />
     </ListItem>
   );
 }
