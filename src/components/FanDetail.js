@@ -1,12 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  ButtonGroup,
-  Button,
-  Switch,
-  FormControlLabel,
-  Typography,
-} from '@material-ui/core';
+import { ButtonGroup, Button, Switch, Typography } from '@material-ui/core';
 import useEntity from '../hooks/useEntity';
 import { useHass } from '../hooks/useHass';
 import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from '../constants';
