@@ -76,7 +76,7 @@ export default function useEntity(entityId) {
     icon = stateObj.attributes.icon || icon;
 
     return icon;
-  }, [domain, stateObj.attributes.icon]);
+  }, [domain, isGroup, stateObj.attributes.icon]);
 
   const openMoreInfo = useCallback(() => {
     const eventMoreInfo = new Event('hass-more-info');
@@ -95,13 +95,13 @@ export default function useEntity(entityId) {
         entity_id: entityId,
       });
     }
-  }, [entityId]);
+  }, [actionType, callService, domain, entityId]);
 
   const execute = useCallback(() => {
     callService(domain, 'turn_on', {
       entity_id: entityId,
     });
-  }, [entityId]);
+  }, [callService, domain, entityId]);
 
   return {
     domain,

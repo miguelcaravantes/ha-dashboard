@@ -94,6 +94,8 @@ export default function LightDetail(props) {
 
   useEffect(() => {
     setBrightness(stateObj.attributes.brightness ?? 0);
+    // disabled since it comes from outside react
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   const doesSupportColor = Boolean(supportedFeatures & LIGHT_SUPPORT_COLOR);
