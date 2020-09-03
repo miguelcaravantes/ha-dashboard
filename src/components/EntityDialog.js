@@ -17,7 +17,6 @@ const Root = styled(Dialog)`
   backdrop-filter: blur(5px);
   & .MuiDialog-paper {
     width: 80%;
-    /* padding: ${({ theme }) => theme.spacing(2)}; */
   }
 `;
 
@@ -30,33 +29,25 @@ const DialogContent = styled(MuiDialogContent)`
   padding: ${({ theme }) => theme.spacing(2)};
 `;
 
+const domainDetailMap = {
+  light: LightDetail,
+  fan: FanDetail,
+};
+
 export default function EntityDialog(props) {
   const { onClose, open, entityId } = props;
   const { domain, name, state, toggle, openMoreInfo, actionType } = useEntity(
     entityId
   );
 
-  let Detail;
-  let width = 'xs';
-  switch (domain) {
-    case 'light':
-      Detail = LightDetail;
-      width = 'xs';
-      break;
-    case 'fan':
-      Detail = FanDetail;
-      width = 'xs';
-      break;
-    default:
-      Detail = null;
-  }
+  const Detail = domainDetailMap[domain];
 
   const handleClose = () => {
     onClose && onClose();
   };
 
   return (
-    <Root maxWidth={width} onClose={handleClose} open={open}>
+    <Root maxWidth="xs" onClose={handleClose} open={open}>
       <Toolbar>
         <Title variant="h6">{name}</Title>
         <IconButton onClick={openMoreInfo}>
