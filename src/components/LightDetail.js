@@ -137,7 +137,7 @@ export default function LightDetail(props) {
 
   return (
     <Root>
-      {doesSupportColor ? (
+      {doesSupportColor && (
         <>
           <Typography variant="h6">Color:</Typography>
           <ColorsContainer>
@@ -149,8 +149,8 @@ export default function LightDetail(props) {
             />
           </ColorsContainer>
         </>
-      ) : null}
-      {doesSupportBrightness ? (
+      )}
+      {doesSupportBrightness && (
         <>
           <Typography variant="h6">Brightness:</Typography>
           <StyledSlider
@@ -159,11 +159,10 @@ export default function LightDetail(props) {
             step={15}
             value={brightness}
             valueLabelDisplay="auto"
-            // disabled={stateObj.state === 'off'}
             onChange={handleBrightnessChange}
           />
         </>
-      ) : null}
+      )}
     </Root>
   );
 }

@@ -51,13 +51,13 @@ export default function FanDetail({ entityId }) {
 
   return (
     <Root>
-      {doesSupportOscillate ? (
+      {doesSupportOscillate && (
         <>
           <Typography variant="h6">Oscillate:</Typography>
           <Switch checked={oscillating} onChange={handleChangeOscillation} />
         </>
-      ) : null}
-      {doesSupportSpeed ? (
+      )}
+      {doesSupportSpeed && (
         <>
           <Typography variant="h6">Speed:</Typography>
           <ButtonGroup color="primary">
@@ -71,7 +71,7 @@ export default function FanDetail({ entityId }) {
             ))}
           </ButtonGroup>
         </>
-      ) : null}
+      )}
     </Root>
   );
 }
