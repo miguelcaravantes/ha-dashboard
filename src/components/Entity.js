@@ -60,6 +60,7 @@ export default function Entity(props) {
     isGroup,
     groupCount,
     toggle,
+    openMoreInfo,
     icon,
   } = useEntity(entityId);
 
@@ -68,7 +69,7 @@ export default function Entity(props) {
   const name = overrideName ?? entityName;
 
   const handleLongPress = () => {
-    supportedDetails.includes(domain) && setModalOpen(true);
+    supportedDetails.includes(domain) ? setModalOpen(true) : openMoreInfo();
   };
   const handleModelClose = () => {
     setModalOpen(false);
