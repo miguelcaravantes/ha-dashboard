@@ -80,6 +80,11 @@ import {
   Bluetooth as BluetoothIcon,
   Harddisk as HarddiskIcon,
   Alarm as AlarmIcon,
+  Vibrate as VibrateIcon,
+  DoNotDisturb as DoNotDisturbIcon,
+  Leak as LeakIcon,
+  Sim as SimIcon,
+  VolumeOff as VolumeOffIcon,
   Brightness1 as Brightness1Icon,
   Brightness2 as Brightness2Icon,
   Brightness3 as Brightness3Icon,
@@ -87,6 +92,8 @@ import {
   Brightness5 as Brightness5Icon,
   Brightness6 as Brightness6Icon,
   Brightness7 as Brightness7Icon,
+  Vibrate,
+  DoNotDisturb,
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -171,6 +178,11 @@ const hassMappings = {
   'mdi:bluetooth': BluetoothIcon,
   'mdi:alarm': AlarmIcon,
   'mdi:harddisk': HarddiskIcon,
+  'mdi:vibrate': VibrateIcon,
+  'mdi:do-not-disturb': DoNotDisturbIcon,
+  'mdi:leak': LeakIcon,
+  'mdi:sim': SimIcon,
+  'mdi:volume-off': VolumeOffIcon,
   'mdi:brightness-1': Brightness1Icon,
   'mdi:brightness-2': Brightness2Icon,
   'mdi:brightness-3': Brightness3Icon,
