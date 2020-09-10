@@ -11,7 +11,7 @@ import {
 import styled from 'styled-components';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
-import { useHass } from '../hooks/useHass';
+import { useHass } from '../common/hooks/useHass';
 import Sensor from './Sensor';
 import BinarySensor from './BinarySensor';
 import EntityIcon from './EntityIcon';

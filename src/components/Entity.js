@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useEntity from '../hooks/useEntity';
+import useEntity from '../common/hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
 import styled, { keyframes, css } from 'styled-components';
 import Icon from './Icon';

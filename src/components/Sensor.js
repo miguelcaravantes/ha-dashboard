@@ -1,5 +1,5 @@
 import React from 'react';
-import useEntity from '../hooks/useEntity';
+import useEntity from '../common/hooks/useEntity';
 import styled from 'styled-components';
 import Icon from './Icon';
 

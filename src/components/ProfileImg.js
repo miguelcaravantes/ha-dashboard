@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHass } from '../hooks/useHass';
+import { useHass } from '../common/hooks/useHass';
 import { Avatar } from '@material-ui/core';
 
 const isPerson = ([s]) => s.startsWith('person.');

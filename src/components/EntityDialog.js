@@ -8,7 +8,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 import LightDetail from './LightDetail';
-import useEntity, { actionTypes } from '../hooks/useEntity';
+import useEntity, { actionTypes } from '../common/hooks/useEntity';
 import styled from 'styled-components';
 import FanDetail from './FanDetail';
 import { Tune as TuneIcon } from 'mdi-material-ui';

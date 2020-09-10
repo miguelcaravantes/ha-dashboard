@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Paper } from '@material-ui/core';
 
-import { useHass } from '../hooks/useHass';
+import { useHass } from '../common/hooks/useHass';
 import EntityRow from './EntityRow';
 import styled from 'styled-components';
 

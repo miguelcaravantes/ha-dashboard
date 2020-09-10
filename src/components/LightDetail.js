@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import useEntity from '../hooks/useEntity';
+import useEntity from '../common/hooks/useEntity';
 import { Slider, Typography } from '@material-ui/core';
-import { useHass } from '../hooks/useHass';
+import { useHass } from '../common/hooks/useHass';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import styled from 'styled-components';
 import useConstant from 'use-constant';

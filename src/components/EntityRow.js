@@ -1,5 +1,5 @@
 import React from 'react';
-import useEntity, { actionTypes } from '../hooks/useEntity';
+import useEntity, { actionTypes } from '../common/hooks/useEntity';
 import {
   Button,
   ListItemSecondaryAction,
