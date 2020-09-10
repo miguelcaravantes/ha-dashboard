@@ -1,7 +1,8 @@
 import { useHass } from './useHass';
 import { useCallback, useMemo } from 'react';
+
 const domainMapping = {
-  light: 'mdi:lightbulb',
+  light: { default: 'mdi:lightbulb', group: 'mdi:lightbulb-group' },
   switch: 'mdi:power-socket-us',
   media_player: 'mdi:cast',
   scene: 'mdi:palette',
@@ -36,6 +37,7 @@ export const actionTypes = {
   Execute: 'EXECUTE',
   Toggle: 'TOGGLE',
 };
+
 const actionTypesMap = new Map([
   ['switch', actionTypes.Toggle],
   ['fan', actionTypes.Toggle],
@@ -43,6 +45,29 @@ const actionTypesMap = new Map([
   ['scene', actionTypes.Execute],
   ['script', actionTypes.Execute],
 ]);
+
+const getIcon = (domain, isGroup, state, stateIcon, deviceClass) => {
+  let icon;
+  const domainIcon = domainMapping[domain];
+  icon =
+    typeof domainIcon === 'object'
+      ? domainIcon[isGroup ? 'group' : 'default']
+      : domainIcon;
+
+  return (
+    stateIcon ??
+    (classMapping[deviceClass] && classMapping[deviceClass][state]) ??
+    icon
+  );
+};
+
+const openMoreInfo = () => {
+  const eventMoreInfo = new Event('hass-more-info');
+  eventMoreInfo.detail = { entityId };
+  window.parent.customPanel.parentNode.parentNode.offsetParent
+    .querySelector('home-assistant')
+    .dispatchEvent(eventMoreInfo);
+};
 
 export default function useEntity(entityId) {
   const { states, callService } = useHass();
@@ -60,34 +85,16 @@ export default function useEntity(entityId) {
   const supportedFeatures = stateObj.attributes.supported_features;
 
   const state = stateObj.state;
+  const stateIcon = stateObj.attributes.icon;
 
-  let icon = useMemo(() => {
-    let icon = '';
+  let icon = useMemo(
+    () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
+    [domain, isGroup, state, stateIcon, deviceClass]
+  );
 
-    const domainIcon = domainMapping[domain];
-    if (domainIcon) {
-      if (domain === 'light' && isGroup) {
-        icon = 'mdi:lightbulb-group';
-      } else {
-        icon = domainIcon;
-      }
-    }
-
-    icon = stateObj.attributes.icon || icon;
-
-    return icon;
-  }, [domain, isGroup, stateObj.attributes.icon]);
-
-  const openMoreInfo = useCallback(() => {
-    const eventMoreInfo = new Event('hass-more-info');
-    eventMoreInfo.detail = { entityId };
-    window.parent.customPanel.parentNode.parentNode.offsetParent
-      .querySelector('home-assistant')
-      .dispatchEvent(eventMoreInfo);
-  }, [entityId]);
-
-  icon =
-    (classMapping[deviceClass] && classMapping[deviceClass][state]) ?? icon;
+  const handleOpenMoreInfo = useCallback(() => openMoreInfo(entityId), [
+    entityId,
+  ]);
 
   const toggle = useCallback(() => {
     if (actionType === actionTypes.Toggle) {
@@ -115,7 +122,7 @@ export default function useEntity(entityId) {
     actionType,
     toggle,
     execute,
-    openMoreInfo,
+    openMoreInfo: handleOpenMoreInfo,
     icon,
   };
 }

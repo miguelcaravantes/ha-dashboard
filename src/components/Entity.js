@@ -68,12 +68,10 @@ export default function Entity(props) {
 
   const name = overrideName ?? entityName;
 
-  const handleLongPress = () => {
+  const handleLongPress = () =>
     supportedDetails.includes(domain) ? setModalOpen(true) : openMoreInfo();
-  };
-  const handleModelClose = () => {
-    setModalOpen(false);
-  };
+
+  const handleModelClose = () => setModalOpen(false);
 
   const longPressHandler = useLongPress(handleLongPress, {
     threshold: 800,
