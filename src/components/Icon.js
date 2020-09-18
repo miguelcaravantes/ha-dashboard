@@ -48,6 +48,10 @@ import {
   BatteryChargingWireless70 as BatteryChargingWireless70Icon,
   BatteryChargingWireless80 as BatteryChargingWireless80Icon,
   BatteryChargingWireless90 as BatteryChargingWireless90Icon,
+  BatteryHeartVariant as BatteryHeartVariantIcon,
+  BatteryMinus as BatteryMinusIcon,
+  PowerPlugOff as PowerPlugOffIcon,
+  TimerOutline as TimerOutlineIcon,
   Map as MapIcon,
   WifiStrengthOff as WifiStrengthOffIcon,
   WifiStrength4 as WifiStrength4Icon,
@@ -92,8 +96,6 @@ import {
   Brightness5 as Brightness5Icon,
   Brightness6 as Brightness6Icon,
   Brightness7 as Brightness7Icon,
-  Vibrate,
-  DoNotDisturb,
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -129,6 +131,10 @@ const hassMappings = {
   'mdi:battery-charging-wireless-70': BatteryChargingWireless70Icon,
   'mdi:battery-charging-wireless-80': BatteryChargingWireless80Icon,
   'mdi:battery-charging-wireless-90': BatteryChargingWireless90Icon,
+  'mdi:battery-heart-variant': BatteryHeartVariantIcon,
+  'mdi:battery-minus': BatteryMinusIcon,
+  'mdi:power-plug-off': PowerPlugOffIcon,
+  'mdi:timer-outline': TimerOutlineIcon,
   'mdi:map': MapIcon,
   'mdi:wifi-strength-off': WifiStrengthOffIcon,
   'mdi:wifi-strength-1': WifiStrength1Icon,
@@ -195,7 +201,7 @@ const hassMappings = {
 export default function Icon({ icon, ...props }) {
   const Icon = hassMappings[icon] || GoogleDownasaurIcon;
   if (!hassMappings[icon] && icon?.startsWith('mdi:')) {
-    alert(`Icon not found "${icon}"`);
+    console.log(`Icon not found "${icon}"`);
   }
   return <Icon {...props} />;
 }
