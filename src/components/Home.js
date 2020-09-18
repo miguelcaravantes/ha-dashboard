@@ -8,7 +8,7 @@ import {
   Tooltip,
   Grid,
 } from '@material-ui/core';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 import { WeatherNight as WeatherNightIcon } from 'mdi-material-ui';
 import { useHass } from '../common/hooks/useHass';

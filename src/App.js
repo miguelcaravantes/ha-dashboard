@@ -1,7 +1,7 @@
 import React from 'react';
 import Panel from './components/Panel';
 import { HassContext } from './common/HassContext';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'emotion-theming';
 import {
   createMuiTheme,
   ThemeProvider as MuiThemeProvider,

@@ -1,6 +1,6 @@
 import React from 'react';
 import useEntity from '../common/hooks/useEntity';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import Icon from './Icon';
 
 const Root = styled.div`

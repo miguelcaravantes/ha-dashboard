@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import useEntity from '../common/hooks/useEntity';
 import { ButtonBase, Badge } from '@material-ui/core';
-import styled, { keyframes, css } from 'styled-components';
+import styled from '@emotion/styled';
+import { keyframes, css } from '@emotion/core';
 import Icon from './Icon';
 import { useLongPress } from 'use-long-press';
 import EntityDialog from './EntityDialog';

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { ButtonGroup, Button, Switch, Typography } from '@material-ui/core';
 import useEntity from '../common/hooks/useEntity';
 import { useHass } from '../common/hooks/useHass';

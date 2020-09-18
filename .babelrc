@@ -1,5 +1,10 @@
 {
-    "plugins": [
-        "babel-plugin-styled-components"
-    ]
-}
+    "env": {
+      "production": {
+        "plugins": ["emotion"]
+      },
+      "development": {
+        "plugins": [["emotion", { "sourceMap": true }]]
+      }
+    }
+  }

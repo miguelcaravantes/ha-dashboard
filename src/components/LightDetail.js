@@ -3,7 +3,7 @@ import useEntity from '../common/hooks/useEntity';
 import { Slider, Typography } from '@material-ui/core';
 import { useHass } from '../common/hooks/useHass';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import useConstant from 'use-constant';
 import { CirclePicker } from 'react-color';
 import { LIGHT_SUPPORT_COLOR, LIGHT_SUPPORT_BRIGHTNESS } from '../constants';

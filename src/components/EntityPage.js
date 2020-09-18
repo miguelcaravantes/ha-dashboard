@@ -3,7 +3,7 @@ import { List, Paper } from '@material-ui/core';
 
 import { useHass } from '../common/hooks/useHass';
 import EntityRow from './EntityRow';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Root = styled(Paper)`
   width: 100%;

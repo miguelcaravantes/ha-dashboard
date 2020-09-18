@@ -1,7 +1,7 @@
 import React from 'react';
 import useEntity from '../common/hooks/useEntity';
 import Icon from './Icon';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const Root = styled.div`
   height: ${({ theme }) => theme.spacing(12)};
