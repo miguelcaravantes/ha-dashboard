@@ -61,7 +61,7 @@ const getIcon = (domain, isGroup, state, stateIcon, deviceClass) => {
   );
 };
 
-const openMoreInfo = () => {
+const openMoreInfo = (entityId) => {
   const eventMoreInfo = new Event('hass-more-info');
   eventMoreInfo.detail = { entityId };
   window.parent.customPanel.parentNode.parentNode.offsetParent
