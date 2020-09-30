@@ -13,7 +13,7 @@ const prefersDarkMode = true; //useMediaQuery('(prefers-color-scheme: dark)');
 const theme = createMuiTheme({
   spacing: (factor) => `${factor * 8}px`,
   palette: {
-    type: prefersDarkMode ? 'dark' : 'light',
+    mode: prefersDarkMode ? 'dark' : 'light',
     primary: {
       main: lightBlue[300],
     },
