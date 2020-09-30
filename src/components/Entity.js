@@ -52,6 +52,18 @@ const Label = styled.span`
 
 const supportedDetails = ['light', 'fan'];
 
+const ButtonWrapper = ({ state, icon, isGroup, groupCount }) => {
+  const buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
+
+  return isGroup ? (
+    <Badge badgeContent={groupCount} color="primary">
+      {buttonIcon}
+    </Badge>
+  ) : (
+    buttonIcon
+  );
+};
+
 export default function Entity(props) {
   const { entityId, name: overrideName } = props;
   const {
@@ -78,29 +90,22 @@ export default function Entity(props) {
     threshold: 800,
   });
 
-  let buttonIcon = <ButtonIcon icon={icon} active={state === 'on'} />;
-
-  buttonIcon = isGroup ? (
-    <Badge badgeContent={groupCount} color="primary">
-      {buttonIcon}
-    </Badge>
-  ) : (
-    buttonIcon
-  );
-
   return (
     <Root>
       <EntityButton focusRipple onClick={toggle} {...longPressHandler}>
-        {buttonIcon}
+        <ButtonWrapper
+          state={state}
+          icon={icon}
+          isGroup={isGroup}
+          groupCount={groupCount}
+        />
         <Label>{name}</Label>
       </EntityButton>
-      {modalOpen ? (
-        <EntityDialog
-          entityId={entityId}
-          open={modalOpen}
-          onClose={handleModelClose}
-        />
-      ) : null}
+      <EntityDialog
+        entityId={entityId}
+        open={modalOpen}
+        onClose={handleModelClose}
+      />
     </Root>
   );
 }
