@@ -7,11 +7,12 @@ import {
   DialogContent as MuiDialogContent,
   IconButton,
 } from '@material-ui/core';
-import LightDetail from './LightDetail';
+
 import useEntity, { actionTypes } from '../common/hooks/useEntity';
 import styled from '@emotion/styled';
 import FanDetail from './FanDetail';
 import { Tune as TuneIcon } from 'mdi-material-ui';
+import LightDetail from './LightDetail/LightDetail';
 
 const Root = styled(Dialog)`
   backdrop-filter: blur(5px);
@@ -48,6 +49,7 @@ export default function EntityDialog(props) {
 
   return (
     <Root maxWidth="xs" onClose={handleClose} open={open}>
+      open &&
       <Toolbar>
         <Title variant="h6">{name}</Title>
         <IconButton onClick={openMoreInfo}>
