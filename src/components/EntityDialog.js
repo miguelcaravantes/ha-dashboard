@@ -35,7 +35,7 @@ const domainDetailMap = {
   fan: FanDetail,
 };
 
-const DialogToolbar = (title, onMoreClick, showToggle, state, onToggle) => (
+const DialogToolbar = ({ title, onMoreClick, showToggle, state, onToggle }) => (
   <Toolbar>
     <Title variant="h6">{title}</Title>
     <IconButton onClick={onMoreClick}>
@@ -69,13 +69,15 @@ export default function EntityDialog(props) {
       <DialogToolbar
         showToggle={actionType === actionTypes.Toggle}
         onMoreClick={openMoreInfo}
+        title={name}
         state={state}
         onChange={toggle}
       />
-      open &&
-      <DialogContent>
-        <Detail entityId={entityId} />
-      </DialogContent>
+      {open && (
+        <DialogContent>
+          <Detail entityId={entityId} />
+        </DialogContent>
+      )}
     </Root>
   );
 }
