@@ -35,6 +35,23 @@ const domainDetailMap = {
   fan: FanDetail,
 };
 
+const DialogToolbar = (title, onMoreClick, showToggle, state, onToggle) => (
+  <Toolbar>
+    <Title variant="h6">{title}</Title>
+    <IconButton onClick={onMoreClick}>
+      <TuneIcon />
+    </IconButton>
+    {showToggle && (
+      <Switch
+        checked={state === 'on'}
+        onChange={onToggle}
+        color="primary"
+        name="toggle"
+      />
+    )}
+  </Toolbar>
+);
+
 export default function EntityDialog(props) {
   const { onClose, open, entityId } = props;
   const { domain, name, state, toggle, openMoreInfo, actionType } = useEntity(
@@ -49,21 +66,13 @@ export default function EntityDialog(props) {
 
   return (
     <Root maxWidth="xs" onClose={handleClose} open={open}>
+      <DialogToolbar
+        showToggle={actionType === actionTypes.Toggle}
+        onMoreClick={openMoreInfo}
+        state={state}
+        onChange={toggle}
+      />
       open &&
-      <Toolbar>
-        <Title variant="h6">{name}</Title>
-        <IconButton onClick={openMoreInfo}>
-          <TuneIcon />
-        </IconButton>
-        {actionType === actionTypes.Toggle ? (
-          <Switch
-            checked={state === 'on'}
-            onChange={toggle}
-            color="primary"
-            name="toggle"
-          />
-        ) : null}
-      </Toolbar>
       <DialogContent>
         <Detail entityId={entityId} />
       </DialogContent>
