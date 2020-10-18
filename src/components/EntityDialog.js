@@ -42,12 +42,7 @@ const DialogToolbar = ({ title, onMoreClick, showToggle, state, onToggle }) => (
       <TuneIcon />
     </IconButton>
     {showToggle && (
-      <Switch
-        checked={state === 'on'}
-        onChange={onToggle}
-        color="primary"
-        name="toggle"
-      />
+      <Switch checked={state === 'on'} onChange={onToggle} color="primary" />
     )}
   </Toolbar>
 );
@@ -71,7 +66,7 @@ export default function EntityDialog(props) {
         onMoreClick={openMoreInfo}
         title={name}
         state={state}
-        onChange={toggle}
+        onToggle={toggle}
       />
       {open && (
         <DialogContent>

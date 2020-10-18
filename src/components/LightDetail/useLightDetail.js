@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import useConstant from 'use-constant';
-import useEntity from '../common/hooks/useEntity';
-import { useHass } from '../common/hooks/useHass';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
+import { LIGHT_SUPPORT_COLOR, LIGHT_SUPPORT_BRIGHTNESS } from '../../constants';
+import useEntity from '../../common/hooks/useEntity';
+import { useHass } from '../../common/hooks/useHass';
 
-import { LIGHT_SUPPORT_COLOR, LIGHT_SUPPORT_BRIGHTNESS } from '../constants';
-const useLightDetail = ({ entityId }) => {
+const useLightDetail = (entityId) => {
   const { callService } = useHass();
   const { stateObj, state, supportedFeatures } = useEntity(entityId);
   const [brightness, setBrightness] = useState(

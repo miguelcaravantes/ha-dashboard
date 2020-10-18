@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import LightBrightness from './LightBrightness';
 import LightColor from './LightColor';
+import useLightDetail from './useLightDetail';
 
 const Root = styled.div`
   display: flex;
