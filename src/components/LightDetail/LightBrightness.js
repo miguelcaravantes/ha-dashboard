@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 const StyledSlider = styled(Slider)`
   color: ${({ theme }) =>
-    theme.palette.type === 'dark'
+    theme.palette.mode === 'dark'
       ? theme.palette.text.primary
       : theme.palette.primary.light};
   height: 40px;
