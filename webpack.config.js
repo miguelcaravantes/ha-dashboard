@@ -1,10 +1,4 @@
-const webpack = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
-
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
-
-var config = {
+module.exports = {
   module: {
     rules: [
       {
@@ -34,27 +28,8 @@ var config = {
       },
     ],
   },
-
-  optimization: {
-    minimizer: [new TerserPlugin()],
-  },
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
   },
-  plugins: [
-    // new BundleAnalyzerPlugin(),
-  ],
-  devServer: {
-    disableHostCheck: true,
-    liveReload: false,
-  },
-};
-
-module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    config.devtool = 'inline-source-maps';
-  }
-
-  return config;
 };
