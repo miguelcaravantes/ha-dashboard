@@ -160,6 +160,9 @@ export default function Home() {
             <Grid item>
               <Entity entityId="light.living_room_lights" name="Lights" />
             </Grid>
+            <Grid item>
+              <Entity entityId="switch.christmas_tree" name="Tree" />
+            </Grid>
           </Grid>
         </Room>
       </Grid>
