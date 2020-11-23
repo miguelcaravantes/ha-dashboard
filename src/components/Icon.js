@@ -96,6 +96,7 @@ import {
   Brightness5 as Brightness5Icon,
   Brightness6 as Brightness6Icon,
   Brightness7 as Brightness7Icon,
+  PineTree as PineTreeIcon,
 } from 'mdi-material-ui';
 
 const hassMappings = {
@@ -196,6 +197,7 @@ const hassMappings = {
   'mdi:brightness-5': Brightness5Icon,
   'mdi:brightness-6': Brightness6Icon,
   'mdi:brightness-7': Brightness7Icon,
+  'mdi:pine-tree': PineTreeIcon,
 };
 
 export default function Icon({ icon, ...props }) {
