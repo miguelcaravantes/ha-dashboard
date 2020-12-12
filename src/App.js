@@ -1,5 +1,5 @@
 import React from 'react';
-import Panel from './components/Panel';
+import Panel from './features/Panel';
 import { HassContext } from './common/HassContext';
 import { ThemeProvider } from '@emotion/react';
 import {
