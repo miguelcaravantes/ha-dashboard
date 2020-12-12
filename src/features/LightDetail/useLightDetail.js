@@ -31,11 +31,12 @@ const useLightDetail = (entityId) => {
       });
     }, 100)
   );
-  const updateColor = useConstant(() =>
+  const handleColorChange = useConstant(() =>
     AwesomeDebouncePromise(async (color) => {
+      console.log(color);
       const data = {
         entity_id: entityId,
-        rgb_color: [color.r, color.g, color.b],
+        rgb_color: color,
       };
       if (stateObj.state === 'off') {
         data.brightness = 255;
@@ -46,14 +47,12 @@ const useLightDetail = (entityId) => {
     }, 100)
   );
 
-  const handleBrightnessChange = async (_, newValue) => {
+  const handleBrightnessChange = async (newValue) => {
     if (newValue !== brightness) {
       setBrightness(newValue);
       await updateBrightness(newValue);
     }
   };
-
-  const handleColorChange = async (color) => await updateColor(color.rgb);
 
   return {
     doesSupportColor,

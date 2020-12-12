@@ -1,7 +1,7 @@
 import React from 'react';
-import { CirclePicker } from 'react-color';
 import { Typography } from '@material-ui/core';
 import styled from '@emotion/styled';
+import hexRgb from 'hex-rgb';
 
 import {
   red,
@@ -22,6 +22,7 @@ import {
   deepOrange,
   brown,
 } from '@material-ui/core/colors';
+import { compose } from '../../common/composition';
 
 const colors = ['#ffffff'].concat(
   [
@@ -45,26 +46,42 @@ const colors = ['#ffffff'].concat(
   ].flatMap((i) => [i[200], i[500], i[700]])
 );
 
-const ColorsContainer = styled.div`
-  & .circle-picker {
-    width: 100% !important;
-    justify-content: center;
-    margin: ${({ theme }) => theme.spacing(2)} !important;
-  }
-`;
-
-const LightColor = ({ onChange }) => (
-  <>
-    <Typography variant="h6">Color:</Typography>
-    <ColorsContainer>
-      <CirclePicker
-        colors={colors}
-        circleSize={32}
-        circleSpacing={8}
-        onChange={onChange}
-      />
-    </ColorsContainer>
-  </>
+const ColorsContainer = styled.div(
+  ({ theme }) => `
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${theme.spacing(1)};
+	padding: ${theme.spacing(1)};
+`
 );
+
+const ColorButton = styled.button(
+  ({ color, theme }) => `
+  background: ${color};
+  border: none;
+  border-radius: 100%;
+  height: ${theme.spacing(4)};
+  width: ${theme.spacing(4)};
+  outline: none;
+`
+);
+
+const removeAlpha = (rgba) => rgba.slice(0, 3);
+const hexToRgb = (hex) => hexRgb(hex, { format: 'array' });
+
+const LightColor = ({ onChange }) => {
+  const handelColorClick = (hexColor) =>
+    compose(onChange, removeAlpha, hexToRgb)(hexColor);
+  return (
+    <>
+      <Typography variant="h6">Color:</Typography>
+      <ColorsContainer>
+        {colors.map((c) => (
+          <ColorButton key={c} color={c} onClick={() => handelColorClick(c)} />
+        ))}
+      </ColorsContainer>
+    </>
+  );
+};
 
 export default LightColor;
