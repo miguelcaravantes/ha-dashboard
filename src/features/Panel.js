@@ -42,7 +42,7 @@ const Menu = styled(IconButton)`
 
 function TabPanel(props) {
   const { children, value, index } = props;
-  return value === index && <Box p={3}>{children}</Box>;
+  return value === index && <Box sx={{ p: 3 }}>{children}</Box>;
 }
 
 export default function Panel() {
@@ -50,7 +50,7 @@ export default function Panel() {
   const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
