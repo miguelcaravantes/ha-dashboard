@@ -19,9 +19,11 @@ import HeartIcon from 'mdi-material-ui/Heart';
 import EntityPage from './EntityPage';
 import Home from './Home';
 import ProfileImg from './ProfileImg';
+import CardDashboard from './CardDashboard';
 
 const Container = styled.div`
   width: 100%;
+  color: ${({ theme }) => theme.palette.text.primary};
   background: ${({ theme }) => theme.palette.background.default};
 `;
 
@@ -48,7 +50,7 @@ function TabPanel(props) {
 export default function Panel() {
   const theme = useTheme();
   const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(2);
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -93,7 +95,7 @@ export default function Panel() {
           <EntityPage />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          Item
+          <CardDashboard />
         </TabPanel>
       </div>
     </Container>

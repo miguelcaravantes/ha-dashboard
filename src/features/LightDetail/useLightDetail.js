@@ -33,7 +33,6 @@ const useLightDetail = (entityId) => {
   );
   const handleColorChange = useConstant(() =>
     AwesomeDebouncePromise(async (color) => {
-      console.log(color);
       const data = {
         entity_id: entityId,
         rgb_color: color,
