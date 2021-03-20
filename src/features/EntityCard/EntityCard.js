@@ -64,7 +64,8 @@ const EntityCard = ({ entityId, color: colorProp }) => {
         background-color: ${state === 'off' ? grey[900] : color[500]};
         border-radius: 10px;
         height: ${theme.spacing(12)};
-        width: ${theme.spacing(18)};
+        width: 100%;
+        max-width: ${theme.spacing(25)};
         display: flex;
         flex-direction: column;
         padding: ${theme.spacing(1.5)};
