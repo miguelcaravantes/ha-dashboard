@@ -17,7 +17,6 @@ import MenuIcon from 'mdi-material-ui/Menu';
 import HeartIcon from 'mdi-material-ui/Heart';
 
 import EntityPage from './EntityPage';
-import Home from './Home';
 import ProfileImg from './ProfileImg';
 import CardDashboard from './CardDashboard';
 
