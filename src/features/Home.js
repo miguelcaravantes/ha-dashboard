@@ -59,7 +59,7 @@ export default function Home() {
           </Box>
           <Grid container spacing={2} justifyContent="center">
             <Grid item>
-              <Entity entityId="light.bedroom_lights" name="Lights" />
+              <Entity entityId="light.bedroom_main_light" name="Light" />
             </Grid>
             <Grid item>
               <Entity entityId="fan.bedroom_fan" name="Fan" />

@@ -18,7 +18,7 @@ export default function CardDashboard() {
         <Typography variant="h6">Bedroom</Typography>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="light.bedroom_lights" />
+            <EntityCard entityId="light.bedroom_main_light" />
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="fan.bedroom_fan" />
@@ -34,6 +34,14 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="binary_sensor.bedroom_window" />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <Typography variant="h6">Dressing Room</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="light.dressing_room_light" />
           </Grid>
         </Grid>
       </Grid>
@@ -103,6 +111,9 @@ export default function CardDashboard() {
       <Grid item xs={12} sm={6} lg={4} xl={3}>
         <Typography variant="h6">Backyard</Typography>
         <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="light.backyard_light" />
+          </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="binary_sensor.backyard_door_1" />
           </Grid>
