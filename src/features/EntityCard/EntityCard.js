@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { css, keyframes } from '@emotion/react';
 import {
   red,
@@ -16,6 +16,7 @@ import useEntity from '../../common/hooks/useEntity';
 import PowerSwitch from './PowerSwitch';
 import { FAN, LIGHT, SENSOR, SWITCH } from '../../common/domains';
 import SensorDisplay from './SensorDisplay';
+import EntityDialog from '../EntityDialog';
 
 const rotate = keyframes`
   from {
@@ -48,15 +49,28 @@ const randomColors = [
   deepOrange,
 ];
 
+const detailSupported = ['light', 'fan'];
 const EntityCard = ({ entityId, color: colorProp }) => {
   const entity = useEntity(entityId);
   const { state, name, domain, icon, openMoreInfo } = entity;
+  const [modalOpen, setModalOpen] = useState(false);
   const color = useMemo(
     () =>
       (entityId && colorProp) ??
       randomColors[Math.floor(Math.random() * randomColors.length)],
     [entityId, colorProp]
   );
+
+  const handleIconClick = useCallback(
+    () =>
+      detailSupported.includes(domain) ? setModalOpen(true) : openMoreInfo(),
+    [domain, openMoreInfo]
+  );
+
+  const handleModelClose = useCallback(() => setModalOpen(false), [
+    setModalOpen,
+  ]);
+
   const Action = actions[domain];
   return (
     <div
@@ -78,7 +92,7 @@ const EntityCard = ({ entityId, color: colorProp }) => {
         `}
       >
         <Icon
-          onClick={openMoreInfo}
+          onClick={handleIconClick}
           css={css`
             font-size: 2.5em;
             ${state === 'on' && icon === 'mdi:fan' && fanAnimation}
@@ -105,6 +119,11 @@ const EntityCard = ({ entityId, color: colorProp }) => {
       >
         {name}
       </span>
+      <EntityDialog
+        entityId={entityId}
+        open={modalOpen}
+        onClose={handleModelClose}
+      />
     </div>
   );
 };

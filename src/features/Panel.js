@@ -50,7 +50,7 @@ function TabPanel(props) {
 export default function Panel() {
   const theme = useTheme();
   const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
@@ -84,18 +84,14 @@ export default function Panel() {
         >
           <Tab icon={<HomeIcon />} aria-label="Home" />
           <Tab icon={<HeartIcon />} aria-label="favorite" />
-          <Tab icon={<HeartIcon />} aria-label="person" />
         </Tabs>
       </Header>
       <div>
         <TabPanel value={value} index={0}>
-          <Home />
+          <CardDashboard />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <EntityPage />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <CardDashboard />
         </TabPanel>
       </div>
     </Container>
