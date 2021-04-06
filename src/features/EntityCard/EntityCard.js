@@ -50,10 +50,11 @@ const randomColors = [
 ];
 
 const detailSupported = ['light', 'fan'];
-const EntityCard = ({ entityId, color: colorProp }) => {
+const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
   const entity = useEntity(entityId);
   const { state, name, domain, icon, openMoreInfo } = entity;
   const [modalOpen, setModalOpen] = useState(false);
+  const title = customTitle || name;
   const color = useMemo(
     () =>
       (entityId && colorProp) ??
@@ -117,7 +118,7 @@ const EntityCard = ({ entityId, color: colorProp }) => {
           font-size: 0.8em;
         `}
       >
-        {name}
+        {title}
       </span>
       <EntityDialog
         entityId={entityId}
