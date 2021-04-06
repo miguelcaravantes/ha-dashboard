@@ -12,6 +12,7 @@ const Root = styled.div`
 `;
 
 const speedNames = {
+  eco: 'Eco',
   low: 'Low',
   medium: 'Med',
   high: 'High',
