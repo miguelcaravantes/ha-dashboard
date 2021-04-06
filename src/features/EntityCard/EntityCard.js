@@ -76,7 +76,11 @@ const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
   return (
     <div
       css={(theme) => css`
-        background-color: ${state === 'off' ? grey[900] : color[500]};
+        background-color: ${state === 'off'
+          ? grey[900]
+          : state === 'unavailable'
+          ? grey[500]
+          : color[500]};
         border-radius: 10px;
         height: ${theme.spacing(12)};
         width: 100%;
