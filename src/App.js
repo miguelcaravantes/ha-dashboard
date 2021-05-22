@@ -2,6 +2,7 @@ import React from 'react';
 import Panel from './features/Panel';
 import { HassContext } from './common/HassContext';
 import { ThemeProvider } from '@emotion/react';
+import { Global, css } from '@emotion/react';
 import {
   createMuiTheme,
   ThemeProvider as MuiThemeProvider,
@@ -27,6 +28,36 @@ if (prefersDarkMode) {
 export default function App(props) {
   return (
     <HassContext.Provider value={props.hass}>
+      <Global
+        styles={css`
+          body {
+            padding: 0;
+            font-family: 'Roboto', 'sans-serif';
+            box-sizing: border-box;
+            user-select: none;
+          }
+
+          react-panel {
+            min-height: 100%;
+            display: flex;
+          }
+
+          html,
+          body {
+            margin: 0;
+            height: 100%;
+          }
+
+          html {
+            box-sizing: border-box;
+          }
+          *,
+          *:before,
+          *:after {
+            box-sizing: inherit;
+          }
+        `}
+      />
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <ThemeProvider theme={theme}>

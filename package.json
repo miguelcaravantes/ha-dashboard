@@ -2,7 +2,6 @@
   "name": "ha-dasboard",
   "version": "1.0.0",
   "description": "Home Assistant React Dashboard",
-  "main": "index.js",
   "dependencies": {
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
@@ -22,6 +21,8 @@
     "@babel/preset-env": "^7.14.1",
     "@babel/preset-react": "^7.13.13",
     "@emotion/babel-plugin": "^11.3.0",
+    "@parcel/babel-plugin-transform-runtime": "^2.0.0-beta.3.1",
+    "@parcel/babel-preset-env": "^2.0.0-beta.3.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "eslint": "^7.26.0",
@@ -33,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.1",
+    "parcel": "^2.0.0-beta.3.1",
     "prettier": "^2.2.1",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.1.1",
@@ -43,8 +45,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "start": "webpack serve --config=webpack.config.dev.js",
-    "build": "webpack --config=webpack.config.prod.js",
+    "start": "parcel serve src/index.js --port 8080 --no-hmr",
+    "build": "parcel build src/index.js --no-cache",
     "lint": "eslint src/**/*.js"
   },
   "author": "Miguel Caravantes",
