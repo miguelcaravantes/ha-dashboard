@@ -76,6 +76,23 @@ export default function CardDashboard() {
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="light.girls_ceiling_light" title="Light" />
           </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="fan.bedroom_fan" title="Fan" />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="sensor.girls_room_temperature"
+              color={orange}
+              title="Temperature"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="sensor.girls_room_humidity"
+              color={blue}
+              title="Humidity"
+            />
+          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12} sm={6} lg={4} xl={3}>
@@ -130,6 +147,14 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="binary_sensor.backyard_door_1" title="Door" />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <Typography variant="h6">Laundry</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="light.laundry_light" title="Light" />
           </Grid>
         </Grid>
       </Grid>
