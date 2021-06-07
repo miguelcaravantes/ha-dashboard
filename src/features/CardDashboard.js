@@ -77,7 +77,7 @@ export default function CardDashboard() {
             <EntityCard entityId="light.girls_ceiling_light" title="Light" />
           </Grid>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="fan.bedroom_fan" title="Fan" />
+            <EntityCard entityId="fan.girls_fan" title="Fan" />
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard
