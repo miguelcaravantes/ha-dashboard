@@ -1,13 +1,25 @@
 import { useState, useEffect } from 'react';
 import useConstant from 'use-constant';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
-import { LIGHT_SUPPORT_COLOR, LIGHT_SUPPORT_BRIGHTNESS } from '../../constants';
+import {
+  COLOR_MODE_UNKNOWN,
+  COLOR_MODE_ON_OFF,
+  COLOR_MODE_HS,
+} from '../../constants';
 import useEntity from '../../common/hooks/useEntity';
 import { useHass } from '../../common/hooks/useHass';
 
+const SUPPORTED_COLOR_MODES_ATTRIBUTE = 'supported_color_modes';
+
 const useLightDetail = (entityId) => {
   const { callService } = useHass();
-  const { stateObj, state, supportedFeatures } = useEntity(entityId);
+  const {
+    stateObj,
+    state,
+    stateObj: {
+      attributes: { [SUPPORTED_COLOR_MODES_ATTRIBUTE]: supportedColorModes },
+    },
+  } = useEntity(entityId);
   const [brightness, setBrightness] = useState(
     stateObj.attributes.brightness ?? 0
   );
@@ -18,10 +30,10 @@ const useLightDetail = (entityId) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
-  const doesSupportColor = Boolean(supportedFeatures & LIGHT_SUPPORT_COLOR);
-  const doesSupportBrightness = Boolean(
-    supportedFeatures & LIGHT_SUPPORT_BRIGHTNESS
-  );
+  const doesSupportColor = supportedColorModes.includes(COLOR_MODE_HS);
+  const doesSupportBrightness =
+    !supportedColorModes.includes(COLOR_MODE_UNKNOWN) &&
+    !supportedColorModes.includes(COLOR_MODE_ON_OFF);
 
   const updateBrightness = useConstant(() =>
     AwesomeDebouncePromise(async (brightness) => {
