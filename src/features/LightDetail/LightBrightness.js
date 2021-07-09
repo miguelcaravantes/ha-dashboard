@@ -31,7 +31,7 @@ const LightBrightness = ({ value, onChange }) => (
       step={15}
       value={value}
       valueLabelDisplay="auto"
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
     />
   </>
 );
