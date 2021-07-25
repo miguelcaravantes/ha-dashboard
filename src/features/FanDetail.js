@@ -1,15 +1,15 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import { ButtonGroup, Button, Switch, Typography } from '@material-ui/core';
 import useEntity from '../common/hooks/useEntity';
 import { useHass } from '../common/hooks/useHass';
 import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from '../constants';
 
-const Root = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
+const Root = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+});
 
 const speedNames = {
   eco: 'Eco',

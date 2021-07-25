@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 import useEntity, { actionTypes } from '../common/hooks/useEntity';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import FanDetail from './FanDetail';
 import { Tune as TuneIcon } from 'mdi-material-ui';
 import LightDetail from './LightDetail/LightDetail';
@@ -49,9 +49,8 @@ const DialogToolbar = ({ title, onMoreClick, showToggle, state, onToggle }) => (
 
 export default function EntityDialog(props) {
   const { onClose, open, entityId } = props;
-  const { domain, name, state, toggle, openMoreInfo, actionType } = useEntity(
-    entityId
-  );
+  const { domain, name, state, toggle, openMoreInfo, actionType } =
+    useEntity(entityId);
 
   const Detail = domainDetailMap[domain];
 

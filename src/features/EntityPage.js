@@ -3,11 +3,11 @@ import { List, Paper } from '@material-ui/core';
 
 import { useHass } from '../common/hooks/useHass';
 import EntityRow from './EntityRow';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 
-const Root = styled(Paper)`
-  width: 100%;
-`;
+const Root = styled(Paper)({
+  width: '100%',
+});
 
 export default function EntityPage() {
   const { states } = useHass();

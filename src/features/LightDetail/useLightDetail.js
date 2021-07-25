@@ -3,7 +3,7 @@ import useConstant from 'use-constant';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import {
   COLOR_MODE_UNKNOWN,
-  COLOR_MODE_ON_OFF,
+  COLOR_MODE_ONOFF,
   COLOR_MODE_HS,
 } from '../../constants';
 import useEntity from '../../common/hooks/useEntity';
@@ -33,7 +33,7 @@ const useLightDetail = (entityId) => {
   const doesSupportColor = supportedColorModes.includes(COLOR_MODE_HS);
   const doesSupportBrightness =
     !supportedColorModes.includes(COLOR_MODE_UNKNOWN) &&
-    !supportedColorModes.includes(COLOR_MODE_ON_OFF);
+    !supportedColorModes.includes(COLOR_MODE_ONOFF);
 
   const updateBrightness = useConstant(() =>
     AwesomeDebouncePromise(async (brightness) => {

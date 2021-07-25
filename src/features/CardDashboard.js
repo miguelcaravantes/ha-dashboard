@@ -4,7 +4,7 @@ import React from 'react';
 import EntityCard from './EntityCard/EntityCard';
 import { orange, blue } from '@material-ui/core/colors';
 
-// const RoomContainer = styled.div(({ theme }) => ({
+// const RoomContainer = styled('div')(({ theme }) => ({
 //   display: 'flex',
 //   flexDirection: 'row',
 //   gap: theme.spacing(2),

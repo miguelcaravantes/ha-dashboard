@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { css, keyframes } from '@emotion/react';
+import { styled } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
+import { keyframes, css as cssSystem } from '@material-ui/system';
 import {
   red,
   purple,
@@ -27,9 +29,16 @@ const rotate = keyframes`
   }
 `;
 
-const fanAnimation = css`
+const fanAnimation = cssSystem`
   animation: ${rotate} 1s linear infinite;
 `;
+
+const StyledIcon = styled(({ rotateIcon: _, ...props }) => <Icon {...props} />)(
+  {
+    fontSize: '2.5em',
+  },
+  ({ rotateIcon }) => (rotateIcon ? fanAnimation : undefined)
+);
 
 const actions = {
   [LIGHT]: PowerSwitch,
@@ -49,6 +58,37 @@ const randomColors = [
   deepOrange,
 ];
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: ({ state, color }) =>
+      state === 'off'
+        ? grey[900]
+        : state === 'unavailable'
+        ? grey[500]
+        : color[500],
+    borderRadius: '10px',
+    height: theme.spacing(12),
+    width: '100%',
+    maxWidth: theme.spacing(25),
+    display: 'flex',
+    flexDirection: 'column',
+    padding: theme.spacing(1.5),
+  },
+  flexContanier: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  action: {
+    marginLeft: 'auto',
+  },
+  title: {
+    marginTop: 'auto',
+    paddingBottom: '0.2em',
+    fontWeight: '700',
+    fontSize: '0.8em',
+  },
+}));
+
 const detailSupported = ['light', 'fan'];
 const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
   const entity = useEntity(entityId);
@@ -62,68 +102,32 @@ const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
     [entityId, colorProp]
   );
 
+  const classes = useStyles({ state, color });
   const handleIconClick = useCallback(
     () =>
       detailSupported.includes(domain) ? setModalOpen(true) : openMoreInfo(),
     [domain, openMoreInfo]
   );
 
-  const handleModelClose = useCallback(() => setModalOpen(false), [
-    setModalOpen,
-  ]);
+  const handleModelClose = useCallback(
+    () => setModalOpen(false),
+    [setModalOpen]
+  );
 
   const Action = actions[domain];
   return (
-    <div
-      css={(theme) => css`
-        background-color: ${state === 'off'
-          ? grey[900]
-          : state === 'unavailable'
-          ? grey[500]
-          : color[500]};
-        border-radius: 10px;
-        height: ${theme.spacing(12)};
-        width: 100%;
-        max-width: ${theme.spacing(25)};
-        display: flex;
-        flex-direction: column;
-        padding: ${theme.spacing(1.5)};
-      `}
-    >
-      <div
-        css={css`
-          display: flex;
-          flex-direction: row;
-        `}
-      >
-        <Icon
+    <div className={classes.root}>
+      <div className={classes.flexContanier}>
+        <StyledIcon
           onClick={handleIconClick}
-          css={css`
-            font-size: 2.5em;
-            ${state === 'on' && icon === 'mdi:fan' && fanAnimation}
-          `}
+          rotateIcon={state === 'on' && icon === 'mdi:fan'}
           icon={icon}
         />
         {Action && (
-          <Action
-            css={css`
-              margin-left: auto;
-            `}
-            entity={entity}
-            color={color}
-          />
+          <Action className={classes.action} entity={entity} color={color} />
         )}
       </div>
-      <span
-        css={css`
-          margin-top: auto;
-          padding-bottom: 0.2em;
-          font-weight: 700;
-          font-size: 0.8em;
-        `}
-      >
-        {title}
-      </span>
+      <span className={classes.title}>{title}</span>
       <EntityDialog
         entityId={entityId}
         open={modalOpen}

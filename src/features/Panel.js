@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import {
   Box,
   Typography,
@@ -20,11 +20,11 @@ import EntityPage from './EntityPage';
 import ProfileImg from './ProfileImg';
 import CardDashboard from './CardDashboard';
 
-const Container = styled.div`
-  width: 100%;
-  color: ${({ theme }) => theme.palette.text.primary};
-  background: ${({ theme }) => theme.palette.background.default};
-`;
+const Container = styled('div')(({ theme }) => ({
+  width: '100%',
+  color: theme.palette.text.primary,
+  background: theme.palette.background.default,
+}));
 
 const Header = styled(AppBar)`
   background: ${({ theme }) => theme.palette.background.default};

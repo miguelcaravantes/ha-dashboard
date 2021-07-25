@@ -1,30 +1,30 @@
 import React from 'react';
 import useEntity from '../common/hooks/useEntity';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import Icon from './Icon';
 
-const Root = styled.div`
-  height: ${({ theme }) => theme.spacing(12)};
-  width: ${({ theme }) => theme.spacing(12)};
-  background: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
+const Root = styled('div')(({ theme }) => ({
+  height: theme.spacing(12),
+  width: theme.spacing(12),
+  background: 'none',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifycontent: 'center',
+}));
 
 const SensorIcon = styled(Icon)`
   width: 1.5em;
   height: 1.5em;
 `;
-const Label = styled.span`
-  font-size: 2.6rem;
-`;
+const Label = styled('span')({
+  fontSize: '2.6rem',
+});
 
-const LabelUnit = styled.span`
-  font-size: 1rem;
-  vertical-align: super;
-`;
+const LabelUnit = styled('span')({
+  fontSize: '1rem',
+  verticalAlign: 'super',
+});
 
 export default function Sensor(props) {
   const { entityId } = props;

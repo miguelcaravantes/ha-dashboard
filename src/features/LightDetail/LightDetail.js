@@ -1,14 +1,14 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import LightBrightness from './LightBrightness';
 import LightColor from './LightColor';
 import useLightDetail from './useLightDetail';
 
-const Root = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
+const Root = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+});
 
 export default function LightDetail({ entityId }) {
   const {

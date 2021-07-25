@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import styled from '@emotion/styled';
+import { styled } from '@material-ui/core/styles';
 import hexRgb from 'hex-rgb';
 
 import {
@@ -46,25 +46,21 @@ const colors = ['#ffffff'].concat(
   ].flatMap((i) => [i[200], i[500], i[700]])
 );
 
-const ColorsContainer = styled.div(
-  ({ theme }) => `
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${theme.spacing(1)};
-	padding: ${theme.spacing(1)};
-`
-);
+const ColorsContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+  padding: theme.spacing(1),
+}));
 
-const ColorButton = styled.button(
-  ({ color, theme }) => `
-  background: ${color};
-  border: none;
-  border-radius: 100%;
-  height: ${theme.spacing(4)};
-  width: ${theme.spacing(4)};
-  outline: none;
-`
-);
+const ColorButton = styled('button')(({ color, theme }) => ({
+  background: color,
+  border: 'none',
+  borderRadius: '100%',
+  height: theme.spacing(4),
+  width: theme.spacing(4),
+  outline: 'none',
+}));
 
 const removeAlpha = (rgba) => rgba.slice(0, 3);
 const hexToRgb = (hex) => hexRgb(hex, { format: 'array' });

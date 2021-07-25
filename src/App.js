@@ -1,11 +1,10 @@
 import React from 'react';
 import Panel from './features/Panel';
 import { HassContext } from './common/HassContext';
-import { ThemeProvider } from '@emotion/react';
-import { Global, css } from '@emotion/react';
+import { GlobalStyles } from '@material-ui/core';
 import {
   createTheme,
-  ThemeProvider as MuiThemeProvider,
+  ThemeProvider as ThemeProvider,
 } from '@material-ui/core/styles';
 import { StylesProvider } from '@material-ui/styles';
 import lightBlue from '@material-ui/core/colors/lightBlue';
@@ -28,8 +27,8 @@ if (prefersDarkMode) {
 export default function App(props) {
   return (
     <HassContext.Provider value={props.hass}>
-      <Global
-        styles={css`
+      <GlobalStyles
+        styles={`
           body {
             padding: 0;
             font-family: 'Roboto', 'sans-serif';
@@ -59,11 +58,9 @@ export default function App(props) {
         `}
       />
       <StylesProvider injectFirst>
-        <MuiThemeProvider theme={theme}>
-          <ThemeProvider theme={theme}>
-            <Panel />
-          </ThemeProvider>
-        </MuiThemeProvider>
+        <ThemeProvider theme={theme}>
+          <Panel />
+        </ThemeProvider>
       </StylesProvider>
     </HassContext.Provider>
   );
