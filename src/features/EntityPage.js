@@ -1,9 +1,9 @@
 import React from 'react';
-import { List, Paper } from '@material-ui/core';
+import { List, Paper } from '@mui/material';
 
 import { useHass } from '../common/hooks/useHass';
 import EntityRow from './EntityRow';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const Root = styled(Paper)({
   width: '100%',

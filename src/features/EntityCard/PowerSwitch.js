@@ -1,6 +1,6 @@
 import React from 'react';
-import { Switch } from '@material-ui/core';
-import { alpha, styled } from '@material-ui/core/styles';
+import { Switch } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
 
 const StyledSwitch = styled(({ overrideColor, ...props }) => (
   <Switch {...props} />

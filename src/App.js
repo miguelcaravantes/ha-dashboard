@@ -1,13 +1,12 @@
 import React from 'react';
 import Panel from './features/Panel';
 import { HassContext } from './common/HassContext';
-import { GlobalStyles } from '@material-ui/core';
+import { GlobalStyles } from '@mui/material';
 import {
   createTheme,
   ThemeProvider as ThemeProvider,
-} from '@material-ui/core/styles';
-import { StylesProvider } from '@material-ui/styles';
-import lightBlue from '@material-ui/core/colors/lightBlue';
+} from '@mui/material/styles';
+import lightBlue from '@mui/material/colors/lightBlue';
 
 const prefersDarkMode = true; //useMediaQuery('(prefers-color-scheme: dark)');
 const theme = createTheme({
@@ -57,11 +56,9 @@ export default function App(props) {
           }
         `}
       />
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <Panel />
-        </ThemeProvider>
-      </StylesProvider>
+      <ThemeProvider theme={theme}>
+        <Panel />
+      </ThemeProvider>
     </HassContext.Provider>
   );
 }

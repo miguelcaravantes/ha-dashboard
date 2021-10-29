@@ -58,10 +58,10 @@ const useLightDetail = (entityId) => {
     }, 100)
   );
 
-  const handleBrightnessChange = async (newValue) => {
+  const handleBrightnessChange = (newValue) => {
     if (newValue !== brightness) {
       setBrightness(newValue);
-      await updateBrightness(newValue);
+      updateBrightness(newValue);
     }
   };
 

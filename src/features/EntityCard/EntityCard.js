@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import { styled } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
-import { keyframes, css as cssSystem } from '@material-ui/system';
+import { styled, keyframes, css as cssSystem } from '@mui/material/styles';
+import { Box } from '@mui/material';
+
 import {
   red,
   purple,
@@ -12,7 +12,7 @@ import {
   green,
   deepOrange,
   grey,
-} from '@material-ui/core/colors';
+} from '@mui/material/colors';
 import Icon from '../Icon';
 import useEntity from '../../common/hooks/useEntity';
 import PowerSwitch from './PowerSwitch';
@@ -58,37 +58,6 @@ const randomColors = [
   deepOrange,
 ];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: ({ state, color }) =>
-      state === 'off'
-        ? grey[900]
-        : state === 'unavailable'
-        ? grey[500]
-        : color[500],
-    borderRadius: '10px',
-    height: theme.spacing(12),
-    width: '100%',
-    maxWidth: theme.spacing(25),
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(1.5),
-  },
-  flexContanier: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  action: {
-    marginLeft: 'auto',
-  },
-  title: {
-    marginTop: 'auto',
-    paddingBottom: '0.2em',
-    fontWeight: '700',
-    fontSize: '0.8em',
-  },
-}));
-
 const detailSupported = ['light', 'fan'];
 const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
   const entity = useEntity(entityId);
@@ -102,7 +71,6 @@ const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
     [entityId, colorProp]
   );
 
-  const classes = useStyles({ state, color });
   const handleIconClick = useCallback(
     () =>
       detailSupported.includes(domain) ? setModalOpen(true) : openMoreInfo(),
@@ -116,24 +84,56 @@ const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
 
   const Action = actions[domain];
   return (
-    <div className={classes.root}>
-      <div className={classes.flexContanier}>
+    <Box
+      sx={{
+        backgroundColor:
+          state === 'off'
+            ? grey[900]
+            : state === 'unavailable'
+            ? grey[500]
+            : color[500],
+        borderRadius: '10px',
+        height: (theme) => theme.spacing(12),
+        width: '100%',
+        maxWidth: (theme) => theme.spacing(25),
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 1.5,
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
         <StyledIcon
           onClick={handleIconClick}
           rotateIcon={state === 'on' && icon === 'mdi:fan'}
           icon={icon}
         />
         {Action && (
-          <Action className={classes.action} entity={entity} color={color} />
+          <Box sx={{ ml: 'auto' }}>
+            <Action entity={entity} color={color} />
+          </Box>
         )}
-      </div>
-      <span className={classes.title}>{title}</span>
+      </Box>
+      <Box
+        sx={{
+          mt: 'auto',
+          pb: '0.2em',
+          fontWeight: '700',
+          fontSize: '0.8em',
+        }}
+      >
+        <span>{title}</span>
+      </Box>
       <EntityDialog
         entityId={entityId}
         open={modalOpen}
         onClose={handleModelClose}
       />
-    </div>
+    </Box>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import {
   Box,
   Typography,
@@ -10,7 +10,7 @@ import {
   Tab,
   useTheme,
   useMediaQuery,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import HomeIcon from 'mdi-material-ui/Home';
 import MenuIcon from 'mdi-material-ui/Menu';

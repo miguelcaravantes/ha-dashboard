@@ -1,15 +1,7 @@
-import { Typography, Grid } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import React from 'react';
-// import styled from '@material-ui/styled-engine';
 import EntityCard from './EntityCard/EntityCard';
-import { orange, blue } from '@material-ui/core/colors';
-
-// const RoomContainer = styled('div')(({ theme }) => ({
-//   display: 'flex',
-//   flexDirection: 'row',
-//   gap: theme.spacing(2),
-//   flexWrap: 'wrap',
-// }));
+import { orange, blue } from '@mui/material/colors';
 
 export default function CardDashboard() {
   return (
@@ -105,6 +97,20 @@ export default function CardDashboard() {
             <EntityCard
               entityId="binary_sensor.corridor_bathroom_door"
               title="Bathroom Door"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <Typography variant="h6">Stairs</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="light.stairs_light" title="Light" />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="binary_sensor.stairs_motion_sensor"
+              title="Motion"
             />
           </Grid>
         </Grid>

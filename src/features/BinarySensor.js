@@ -1,7 +1,7 @@
 import React from 'react';
 import useEntity from '../common/hooks/useEntity';
 import Icon from './Icon';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 
 const Root = styled('div')(({ theme }) => ({
   height: theme.spacing(12),

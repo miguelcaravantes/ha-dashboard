@@ -1,6 +1,6 @@
 import React from 'react';
 import useEntity from '../common/hooks/useEntity';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import Icon from './Icon';
 
 const Root = styled('div')(({ theme }) => ({

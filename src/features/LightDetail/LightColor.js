@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+import { Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import hexRgb from 'hex-rgb';
 
 import {
@@ -21,7 +21,7 @@ import {
   orange,
   deepOrange,
   brown,
-} from '@material-ui/core/colors';
+} from '@mui/material/colors';
 import { compose } from '../../common/composition';
 
 const colors = ['#ffffff'].concat(

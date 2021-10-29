@@ -31,6 +31,10 @@ const classMapping = {
     on: 'mdi:door-open',
     off: 'mdi:door-closed',
   },
+  motion: {
+    on: 'mdi:motion-sensor',
+    off: 'mdi:motion-sensor-off',
+  },
 };
 
 export const actionTypes = {
@@ -92,9 +96,10 @@ export default function useEntity(entityId) {
     [domain, isGroup, state, stateIcon, deviceClass]
   );
 
-  const handleOpenMoreInfo = useCallback(() => openMoreInfo(entityId), [
-    entityId,
-  ]);
+  const handleOpenMoreInfo = useCallback(
+    () => openMoreInfo(entityId),
+    [entityId]
+  );
 
   const toggle = useCallback(() => {
     if (actionType === actionTypes.Toggle) {

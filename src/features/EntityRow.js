@@ -7,14 +7,13 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
+} from '@mui/material';
 import Icon from './Icon';
 
 export default function EntityRow(props) {
   const { entityId } = props;
-  const { state, name, actionType, toggle, execute, icon } = useEntity(
-    entityId
-  );
+  const { state, name, actionType, toggle, execute, icon } =
+    useEntity(entityId);
 
   const actionMap = new Map([
     [

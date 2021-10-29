@@ -1,9 +1,12 @@
 import React from 'react';
 import { useHass } from '../common/hooks/useHass';
-import { Avatar } from '@material-ui/core';
+import { Avatar } from '@mui/material';
 
 const isPerson = ([s]) => s.startsWith('person.');
-const withUser = (userId) => ([, s]) => s.attributes.user_id === userId;
+const withUser =
+  (userId) =>
+  ([, s]) =>
+    s.attributes.user_id === userId;
 export default function ProfileImg() {
   const { user, states } = useHass();
   const userId = user?.id;

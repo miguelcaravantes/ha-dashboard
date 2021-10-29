@@ -6,10 +6,10 @@ import {
   Switch,
   DialogContent as MuiDialogContent,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import useEntity, { actionTypes } from '../common/hooks/useEntity';
-import { styled } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import FanDetail from './FanDetail';
 import { Tune as TuneIcon } from 'mdi-material-ui';
 import LightDetail from './LightDetail/LightDetail';
