@@ -1,7 +1,7 @@
 import { Typography, Grid } from '@mui/material';
 import React from 'react';
 import EntityCard from './EntityCard/EntityCard';
-import { orange, blue } from '@mui/material/colors';
+import { orange, blue, teal } from '@mui/material/colors';
 
 export default function CardDashboard() {
   return (
@@ -134,6 +134,19 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="switch.living_room_fan" title="Fan" />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="switch.living_room_diffuser"
+              title="Diffuser"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="switch.christmas_tree"
+              title="Christmas Tree"
+              color={teal}
+            />
           </Grid>
         </Grid>
       </Grid>
