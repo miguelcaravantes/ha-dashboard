@@ -119,7 +119,7 @@ export default function CardDashboard() {
         <Typography variant="h6">Kitchen</Typography>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="light.kitchen_light" title="Light" />
+            <EntityCard entityId="light.kitchen_lights" title="Lights" />
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="switch.kitchen_diffuser" title="Diffuser" />
