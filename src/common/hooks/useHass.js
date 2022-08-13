@@ -1,7 +1,12 @@
-import { useContext } from 'react';
-import { HassContext } from '../HassContext';
+import { Store } from 'mdi-material-ui';
+import { useContext, useSyncExternalStore } from 'react';
+import { hassStore } from '../../index';
 
 export function useHass() {
-  const hass = useContext(HassContext);
+  const hass = useSyncExternalStore(
+    hassStore.subscribe,
+    hassStore.getSnapshot,
+    hassStore.getServerSnapshot
+  );
   return hass;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import Panel from './features/Panel';
-import { HassContext } from './common/HassContext';
 import { GlobalStyles } from '@mui/material';
 import {
   createTheme,
@@ -23,9 +22,9 @@ if (prefersDarkMode) {
   theme.palette.background.paper = 'rgba(11,11,11,.85)';
 }
 
-export default function App(props) {
+export default function App() {
   return (
-    <HassContext.Provider value={props.hass}>
+    <>
       <GlobalStyles
         styles={`
           body {
@@ -59,6 +58,6 @@ export default function App(props) {
       <ThemeProvider theme={theme}>
         <Panel />
       </ThemeProvider>
-    </HassContext.Provider>
+    </>
   );
 }

@@ -1,5 +1,7 @@
-import { useHass } from './useHass';
+import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
+import { hassStore } from '../../index.js';
 import { useCallback, useMemo } from 'react';
+import shallowEqual from 'shallowequal';
 
 const domainMapping = {
   light: { default: 'mdi:lightbulb', group: 'mdi:lightbulb-group' },
@@ -74,9 +76,17 @@ const openMoreInfo = (entityId) => {
 };
 
 export default function useEntity(entityId) {
-  const { states, callService } = useHass();
+  const { stateObj, callService } = useSyncExternalStoreWithSelector(
+    hassStore.subscribe,
+    hassStore.getSnapshot,
+    hassStore.getServerSnapshot,
+    (snapshot) => ({
+      callService: snapshot.callService,
+      stateObj: snapshot.states[entityId],
+    }),
+    shallowEqual
+  );
 
-  const stateObj = states[entityId];
   const domain = entityId.split('.')[0];
 
   const actionType = actionTypesMap.get(domain);

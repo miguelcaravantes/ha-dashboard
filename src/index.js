@@ -1,18 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import App from './App';
 
+function createStore(initalState = {}) {
+  let state = initalState;
+  const listeners = new Set();
+
+  function setState(newState) {
+    state = newState;
+    listeners.forEach((notify) => notify());
+  }
+
+  function subscribe(listener) {
+    listeners.add(listener);
+    () => listeners.delete(listener);
+  }
+  function getSnapshot() {
+    return state;
+  }
+  function getServerSnapshot() {
+    return state;
+  }
+
+  return { setState, subscribe, getSnapshot, getServerSnapshot };
+}
+
+export const hassStore = createStore({});
+
 class ReactWrapper extends HTMLElement {
   set hass(value) {
-    this._hass = value;
-    this.render();
+    hassStore.setState(value);
   }
   disconnectedCallback() {
-    ReactDOM.unmountComponentAtNode(this);
+    this.root.unmount();
   }
-  render() {
-    ReactDOM.render(<App hass={this._hass} />, this);
+  connectedCallback() {
+    this.root = createRoot(this);
+    this.root.render(<App />);
   }
 }
 customElements.define('react-panel', ReactWrapper);
