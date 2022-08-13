@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useConstant from 'use-constant';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import {
@@ -20,14 +20,15 @@ const useLightDetail = (entityId) => {
       attributes: { [SUPPORTED_COLOR_MODES_ATTRIBUTE]: supportedColorModes },
     },
   } = useEntity(entityId);
-  const [brightness, setBrightness] = useState(
-    stateObj.attributes.brightness ?? 0
-  );
+  const hassBrightness = useRef(stateObj.attributes.brightness ?? 0);
+
+  const [brightness, setBrightness] = useState(hassBrightness.current);
+  hassBrightness.current = stateObj.attributes.brightness ?? 0;
 
   useEffect(() => {
-    setBrightness(stateObj.attributes.brightness ?? 0);
-    // disabled since it comes from outside react
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (state) {
+      setBrightness(hassBrightness.current);
+    }
   }, [state]);
 
   const doesSupportColor = supportedColorModes.includes(COLOR_MODE_HS);
