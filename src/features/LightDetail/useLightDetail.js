@@ -21,15 +21,17 @@ const useLightDetail = (entityId) => {
     },
   } = useEntity(entityId);
   const hassBrightness = useRef(stateObj.attributes.brightness ?? 0);
-
   const [brightness, setBrightness] = useState(hassBrightness.current);
   hassBrightness.current = stateObj.attributes.brightness ?? 0;
 
-  useEffect(() => {
-    if (state) {
-      setBrightness(hassBrightness.current);
-    }
-  }, [state]);
+  useEffect(
+    function syncBrightness() {
+      if (state) {
+        setBrightness(hassBrightness.current);
+      }
+    },
+    [state]
+  );
 
   const doesSupportColor = supportedColorModes.includes(COLOR_MODE_HS);
   const doesSupportBrightness =
