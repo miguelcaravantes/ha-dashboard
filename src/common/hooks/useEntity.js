@@ -4,7 +4,10 @@ import { useCallback, useMemo } from 'react';
 import shallowEqual from 'shallowequal';
 
 const domainMapping = {
-  light: { default: 'mdi:lightbulb', group: 'mdi:lightbulb-group' },
+  light: {
+    default: 'mdi:lightbulb-outline',
+    group: 'mdi:lightbulb-group-outline',
+  },
   switch: 'mdi:power-socket-us',
   media_player: 'mdi:cast',
   scene: 'mdi:palette',
@@ -37,6 +40,8 @@ const classMapping = {
     on: 'mdi:motion-sensor',
     off: 'mdi:motion-sensor-off',
   },
+  temperature: 'mdi:thermometer',
+  humidity: 'mdi:water-percent',
 };
 
 export const actionTypes = {
@@ -59,10 +64,12 @@ const getIcon = (domain, isGroup, state, stateIcon, deviceClass) => {
     typeof domainIcon === 'object'
       ? domainIcon[isGroup ? 'group' : 'default']
       : domainIcon;
-
   return (
     stateIcon ??
-    (classMapping[deviceClass] && classMapping[deviceClass][state]) ??
+    classMapping[deviceClass]?.[state] ??
+    (typeof classMapping[deviceClass] === 'string'
+      ? classMapping[deviceClass]
+      : undefined) ??
     icon
   );
 };
@@ -105,6 +112,7 @@ export default function useEntity(entityId) {
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
     [domain, isGroup, state, stateIcon, deviceClass]
   );
+  console.log({ icon });
 
   const handleOpenMoreInfo = useCallback(
     () => openMoreInfo(entityId),

@@ -10,7 +10,7 @@
     "@mui/system": "^5.10.0",
     "awesome-debounce-promise": "^2.1.0",
     "hex-rgb": "^5.0.0",
-    "mdi-material-ui": "npm:@mitch528/mdi-material-ui@^7.0.0",
+    "mdi-material-ui": "^7.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shallowequal": "^1.1.0",

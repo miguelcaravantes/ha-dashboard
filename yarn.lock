@@ -1257,9 +1257,9 @@ callsites@^3.0.0:
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
 caniuse-lite@^1.0.30001271:
-  version "1.0.30001272"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001272.tgz#8e9790ff995e9eb6e1f4c45cd07ddaa87cddbb14"
-  integrity sha512-DV1j9Oot5dydyH1v28g25KoVm7l8MTxazwuiH3utWiAS6iL/9Nh//TGwqFEeqqN8nnWYQ8HHhUq+o4QPt9kvYw==
+  version "1.0.30001377"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001377.tgz"
+  integrity sha512-I5XeHI1x/mRSGl96LFOaSk528LA/yZG3m3iQgImGujjO8gotd/DL8QaI1R1h1dg5ATeI2jqPblMpKq4Tr5iKfQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -2324,10 +2324,10 @@ loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-"mdi-material-ui@npm:@mitch528/mdi-material-ui@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@mitch528/mdi-material-ui/-/mdi-material-ui-7.0.0.tgz#dbf210b92b53688e57ca9d0c66b72fc9934a9697"
-  integrity sha512-Caorcyp46jla2S5XXpwDE/QjRWqy1yZMD77gwZlpYhegQjoA+Ib2b/lMIOGuJKlpUB5v8CGklBgwlxJzkLLLjg==
+mdi-material-ui@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/mdi-material-ui/-/mdi-material-ui-7.5.0.tgz#1fab9251807a7df2f42a7fa5ae107e4170e5dd99"
+  integrity sha512-/0QLIFErB+4Y0he1sXN8GAomfgYWd8DeYwtEZ51F6+opxDPstanHFGLJqcqBpz3ylZ7H8haXc5oB7qBKWvF5TA==
 
 mdn-data@2.0.14:
   version "2.0.14"
