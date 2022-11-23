@@ -10,7 +10,7 @@ export default function CardDashboard() {
         <Typography variant="h6">Bedroom</Typography>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="light.bedroom_main_light" title="Light" />
+            <EntityCard entityId="light.bedroom_main_light_2" title="Light" />
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="fan.bedroom_fan" title="Fan" />

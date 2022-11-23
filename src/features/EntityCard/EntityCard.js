@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { styled, keyframes, css as cssSystem } from '@mui/material/styles';
 import { Box } from '@mui/material';
+import ErrorBoundary from './ErrorBoundary.js';
 
 import {
   red,
@@ -59,7 +60,8 @@ const randomColors = [
 ];
 
 const detailSupported = ['light', 'fan'];
-const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
+
+function EntityCardInner({ entityId, title: customTitle, color: colorProp }) {
   const entity = useEntity(entityId);
   const { state, name, domain, icon, openMoreInfo } = entity;
   const [modalOpen, setModalOpen] = useState(false);
@@ -135,6 +137,14 @@ const EntityCard = ({ entityId, title: customTitle, color: colorProp }) => {
       />
     </Box>
   );
-};
+}
+
+function EntityCard(props) {
+  return (
+    <ErrorBoundary entityId={props.entityId}>
+      <EntityCardInner {...props} />
+    </ErrorBoundary>
+  );
+}
 
 export default EntityCard;
