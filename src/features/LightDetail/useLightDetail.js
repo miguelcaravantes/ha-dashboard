@@ -5,6 +5,7 @@ import {
   COLOR_MODE_UNKNOWN,
   COLOR_MODE_ONOFF,
   COLOR_MODE_HS,
+  COLOR_MODE_XY,
 } from '../../constants';
 import useEntity from '../../common/hooks/useEntity';
 import { useHass } from '../../common/hooks/useHass';
@@ -33,7 +34,10 @@ const useLightDetail = (entityId) => {
     [state]
   );
 
-  const doesSupportColor = supportedColorModes.includes(COLOR_MODE_HS);
+  console.log(entityId, supportedColorModes);
+  const doesSupportColor =
+    supportedColorModes.includes(COLOR_MODE_HS) ||
+    supportedColorModes.includes(COLOR_MODE_XY);
   const doesSupportBrightness =
     !supportedColorModes.includes(COLOR_MODE_UNKNOWN) &&
     !supportedColorModes.includes(COLOR_MODE_ONOFF);
