@@ -19,6 +19,12 @@ export default function CardDashboard() {
             />
           </Grid>
           <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="light.bedroom_window_light"
+              title="Window Light"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
             <EntityCard entityId="fan.bedroom_fan" title="Fan" />
           </Grid>
           <Grid item xs={6} sm={6}>
