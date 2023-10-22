@@ -98,8 +98,8 @@ export default function useEntity(entityId) {
 
   const actionType = actionTypesMap.get(domain);
 
-  const children = stateObj.attributes.entity_id?.length;
-  const isGroup = children > 1;
+  const childrenLength = stateObj.attributes.entity_id?.length;
+  const isGroup = childrenLength > 1;
 
   const unitOfMeasurement = stateObj.attributes.unit_of_measurement;
   const deviceClass = stateObj.attributes.device_class;
@@ -138,7 +138,8 @@ export default function useEntity(entityId) {
     state: stateObj.state,
     stateObj,
     isGroup,
-    groupCount: isGroup ? children : undefined,
+    groupCount: isGroup ? childrenLength : undefined,
+    groupEntities: isGroup ? stateObj.attributes.entity_id : undefined,
     unitOfMeasurement,
     supportedFeatures,
     actionType,

@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import LightBrightness from './LightBrightness';
 import LightColor from './LightColor';
 import useLightDetail from './useLightDetail';
+import useEntity from '../../common/hooks/useEntity';
+import LightGroup from './LightGroup';
 
 const Root = styled('div')({
   display: 'flex',
@@ -11,6 +13,7 @@ const Root = styled('div')({
 });
 
 export default function LightDetail({ entityId }) {
+  const { isGroup } = useEntity(entityId);
   const {
     doesSupportColor,
     doesSupportBrightness,
@@ -24,6 +27,7 @@ export default function LightDetail({ entityId }) {
       {doesSupportBrightness && (
         <LightBrightness value={brightness} onChange={handleBrightnessChange} />
       )}
+      {isGroup && <LightGroup entityId={entityId} />}
     </Root>
   );
 }
