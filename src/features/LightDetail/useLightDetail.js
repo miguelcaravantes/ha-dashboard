@@ -34,7 +34,6 @@ const useLightDetail = (entityId) => {
     [state]
   );
 
-  console.log(entityId, supportedColorModes);
   const doesSupportColor =
     supportedColorModes.includes(COLOR_MODE_HS) ||
     supportedColorModes.includes(COLOR_MODE_XY);

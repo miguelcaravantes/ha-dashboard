@@ -1,5 +1,5 @@
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
-import { hassStore } from '../../index.js';
+import { hassStore } from '../../index';
 import { useCallback, useMemo } from 'react';
 import shallowEqual from 'shallowequal';
 
@@ -112,7 +112,6 @@ export default function useEntity(entityId) {
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
     [domain, isGroup, state, stateIcon, deviceClass]
   );
-  console.log({ icon });
 
   const handleOpenMoreInfo = useCallback(
     () => openMoreInfo(entityId),

@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { styled, keyframes, css as cssSystem } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import ErrorBoundary from './ErrorBoundary.js';
+import ErrorBoundary from './ErrorBoundary';
 
 import {
   red,

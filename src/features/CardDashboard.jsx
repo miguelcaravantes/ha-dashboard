@@ -67,7 +67,7 @@ export default function CardDashboard() {
             <EntityCard entityId="light.studio_lights" title="Lights" />
           </Grid>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="switch.studio_fan" title="Fan" />
+            <EntityCard entityId="switch.studio_diffuser" title="Diffuser" />
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="binary_sensor.studio_window" title="Window" />
@@ -107,6 +107,20 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="switch.kitchen_diffuser" title="Diffuser" />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12} sm={6} lg={4} xl={3}>
+        <Typography variant="h6">Dinning Room</Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={6} sm={6}>
+            <EntityCard entityId="light.dinning_room_switch" title="Light" />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="light.dinning_room_switch_2"
+              title="Secondary Light"
+            />
           </Grid>
         </Grid>
       </Grid>
