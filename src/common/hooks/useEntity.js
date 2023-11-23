@@ -40,8 +40,8 @@ const classMapping = {
     on: 'mdi:motion-sensor',
     off: 'mdi:motion-sensor-off',
   },
-  cover: {
-    open: 'mdi:window-closed',
+  shade: {
+    open: 'mdi:roller-shade',
     closed: 'mdi:roller-shade-closed',
     closing: 'mdi:roller-shade',
     opening: 'mdi:roller-shade',
