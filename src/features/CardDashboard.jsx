@@ -70,7 +70,33 @@ export default function CardDashboard() {
             <EntityCard entityId="switch.studio_diffuser" title="Diffuser" />
           </Grid>
           <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="sensor.studio_temperature"
+              color={orange}
+              title="Temperature"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="sensor.studio_humidity"
+              color={blue}
+              title="Humidity"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
             <EntityCard entityId="binary_sensor.studio_window" title="Window" />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="cover.studio_blackout_shade"
+              title="Blackout shade"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="cover.studio_light_filtering_shade"
+              title="Light filtering shade"
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -82,20 +108,6 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard entityId="fan.girls_fan" title="Fan" />
-          </Grid>
-          <Grid item xs={6} sm={6}>
-            <EntityCard
-              entityId="sensor.girls_room_temperature"
-              color={orange}
-              title="Temperature"
-            />
-          </Grid>
-          <Grid item xs={6} sm={6}>
-            <EntityCard
-              entityId="sensor.girls_room_humidity"
-              color={blue}
-              title="Humidity"
-            />
           </Grid>
         </Grid>
       </Grid>

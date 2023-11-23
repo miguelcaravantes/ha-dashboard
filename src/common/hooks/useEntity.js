@@ -40,6 +40,12 @@ const classMapping = {
     on: 'mdi:motion-sensor',
     off: 'mdi:motion-sensor-off',
   },
+  cover: {
+    open: 'mdi:window-closed',
+    closed: 'mdi:roller-shade-closed',
+    closing: 'mdi:roller-shade',
+    opening: 'mdi:roller-shade',
+  },
   temperature: 'mdi:thermometer',
   humidity: 'mdi:water-percent',
 };
@@ -66,7 +72,7 @@ const getIcon = (domain, isGroup, state, stateIcon, deviceClass) => {
       : domainIcon;
   return (
     stateIcon ??
-    classMapping[deviceClass]?.[state] ??
+    classMapping[deviceClass ?? domain]?.[state] ??
     (typeof classMapping[deviceClass] === 'string'
       ? classMapping[deviceClass]
       : undefined) ??

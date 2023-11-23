@@ -80,6 +80,8 @@ import {
   RaspberryPi,
   Remote,
   Restart,
+  RollerShade,
+  RollerShadeClosed,
   Scent,
   ScriptText,
   Sim,
@@ -220,6 +222,8 @@ const hassMappings = {
   'mdi:window-closed-variant': WindowClosedVariant,
   'mdi:window-open': WindowOpen,
   'mdi:window-open-variant': WindowOpenVariant,
+  'mdi:roller-shade-closed': RollerShadeClosed,
+  'mdi:roller-shade': RollerShade,
 };
 
 export default function Icon({ icon, ...props }) {
