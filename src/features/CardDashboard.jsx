@@ -150,7 +150,7 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard
-              entityId="switch.christmas_tree"
+              entityId="light.christmas_tree"
               title="Christmas Tree"
               color={teal}
             />
