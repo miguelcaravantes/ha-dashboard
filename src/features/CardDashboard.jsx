@@ -192,7 +192,7 @@ export default function CardDashboard() {
           </Grid>
           <Grid item xs={6} sm={6}>
             <EntityCard
-              entityId="binary_sensor.backyard_door_1"
+              entityId="binary_sensor.backyard_door_2"
               title="Door 2"
             />
           </Grid>
