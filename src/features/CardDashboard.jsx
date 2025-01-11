@@ -180,7 +180,22 @@ export default function CardDashboard() {
             <EntityCard entityId="light.backyard_lights" title="Light" />
           </Grid>
           <Grid item xs={6} sm={6}>
-            <EntityCard entityId="binary_sensor.backyard_door_1" title="Door" />
+            <EntityCard
+              entityId="binary_sensor.backyard_motion"
+              title="Motion"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="binary_sensor.backyard_door_1"
+              title="Door 1"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <EntityCard
+              entityId="binary_sensor.backyard_door_1"
+              title="Door 2"
+            />
           </Grid>
         </Grid>
       </Grid>
