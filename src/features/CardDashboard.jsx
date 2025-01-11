@@ -1,5 +1,4 @@
 import { Typography, Grid } from '@mui/material';
-import React from 'react';
 import EntityCard from './EntityCard/EntityCard';
 import { orange, blue, teal } from '@mui/material/colors';
 

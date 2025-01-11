@@ -1,4 +1,3 @@
-import React from 'react';
 import { styled } from '@mui/material/styles';
 import LightBrightness from './LightBrightness';
 import LightColor from './LightColor';

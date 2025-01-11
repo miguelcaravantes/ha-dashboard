@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHass } from '../common/hooks/useHass';
 import { Avatar } from '@mui/material';
 

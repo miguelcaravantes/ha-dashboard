@@ -1,4 +1,3 @@
-import React from 'react';
 import { List, Paper } from '@mui/material';
 
 import { useHass } from '../common/hooks/useHass';

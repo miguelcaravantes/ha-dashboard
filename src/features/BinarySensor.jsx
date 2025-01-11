@@ -1,4 +1,3 @@
-import React from 'react';
 import useEntity from '../common/hooks/useEntity';
 import Icon from './Icon';
 import { styled } from '@mui/material/styles';
