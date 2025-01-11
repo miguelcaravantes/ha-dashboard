@@ -18,6 +18,7 @@ import HeartIcon from 'mdi-material-ui/Heart';
 import EntityPage from './EntityPage';
 import ProfileImg from './ProfileImg';
 import CardDashboard from './CardDashboard';
+import { useState } from 'react';
 
 const Container = styled('div')(({ theme }) => ({
   width: '100%',
@@ -48,7 +49,7 @@ function TabPanel(props) {
 export default function Panel() {
   const theme = useTheme();
   const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
