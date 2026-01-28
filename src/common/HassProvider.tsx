@@ -1,5 +1,6 @@
-import { createContext, useSyncExternalStore, type ReactNode } from 'react';
+import { useSyncExternalStore, type ReactNode } from 'react';
 import type { HomeAssistant } from '../types/home-assistant.js';
+import { HassContext } from './HassContext.js';
 
 interface HassStore {
   setState: (newState: HomeAssistant) => void;
@@ -36,8 +37,6 @@ function createStore(
 }
 
 export const hassStore = createStore();
-
-export const HassContext = createContext<HomeAssistant | null>(null);
 
 interface HassProviderProps {
   children: ReactNode;

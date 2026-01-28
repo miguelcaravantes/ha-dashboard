@@ -1,7 +1,7 @@
-import Panel from './features/Panel';
+import Panel from './features/Panel.js';
 import { GlobalStyles, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
+import theme from './theme.js';
 
 export default function App() {
   return (

@@ -1,5 +1,5 @@
 import { createRoot, type Root } from 'react-dom/client';
-import App from './App.jsx';
+import App from './App.js';
 import { HassProvider, hassStore } from './common/HassProvider.js';
 import type { HomeAssistant } from './types/home-assistant.js';
 
