@@ -15,7 +15,7 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 **Target features:**
 
 - **Strict TypeScript**: Type-safe codebase with `home-assistant-js-websocket` types.
-- **MUI v6 System**: New theming engine with CSS variables and Grid2.
+- **MUI v7 System**: New theming engine with CSS variables and Grid2.
 - **Modern Build**: Vite 7 replacing legacy build tooling.
 - **Web Component Wrapper**: Robust `hass` property injection and state management.
 
@@ -34,7 +34,7 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 
 - [ ] **TypeScript Migration** — Convert all `.js/.jsx` files to `.ts/.tsx`
 - [ ] **Strict Configuration** — Enable `strict: true` in `tsconfig.json`
-- [ ] **MUI Upgrade** — Upgrade `@mui/material` and dependencies to v6
+- [ ] **MUI Upgrade** — Upgrade `@mui/material` and dependencies to v7
 - [ ] **Hass Typing** — Implement standard library types for `hass` object
 - [ ] **Linting & Formatting** — Update ESLint/Prettier for TypeScript support
 
@@ -54,7 +54,7 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 ## Constraints
 
 - **Strict Mode** — TypeScript must be configured with `strict: true`.
-- **MUI v6** — Must use the latest stable version of Material UI.
+- **MUI v7** — Must use the latest version of Material UI (v7).
 - **Type Safety** — No explicit `any` types in final codebase.
 
 ## Key Decisions
@@ -63,7 +63,7 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 | ----------------------- | ----------------------------------------------------------------------------- | --------- |
 | **Big Bang Migration**  | Small codebase (8 files) allows for immediate full conversion.                | — Pending |
 | **Standard Hass Types** | Using community/standard libraries avoids maintenance burden of manual types. | — Pending |
-| **MUI v6**              | Keeping UI library current ensures long-term support and features.            | — Pending |
+| **MUI v7**              | Keeping UI library current ensures long-term support and features.            | — Pending |
 
 ---
 

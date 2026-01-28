@@ -1,17 +1,34 @@
+# Project State
+
+**Project:** React Home Assistant Dashboard - Modernization
+**Core Value:** Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
+
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-01-27 — Milestone v1.0 started
+**Phase:** 1 - Infrastructure Foundation
+**Goal:** Developer environment and build pipeline support modern stack.
+**Status:** 🔴 Not Started
 
-## Accumulated Context
+**Progress:**
+[░░░░░░░░░░] 0%
+
+## Performance Metrics
+
+| Metric          | Target | Current |
+| --------------- | ------ | ------- |
+| **Dev Start**   | <500ms | TBD     |
+| **Type Safety** | Strict | Loose   |
+| **React**       | v19    | v18     |
+
+## Context & Memory
 
 ### Decisions
-- **Big Bang Migration**: Small codebase (8 files) allows for immediate full conversion.
-- **Standard Hass Types**: Using community/standard libraries avoids maintenance burden of manual types.
-- **MUI v6**: Keeping UI library current ensures long-term support and features.
 
-### Blockers/Concerns
-- **Implicit Any Trap**: Risk of getting stuck in type errors during migration. Mitigation: `allowJs` initially.
-- **Grid2 Upgrade**: MUI v6 breaking changes to Grid props. Mitigation: Codemods.
+- **Migration Strategy:** Infrastructure First -> Core -> Components -> Optimization.
+- **Strict Mode:** Will be enforced in Phase 3 after component migration to avoid "implicit any" avalanche.
+
+### Next Actions
+
+- Initialize Phase 1 planning.
+- Verify Node.js version.
+- Scaffold Vite 7 configuration.
