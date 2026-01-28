@@ -1,105 +1,101 @@
-# Stack Research
+# Technology Stack
 
-**Domain:** React Home Assistant Dashboard
-**Researched:** 2026-01-27
+**Project:** React Home Assistant Dashboard - Modernization
+**Researched:** Jan 27, 2026
 **Confidence:** HIGH
 
-## Recommended Stack
+## Recommended Stack Additions & Changes
 
-### Core Technologies
+### Core Framework (Modernization)
 
-| Technology     | Version | Purpose       | Why Recommended                                                                                                               |
-| -------------- | ------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **React**      | ^19.2.0 | UI Framework  | The standard for this project. v19 (Standard 2025) brings Actions and compiler improvements.                                  |
-| **TypeScript** | ^5.9.0  | Language      | Explicit requirement. Configured for `strict: true` to ensure robust type safety matching HA standards.                       |
-| **MUI Core**   | ^6.5.0  | UI Components | Explicit requirement. v6 is the mature "Standard 2025" release (pre-v7) offering stability and broad ecosystem compatibility. |
-| **Vite**       | ^7.0.0  | Build Tool    | The de facto standard for React. Replaces CRA. Provides instant dev server and optimized production builds.                   |
+| Technology     | Version   | Purpose     | Action                                                             |
+| -------------- | --------- | ----------- | ------------------------------------------------------------------ |
+| **Vite**       | `^7.0.0`  | Build Tool  | **Upgrade** from v6. Required for React 19 support and faster HMR. |
+| **React**      | `^19.0.0` | UI Library  | **Upgrade** from v18. Enables Actions and `useOptimistic`.         |
+| **React DOM**  | `^19.0.0` | UI Renderer | **Upgrade** to match React core.                                   |
+| **TypeScript** | `^5.7.0`  | Language    | **Add**. Critical for "Strict TS" requirement.                     |
 
-### Supporting Libraries
+### UI & Styling
 
-| Library                         | Version | Purpose          | When to Use                                                                                                                    |
-| ------------------------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **home-assistant-js-websocket** | ^9.6.0  | HA Connection    | **Mandatory.** The official library for Auth and WebSocket connection to Home Assistant. Provides standard `HassEntity` types. |
-| **@mui/icons-material**         | ^6.5.0  | Icons            | Use for all UI icons to maintain consistency with MUI design system.                                                           |
-| **zustand**                     | ^5.0.0  | State Management | Use for global client state (theme, connection status). Simpler than Redux, less boilerplate than Context.                     |
-| **@tanstack/react-query**       | ^6.0.0  | Async State      | Use for fetching history/logbook data not covered by websocket subscriptions. Handles caching and loading states.              |
-| **react-router-dom**            | ^7.0.0  | Routing          | Use if the dashboard requires multiple views/pages.                                                                            |
+| Technology              | Version    | Purpose    | Action                                                                      |
+| ----------------------- | ---------- | ---------- | --------------------------------------------------------------------------- |
+| **@mui/material**       | `^6.0.0`   | Components | **Upgrade** from v5.10. Modern styling engine, better performance.          |
+| **@mui/icons-material** | `^6.0.0`   | Icons      | **Add**. Replaces `mdi-material-ui`. Official support, better tree-shaking. |
+| **@emotion/react**      | `^11.14.0` | Styling    | **Upgrade**. Peer dependency for MUI v6.                                    |
+| **@emotion/styled**     | `^11.14.0` | Styling    | **Upgrade**. Peer dependency for MUI v6.                                    |
 
-### Development Tools
+### Legacy Cleanup (Removals)
 
-| Tool         | Purpose    | Notes                                                                         |
-| ------------ | ---------- | ----------------------------------------------------------------------------- |
-| **ESLint**   | Linting    | Use Flat Config (`eslint.config.js`). Standardize on `typescript-eslint` v8+. |
-| **Vitest**   | Testing    | Fast unit testing compatible with Vite. Replaces Jest.                        |
-| **Prettier** | Formatting | Enforce consistent code style.                                                |
+| Library                    | Replacement                         | Rationale                                                                                                              |
+| -------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `mdi-material-ui`          | `@mui/icons-material`               | Package is effectively unmaintained (latest tag v4, irregular v7 updates). Switch to official MUI icons for stability. |
+| `awesome-debounce-promise` | `use-debounce` or `lodash.debounce` | Unmaintained (7+ years). React 19 concurrency safe alternatives required.                                              |
 
-## Installation
+### Development Tooling (New)
 
-```bash
-# Core
-npm install react react-dom @mui/material @emotion/react @emotion/styled @mui/icons-material
+| Tool                    | Version   | Purpose                                               |
+| ----------------------- | --------- | ----------------------------------------------------- |
+| **typescript-eslint**   | `^8.0.0`  | **Add**. Required for strict TS linting.              |
+| **vite-plugin-checker** | `^0.8.0`  | **Add**. Runs TS checks in Vite overlay.              |
+| **@types/node**         | `^22.0.0` | **Add**. Type definitions for Node.js (config files). |
+| **@types/react**        | `^19.0.0` | **Add**. React 19 type definitions.                   |
+| **@types/react-dom**    | `^19.0.0` | **Add**. React DOM 19 type definitions.               |
 
-# Supporting
-npm install home-assistant-js-websocket zustand @tanstack/react-query react-router-dom
+## Configuration Requirements
 
-# Dev dependencies
-npm install -D typescript @types/react @types/react-dom vite @vitejs/plugin-react eslint prettier vitest
+### 1. TypeScript Strict Mode (`tsconfig.json`)
+
+Must be created with `strict: true`.
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
 ```
 
-## Alternatives Considered
+### 2. Vite 7 Config (`vite.config.ts`)
 
-| Recommended | Alternative   | When to Use Alternative                                                                                                                          |
-| ----------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **MUI v6**  | MUI v7        | If "latest bleeding edge" is preferred over the specific "MUI v6" requirement. v7 (released Mar 2025) is the current major, but v6 is requested. |
-| **React**   | Lit           | If building a _custom card_ inside Lovelace rather than a standalone dashboard. Lit is the native framework of Home Assistant Frontend.          |
-| **Zustand** | Redux Toolkit | If complex state transactions are required (rare for dashboards which mostly reflect remote state).                                              |
-| **Vite**    | Next.js       | If SEO or Server Side Rendering is critical. Not recommended for an auth-gated dashboard app.                                                    |
+Update `vite.config.js` to `vite.config.ts` and ensure React plugin is configured.
 
-## What NOT to Use
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
-| Avoid                      | Why                                                              | Use Instead                   |
-| -------------------------- | ---------------------------------------------------------------- | ----------------------------- |
-| **Create React App (CRA)** | Deprecated and slow.                                             | Vite                          |
-| **MUI v5**                 | Outdated (EOL). Missing modern slot props and performance fixes. | MUI v6                        |
-| **axios / fetch**          | Manual socket handling is error-prone.                           | `home-assistant-js-websocket` |
-| **Redux (Vanilla)**        | Too much boilerplate for this use case.                          | Zustand or React Context      |
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+});
+```
 
-## Stack Patterns by Variant
+## Migration Notes
 
-**If building a Custom Panel (iframe/module):**
-
-- Use `vite-plugin-singlefile` or similar to bundle into one JS/CSS artifact.
-- Ensure `publicPath` (base) is configured correctly for HA ingress.
-
-**If utilizing Strict Mode:**
-
-- Ensure `tsconfig.json` includes:
-  ```json
-  {
-    "compilerOptions": {
-      "strict": true,
-      "noUncheckedIndexedAccess": true,
-      "exactOptionalPropertyTypes": true,
-      "verbatimModuleSyntax": true
-    }
-  }
-  ```
-
-## Version Compatibility
-
-| Package A           | Compatible With   | Notes                                          |
-| ------------------- | ----------------- | ---------------------------------------------- |
-| **MUI v6**          | **React 18 & 19** | Fully supports React 19.                       |
-| **MUI v6**          | **Emotion 11**    | Requires Emotion 11 (installed via peer deps). |
-| **ha-js-websocket** | **TypeScript 5+** | Native types included.                         |
+1.  **MUI v6 Migration**:
+    - Run codemods if available, but v5 -> v6 is mostly additive.
+    - Check `ThemeProvider` usage for deprecated theme variables.
+2.  **Icon Migration**:
+    - `import { Icon } from 'mdi-material-ui'` -> `import Icon from '@mui/icons-material/Icon'`.
+    - Verify icon names; most standard Material icons match, but community ones might be missing. If a specific MDI icon is missing in MUI, import it from `@mdi/js` and use `<SvgIcon>`.
 
 ## Sources
 
-- **MUI Releases** — Verified v6.5.0 (July 2025) and v7.3.7 (Current). v6 is the mature stable choice.
-- **Home Assistant Frontend** — Verified `home-assistant-js-websocket` v9.6.0 as the standard connection lib.
-- **npm registry** — Verified React 19 and Vite 7 current status.
-
----
-
-_Stack research for: React Home Assistant Dashboard_
-_Researched: 2026-01-27_
+- [React 19 Upgrade Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide)
+- [MUI Installation](https://mui.com/material-ui/getting-started/installation/)
+- [Vite Releases](https://github.com/vitejs/vite/releases)

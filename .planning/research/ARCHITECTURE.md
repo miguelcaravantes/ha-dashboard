@@ -1,122 +1,153 @@
 # Architecture Patterns
 
 **Domain:** React Home Assistant Dashboard (Custom Panel)
-**Researched:** Tue Jan 27 2026
+**Researched:** Jan 27 2026
+**Target:** Vite 7, React 19, MUI v6, Strict TS
 
 ## Recommended Architecture
 
-The application follows a **Custom Panel** architecture, where the React application is wrapped in a Web Component (`<react-panel>`) and injected into the Home Assistant frontend. Data is received via property injection rather than direct WebSocket connection.
+The application follows a **Micro-Frontend** pattern via a Custom Web Element (`<react-panel>`). It is injected into Home Assistant's frontend and shares the main HA WebSocket connection.
+
+### System Diagram
 
 ```mermaid
 graph TD
-    HA[Home Assistant] -- sets .hass prop --> WC[Web Component <react-panel>]
-    WC -- updates --> Store[hassStore (Vanilla JS Observer)]
-    Store -- useSyncExternalStore --> Hook[useHass()]
-    Hook -- provides typed data --> Smart[Smart Components]
-    Smart -- passes props --> Dumb[Presentation Components]
+    HA[Home Assistant Core] -->|Injects 'hass' prop| WC[<react-panel> Web Component]
+    WC -->|Updates| Store[hassStore (Vanilla Observable)]
+    Store -->|Subscribes| Hook[useHass (useSyncExternalStore)]
+    Hook -->|Provides Data| App[React App Root]
+    App -->|Renders| Feat[Feature Components]
 ```
 
 ### Component Boundaries
 
-| Component Type                | Responsibility                                                      | Connection           | Example                       |
-| ----------------------------- | ------------------------------------------------------------------- | -------------------- | ----------------------------- |
-| **Entry Point** (`index.tsx`) | Defines Custom Element, binds `hass` setter to Store, mounts React. | `HTMLElement` API    | `ReactWrapper`                |
-| **Root** (`App.tsx`)          | Sets up ThemeProvider (MUI v6), GlobalStyles, Layout.               | None                 | `App`                         |
-| **Smart Components**          | Retrieve specific entities from store, handle business logic.       | `useHass()`          | `CardDashboard`, `EntityPage` |
-| **Presentation Components**   | Render UI based on props. Pure functions.                           | Props (`HassEntity`) | `EntityCard`, `EntityRow`     |
+| Component       | Type  | Responsibility                                    | Modernization Changes                                     |
+| --------------- | ----- | ------------------------------------------------- | --------------------------------------------------------- |
+| `src/index.tsx` | Entry | Defines Web Component, creates Root, handles HMR. | **Convert to TS.** Switch to `createRoot`. Add HMR logic. |
+| `hassStore`     | State | Singleton holding the `hass` object (God Object). | **Strictly Type** with `HomeAssistant` interface.         |
+| `useHass`       | Hook  | Connects React components to the store.           | **Strict Return Type.** Remove unused `useContext`.       |
+| `App.tsx`       | View  | Root component, Routing (if any), Theme Provider. | **Add MUI v6 `ThemeProvider`.**                           |
+| `features/*`    | UI    | Domain-specific cards (Lights, Sensors).          | **Migrate to MUI v6.** **Add Strict TS.**                 |
 
 ### Data Flow
 
-1.  **Injection:** Home Assistant sets `document.querySelector('react-panel').hass = { ... }`.
-2.  **Storage:** `src/index.tsx`'s `hassStore` receives the object and notifies listeners.
-3.  **Subscription:** `useHass` hook (via `useSyncExternalStore`) subscribes to `hassStore`.
-4.  **Consumption:** Components call `useHass()` to get the _full_ `HomeAssistant` object.
-5.  **Selection:** Smart components select specific entities (e.g., `hass.states['light.living_room']`).
+1.  **Ingest:** Home Assistant sets the `.hass` property on the `<react-panel>` DOM node.
+2.  **Store:** The setter triggers `hassStore.setState(newValue)`.
+3.  **Propagate:** `useSyncExternalStore` in `useHass` detects the change and triggers a re-render.
+4.  **Render:** Components consume `hass` via `useHass()` to get entity states.
 
-## Patterns to Follow
+**Why this pattern?**
+It avoids Prop Drilling the massive `hass` object and decouples the React tree updates from the imperative DOM property updates.
 
-### Pattern 1: Strict Typed Injection
+## Modernization Strategy
 
-**What:** Use the authoritative `HomeAssistant` type for the injected object.
-**Why:** Prevents "property does not exist" errors and enables autocomplete for the massive HA state object.
+### 1. Build System (Vite 7)
+
+Switch from generic "App" build to "Library" mode to ensure a clean, single-entry output compatible with HA's resource loader.
+
+**Config Pattern:**
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  build: {
+    lib: {
+      entry: 'src/index.tsx',
+      formats: ['es'],
+      fileName: 'ha-dashboard',
+    },
+    rollupOptions: {
+      // Externalize React if loading from HA (optional, usually bundled for stability)
+      // For now: Bundle everything to avoid runtime conflicts.
+    },
+  },
+});
+```
+
+### 2. Typing Strategy (Strict TS)
+
+The `hass` object is complex. Do not define it manually.
+
+- **Connection:** Use `home-assistant-js-websocket` for connection types.
+- **Structure:** Use `home-assistant-types` (Community) or `HomeAssistant` interface copied from frontend source.
+
 **Implementation:**
 
 ```typescript
-import { HomeAssistant } from 'home-assistant-js-websocket'; // Type only
+import { HomeAssistant } from 'home-assistant-types'; // Recommended source
 
-// In Store
-export interface HassStore {
+interface HassStore {
+  state: HomeAssistant | undefined;
   subscribe: (callback: () => void) => () => void;
   getSnapshot: () => HomeAssistant | undefined;
 }
-
-// In Components
-const hass = useHass(); // Returns HomeAssistant
 ```
 
-### Pattern 2: MUI v6 Grid Migration
+### 3. UI Framework (MUI v6)
 
-**What:** Use `Grid2` instead of legacy `Grid`.
-**Why:** MUI v6 stabilizes `Grid2` which uses standard CSS `gap` instead of negative margins.
-**Implementation:**
+**No Shadow DOM:**
+The current architecture renders directly into the Custom Element (`this`).
 
-```typescript
-import Grid from '@mui/material/Grid2';
+- **Pros:** Simplifies MUI integration (styles inject into `<head>`).
+- **Cons:** Global HA styles might bleed in.
+- **Decision:** **Keep No Shadow DOM** for this milestone. It reduces complexity. Use specific class names if conflicts arise.
 
-<Grid container spacing={2}>
-  <Grid size={{ xs: 12, md: 6 }}>...</Grid>
-</Grid>;
-```
+**Integration:**
 
-### Pattern 3: Feature-Based Organization
+- Wrap `<App />` with `<ThemeProvider theme={theme}><CssBaseline />`.
+- Ensure `theme` adapts to HA's dark/light mode if possible (read from `hass.selectedTheme` or `prefers-color-scheme`).
 
-**What:** Keep the `src/features/` directory. Each feature folder should contain its main component, sub-components, and any feature-specific utils.
+## Patterns to Follow
+
+### Pattern 1: The "Hass Hook" Access
+
+**What:** Always use `useHass()` to access state. Never pass `hass` down as props.
+**When:** In any feature component needing entity data.
 **Example:**
 
+```typescript
+const { states } = useHass();
+const entity = states['light.living_room'];
 ```
-src/features/LightControl/
-  ├── LightControl.tsx    # Smart component
-  ├── LightSlider.tsx     # Presentation
-  └── light-utils.ts      # Logic
+
+### Pattern 2: Entity ID Safety
+
+**What:** Use a typed helper or constants for Entity IDs if possible, or at least validate existence.
+**When:** Accessing `states[id]`.
+**Example:**
+
+```typescript
+const entity = states[ENTITY_ID];
+if (!entity) return <Unavailable />;
 ```
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Context for Global State
+### Anti-Pattern 1: Context Duplication (Dead Code)
 
-**What:** Using `React.Context` to pass the `hass` object down.
-**Why Bad:** The `hass` object updates frequently (every state change in HA). Context causes full tree re-renders unless carefully optimized.
-**Instead:** Continue using `useSyncExternalStore` (as currently implemented in `useHass.js`) which allows React to bail out of updates if selected data hasn't changed (if selectors are used).
+**What:** Creating a React Context (`HassContext`) that mirrors the `hassStore`.
+**Why bad:** Redundant. `useSyncExternalStore` is more efficient for high-frequency updates (like sensor changes).
+**Fix:** Delete `src/common/HassContext.js` as it is unused.
 
-### Anti-Pattern 2: Loose Prop Typing
+### Anti-Pattern 2: Destructuring "God Object" in Props
 
-**What:** `props: any` or `props: { entity: object }`.
-**Why Bad:** Defeats the purpose of TS.
-**Instead:**
-
-```typescript
-import { HassEntity } from 'home-assistant-js-websocket';
-
-interface EntityCardProps {
-  entity: HassEntity;
-  hass: HomeAssistant; // If needed for service calls
-}
-```
+**What:** Passing `props.hass` to every child.
+**Why bad:** Causes full-tree re-renders on _any_ state change (which happens every second in HA).
+**Instead:** Pass only necessary data (e.g., `entityId`) and let the child `useHass()` + selector (if optimized) or just access what it needs.
 
 ## Scalability Considerations
 
-| Concern              | Impact                                          | Strategy                                                                                                     |
-| -------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **Frequent Updates** | `hass` object changes on every event (seconds). | Use memoization (`React.memo`) on presentation components. Use selectors in `useHass` (future optimization). |
-| **Bundle Size**      | MUI is large.                                   | Use Tree-shaking. Import specific icons (e.g. `mdi-material-ui/Lightbulb`).                                  |
+| Concern                | Impact                                            | Mitigation                                                                                                                                                       |
+| ---------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Render Performance** | `hass` updates frequently (time, sensor changes). | `useSyncExternalStore` is good, but basic usage re-renders on _every_ update. **Future Phase:** Implement selectors in `useHass` (e.g., `useEntity('light.x')`). |
+| **Bundle Size**        | React + MUI is heavy (~300kb+).                   | Use Vite 7 tree-shaking. Ensure only used icons (`mdi-material-ui`) are imported.                                                                                |
 
-## Suggested Build Order
+## Build Order
 
-1.  **Foundation:** Rename `index.jsx` -> `index.tsx`, `App.jsx` -> `App.tsx`. Define `hassStore` with types.
-2.  **Hooks:** Type `useHass.ts` and `useEntity.ts`.
-3.  **UI Core:** Upgrade MUI to v6. Update `ThemeProvider` to use `cssVariables: true`.
-4.  **Components (Bottom-Up):** Convert generic UI components (Icons, Panels) to TSX.
-5.  **Features (Top-Down):** Convert `CardDashboard`, then individual cards (`EntityCard`).
+1.  **Clean:** Remove `HassContext` and unused imports.
+2.  **Tooling:** Update `vite.config.ts` (Vite 7, Lib mode).
+3.  **Strict TS:** Rename `.js/.jsx` to `.ts/.tsx`. Fix strict errors in `index.tsx` and `useHass.ts` first.
+4.  **MUI v6:** Upgrade dependencies. Wrap App in ThemeProvider. Fix breaking changes in components.
 
 ## Sources
 

@@ -1,138 +1,130 @@
 # Project Research Summary
 
-**Project:** React Home Assistant Dashboard
-**Domain:** Smart Home / IoT Dashboard
-**Researched:** Tue Jan 27 2026
+**Project:** React Home Assistant Dashboard - Modernization
+**Domain:** Smart Home / Frontend Engineering
+**Researched:** Jan 27, 2026
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This project involves building a **React-based Custom Panel** for Home Assistant, designed to run directly within the Home Assistant frontend environment. Unlike a standalone web app, this "Custom Panel" architecture requires wrapping the React application in a Web Component and relying on property injection for data (specifically the `hass` object) rather than managing its own WebSocket connections. This approach ensures seamless integration with the host environment's authentication and state management.
+The React Home Assistant Dashboard project is a modernization effort to upgrade an existing dashboard to a state-of-the-art stack. Research indicates a "Micro-Frontend" architecture where the React application runs as a custom web element (`<react-panel>`) injected into Home Assistant. This approach leverages the parent application's authentication and WebSocket connection while providing a modern development environment.
 
-The recommended approach leverages a modern "Standard 2025" stack: **React 19**, **MUI v6**, and **Strict TypeScript**. A key architectural pattern is the use of a **Vanilla JS Store** connected to React via `useSyncExternalStore` to handle the frequent, massive state updates from Home Assistant without causing unnecessary re-renders—a critical optimization for dashboard performance. The build system shifts from legacy CRA to **Vite 7** for superior performance and developer experience.
+The recommended stack is a significant leap forward, adopting Vite 7, React 19, and MUI v6, underpinned by strict TypeScript. This combination offers superior developer experience (instant HMR) and runtime performance (React Compiler, no shadow DOM overhead). The strategy prioritizes a "Leaf-up" migration to Strict TypeScript to prevent regressions and improve stability.
 
-Key risks center on the migration to strict TypeScript and MUI v6. The "Implicit Any" trap during migration can paralyze development if not managed with an incremental strategy. Additionally, MUI v6 introduces breaking changes to the Grid system (now `Grid2`) and theming engine (CSS variables) that require careful handling to avoid layout regressions.
+Key risks include the "Implicit Any" avalanche when enabling strict mode and version compatibility issues with Node.js and legacy packages like `mdi-material-ui`. Mitigation involves a phased migration: upgrading infrastructure first, then core libraries, and finally converting feature components incrementally while maintaining a working state.
 
 ## Key Findings
 
 ### Recommended Stack
 
-**Core technologies:**
+The research prescribes a complete overhaul of the build and runtime environment to align with 2026 standards. The focus is on strict type safety and build performance.
 
-- **React 19 / Vite 7:** The standard modern web foundation. React 19 brings compiler improvements, while Vite replaces the deprecated Create React App.
-- **MUI v6:** The required UI framework. Version 6 offers stable "Standard 2025" features like CSS variables and `Grid2`, replacing legacy patterns.
-- **TypeScript 5.9+:** Configured with `strict: true` to match Home Assistant's high standards for type safety.
-- **home-assistant-js-websocket:** The mandatory library for typing and handling Home Assistant connection objects.
-- **Zustand:** Recommended for global client-side state management due to its simplicity compared to Redux.
+**Core technologies:**
+- **Vite 7**: Build Tool — Replaces legacy Webpack/Vite 6 for instant HMR and strict TS support.
+- **React 19**: UI Library — Enables concurrent rendering features and the new React Compiler.
+- **MUI v6**: Component Library — Improved styling engine and "Grid v2" for responsive layouts.
+- **TypeScript 5.7+**: Language — Critical for "Strict Mode" to prevent runtime errors with HA entities.
 
 ### Expected Features
 
 **Must have (table stakes):**
-
-- **Strict TypeScript:** A fully typed codebase (`noImplicitAny`) to prevent runtime errors.
-- **Native Dark Mode:** Seamless integration with HA's dark mode using MUI's `colorSchemes`.
-- **CSS Theme Variables:** Modern theming that eliminates SSR flickering and simplifies style overrides.
+- **Strict Type Safety** — Compile-time validation of Home Assistant entities to prevent "white screens of death."
+- **Instant HMR** — Sub-100ms updates during development.
+- **CSS Variables Theming** — Instant light/dark mode switching without React re-renders.
+- **Responsive Grid v2** — Standardized layout component replacing legacy Grid.
 
 **Should have (competitive):**
-
-- **Container Queries:** For responsive dashboard cards that adapt to their container size, not just the viewport.
-- **Standardized Gap:** Using `Grid2`'s CSS `gap` property for cleaner layouts.
+- **React Actions** — Modern state handling for mutations (toggling lights).
+- **Typed Entity Hooks** — `useEntity('light.x')` with autocomplete.
+- **React Compiler** — Automatic memoization for performance.
 
 **Defer (v2+):**
-
-- **Pigment CSS:** A zero-runtime CSS-in-JS solution. While powerful, it adds significant build complexity that may distract from the primary migration goals.
+- **Zero-Runtime Styles (Pigment CSS)** — Deferred to avoid complexity during initial migration.
 
 ### Architecture Approach
 
-The application follows a **Custom Panel Architecture** where the React root is wrapped in a Web Component (`<react-panel>`).
+The application functions as a Micro-Frontend injected into Home Assistant via a Custom Web Element.
 
 **Major components:**
-
-1.  **Web Component Wrapper:** Receives the `hass` property from Home Assistant and pushes it to a central store.
-2.  **HassStore:** A vanilla JS observer that holds the current state.
-3.  **useHass Hook:** Connects components to the store using `useSyncExternalStore` to prevent unnecessary re-renders.
-4.  **Feature Modules:** Self-contained directories (`src/features/LightControl`) containing smart components and logic.
+1. **`<react-panel>` (Web Component)** — Entry point that receives the `hass` prop from Home Assistant.
+2. **`hassStore` (Singleton)** — A vanilla observable store that holds the global `hass` object, avoiding prop drilling.
+3. **`useHass` (Hook)** — Connects React components to the store using `useSyncExternalStore` for efficient updates.
 
 ### Critical Pitfalls
 
-1.  **The "Implicit Any" Tsunami:** Trying to migrate everything to strict TS at once leads to burnout. **Avoid:** Use "Leaf-up" migration and `allowJs: true` initially.
-2.  **Context "Empty Object" Trap:** Initializing Context with `{}` causes type errors in strict mode. **Avoid:** Use `null` as initial value and guard with a custom hook.
-3.  **Grid v2 Prop Mismatch:** MUI v6 `Grid2` uses different props (`size` vs `xs`) than v5. **Avoid:** Audit all Grid usage and use codemods.
+1. **Implicit Any Avalanche** — Turning on `strict: true` globally breaks the build. **Avoid** by using `allowJs: true` and migrating file-by-file ("leaf-up" strategy).
+2. **Vite 7 Node Lockout** — Vite 7 requires Node 20.19+ or 22.12+. **Avoid** by upgrading CI/Dev environment first.
+3. **React 19 Ref Callbacks** — Implicit returns in ref callbacks cause TS errors. **Avoid** by fixing these patterns before enabling strict mode.
+4. **MUI Grid v2 Conflicts** — Mixing legacy `Grid` props with MUI v6 breaks layouts. **Avoid** by using codemods and auditing usage.
 
 ## Implications for Roadmap
 
 Based on research, suggested phase structure:
 
-### Phase 1: Foundation & Infrastructure
+### Phase 1: Infrastructure Foundation
+**Rationale:** The new stack requires a compatible runtime (Node) and build system (Vite 7) before any code changes can occur.
+**Delivers:** A working "Hello World" build with Vite 7 and TypeScript configuration in place (but loose).
+**Addresses:** Instant HMR, Vite 7 support.
+**Avoids:** Node.js Version Lockout.
 
-**Rationale:** A stable build and type system is required before porting any UI. The architecture relies on the correct implementation of the `hass` injection which must be proven first.
-**Delivers:** configured Vite setup, Strict TS config, basic Web Component wrapper, and the `useHass` hook infrastructure.
-**Addresses:** Strict TypeScript Config, connection to Home Assistant.
-**Avoids:** "Implicit Any" Tsunami (by setting up config correctly from the start).
+### Phase 2: Core Modernization
+**Rationale:** The "God Object" (`hass` prop) handling needs to be modernized and typed before feature components can use it safely.
+**Delivers:** Upgraded React 19 / MUI v6 dependencies, typed `hassStore`, and a modernized `index.tsx` entry point.
+**Uses:** React 19, MUI v6, `home-assistant-types`.
+**Implements:** `hassStore` singleton pattern.
 
-### Phase 2: Core UI System
+### Phase 3: Component Migration (Leaf-Up)
+**Rationale:** Feature components must be migrated incrementally to Strict TS to avoid the "Avalanche" pitfall.
+**Delivers:** Feature components converted to `.tsx` one by one, with proper entity typing and MUI v6 components.
+**Addresses:** Strict Type Safety, Responsive Grid v2.
+**Avoids:** Implicit Any Avalanche, Grid v2 Conflicts.
 
-**Rationale:** Feature development requires the design system to be in place. MUI v6 setup is complex and should be isolated from feature logic.
-**Delivers:** Theme provider with CSS variables, Dark Mode support, Layout shell, and atomic UI components (Buttons, Cards).
-**Uses:** MUI v6, CSS Theme Variables.
-**Avoids:** Theme Object Mutation, Grid v2 Prop Mismatch.
-
-### Phase 3: Dashboard Feature Migration
-
-**Rationale:** With the foundation and UI system ready, features can be ported one by one into the new `src/features/` structure.
-**Delivers:** Functional dashboard features (Entity Cards, Logbooks, Controls) connected to real data.
-**Implements:** Smart/Dumb component pattern, Feature-based organization.
-
-### Phase 4: Optimization & Polish
-
-**Rationale:** Performance tuning and advanced features should only occur after the core value is delivered and stable.
-**Delivers:** Code splitting, potentially Pigment CSS (if needed), detailed accessibility/testing polish.
+### Phase 4: Optimization & Cleanup
+**Rationale:** Once the codebase is fully typed and modern, we can enable advanced features and remove dead code.
+**Delivers:** Enabled React Compiler, removed legacy libs (`mdi-material-ui`, `awesome-debounce-promise`), strict linting.
+**Addresses:** Performance differentiators.
 
 ### Phase Ordering Rationale
 
-- **Foundation first:** We cannot build React components without the Web Component wrapper and `hass` injection mechanism working.
-- **UI System second:** We need the MUI v6 theme and `Grid2` patterns defined so feature developers don't use legacy v5 patterns.
-- **Features parallel:** Once Phase 2 is done, multiple features could potentially be built in parallel.
+- **Infrastructure First:** You can't run Vite 7 without the right Node version.
+- **Core Second:** You can't type check feature components if the core `hass` object types aren't defined.
+- **Migration Third:** Doing this incrementally prevents a "broken build" state that lasts for weeks.
 
 ### Research Flags
 
 Phases likely needing deeper research during planning:
-
-- **Phase 4 (Optimization):** Pigment CSS integration with Vite in a Custom Panel context might be tricky.
+- **Phase 3 (Component Migration):** Needs specific investigation into complex custom cards that might rely on deprecated MUI v5 features or weird `hass` object structures.
 
 Phases with standard patterns (skip research-phase):
-
-- **Phase 1 (Foundation):** Standard Vite + TS setup.
-- **Phase 2 (UI System):** Well-documented MUI v6 patterns.
+- **Phase 1 (Infrastructure):** Standard Vite/TS setup.
+- **Phase 2 (Core):** Standard library upgrades documented in release notes.
 
 ## Confidence Assessment
 
-| Area         | Confidence | Notes                                                                             |
-| ------------ | ---------- | --------------------------------------------------------------------------------- |
-| Stack        | HIGH       | Verified versions (React 19, MUI v6) against official docs and HA standards.      |
-| Features     | HIGH       | Clear distinction between stable features and bleeding edge (Pigment CSS).        |
-| Architecture | HIGH       | The "Web Component Wrapper" pattern is the standard for HA Custom Panels.         |
-| Pitfalls     | HIGH       | Specific, code-level pitfalls identified from experience with similar migrations. |
+| Area | Confidence | Notes |
+|------|------------|-------|
+| Stack | HIGH | Official docs for React 19, Vite 7, and MUI v6 are clear. |
+| Features | HIGH | Table stakes are well-defined by modern standards. |
+| Architecture | HIGH | The Micro-Frontend pattern is standard for HA dashboards. |
+| Pitfalls | HIGH | Risks are well-documented in migration guides. |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Custom Panel Entry:** Exact details of `vite-plugin-singlefile` or similar bundling strategy for the Custom Panel entry point need to be verified during Phase 1 implementation.
+- **Community Icons:** The mapping from `mdi-material-ui` to `@mui/icons-material` might not be 1:1. Some icons might be missing and require `@mdi/js`.
+- **Theme Adaptation:** Exact mechanism for syncing HA theme (light/dark) to MUI theme needs verification during Phase 2.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-
-- **MUI Releases:** Verified v6.5.0 and v7.3.7 status.
-- **Home Assistant Frontend:** Verified `home-assistant-js-websocket` v9.6.0 usage.
-- **MUI v6 Upgrade Guide:** Source of migration steps and pitfalls.
+- **Vite 7 Roadmap** — Verified Node.js requirements.
+- **React 19 Upgrade Guide** — Verified Ref callback changes and Compiler features.
+- **MUI v6 Migration Guide** — Verified Grid v2 and styling changes.
 
 ### Secondary (MEDIUM confidence)
-
-- **Project Codebase:** Analysis of `src/index.jsx` and `App.jsx` confirmed current legacy patterns.
+- **Home Assistant Frontend Repo** — Logic for Custom Panel injection.
 
 ---
-
-_Research completed: Tue Jan 27 2026_
-_Ready for roadmap: yes_
+*Research completed: Jan 27, 2026*
+*Ready for roadmap: yes*
