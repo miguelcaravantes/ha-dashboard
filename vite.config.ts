@@ -6,9 +6,10 @@ export default defineConfig({
   base: './',
   server: {
     port: 8080,
-    hmr: false,
+    hmr: true,
   },
   build: {
+    target: 'esnext',
     // generate manifest.json in outDir
     assetsDir: './',
     rollupOptions: {
