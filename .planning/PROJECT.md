@@ -8,6 +8,17 @@ A custom React-based dashboard for Home Assistant, integrated as a Custom Panel.
 
 Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
 
+## Current Milestone: v1.0 Foundation & Modernization
+
+**Goal:** Establish modern stack (Vite 7, React 19, Strict TS, MUI v6) and migrate core infrastructure.
+
+**Target features:**
+
+- **Strict TypeScript**: Type-safe codebase with `home-assistant-js-websocket` types.
+- **MUI v6 System**: New theming engine with CSS variables and Grid2.
+- **Modern Build**: Vite 7 replacing legacy build tooling.
+- **Web Component Wrapper**: Robust `hass` property injection and state management.
+
 ## Requirements
 
 ### Validated
@@ -31,6 +42,7 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 
 - **New Features** — Adding new cards or functionality (focus is on refactor)
 - **HA Core Changes** — Modifications to Home Assistant itself
+- **Pigment CSS** — Deferred to v2 (optimization phase)
 
 ## Context
 
@@ -47,11 +59,12 @@ Provide a modern, type-safe, and performant interface for controlling Home Assis
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| **Big Bang Migration** | Small codebase (8 files) allows for immediate full conversion. | — Pending |
+| Decision                | Rationale                                                                     | Outcome   |
+| ----------------------- | ----------------------------------------------------------------------------- | --------- |
+| **Big Bang Migration**  | Small codebase (8 files) allows for immediate full conversion.                | — Pending |
 | **Standard Hass Types** | Using community/standard libraries avoids maintenance burden of manual types. | — Pending |
-| **MUI v6** | Keeping UI library current ensures long-term support and features. | — Pending |
+| **MUI v6**              | Keeping UI library current ensures long-term support and features.            | — Pending |
 
 ---
-*Last updated: 2026-01-27 after initialization*
+
+_Last updated: 2026-01-27 after v1.0 start_
