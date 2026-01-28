@@ -72,21 +72,21 @@ This phase upgrades the primary dependencies and establishes the global data lay
 **Goal:** UI components are type-safe, responsive, and use modern patterns.
 
 **Plans:** 5 plans
-- [ ] 03-01-PLAN.md — Entity Typing & Strict Foundation
-- [ ] 03-02-PLAN.md — Layout & Dashboard Migration
-- [ ] 03-03-PLAN.md — Entity Card & Sub-components
-- [ ] 03-04-PLAN.md — Detail Views & Actions
-- [ ] 03-05-PLAN.md — Remaining Components & Finalization
+- [x] 03-01-PLAN.md — Entity Typing & Strict Foundation
+- [x] 03-02-PLAN.md — Layout & Dashboard Migration
+- [x] 03-03-PLAN.md — Entity Card & Sub-components
+- [x] 03-04-PLAN.md — Detail Views & Actions
+- [x] 03-05-PLAN.md — Remaining Components & Finalization
 
 This is the bulk of the work, migrating components to strict TypeScript, implementing new hooks, and adopting modern UI patterns like Grid v2 and Container Queries.
 
 **Plans:** 5 plans
 
-- [ ] 03-01-PLAN.md — Entity Typing & Strict Foundation
-- [ ] 03-02-PLAN.md — Layout & Dashboard Migration
-- [ ] 03-03-PLAN.md — Entity Card & Sub-components Migration
-- [ ] 03-04-PLAN.md — Detail Views & Actions Migration
-- [ ] 03-05-PLAN.md — Remaining Components & Strict Finalization
+- [x] 03-01-PLAN.md — Entity Typing & Strict Foundation
+- [x] 03-02-PLAN.md — Layout & Dashboard Migration
+- [x] 03-03-PLAN.md — Entity Card & Sub-components Migration
+- [x] 03-04-PLAN.md — Detail Views & Actions Migration
+- [x] 03-05-PLAN.md — Remaining Components & Strict Finalization
 
 | Requirement | Description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
@@ -125,5 +125,5 @@ With the codebase fully strictly typed, we can safely enable the React Compiler 
 | --------------------- | ----------------------- | ---------- |
 | **1. Infrastructure** | Build system & Node env | ✓ Complete |
 | **2. Core**           | React 19 & MUI v6       | ✓ Complete |
-| **3. Migration**      | Strict TS & Components  | ○ Planned |
+| **3. Migration**      | Strict TS & Components  | ✓ Complete |
 | **4. Optimization**   | Compiler & Pigment CSS  | 🔴 Pending |
