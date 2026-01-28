@@ -1,6 +1,7 @@
-import useEntity from '../common/hooks/useEntity';
-import Icon from './Icon';
+import useEntity from '../common/hooks/useEntity.js';
+import Icon from './Icon.js';
 import { styled } from '@mui/material/styles';
+import type { KnownEntityId } from '../types/entities.js';
 
 const Root = styled('div')(({ theme }) => ({
   height: theme.spacing(12),
@@ -17,8 +18,15 @@ const SensorIcon = styled(Icon)(({ theme }) => ({
   height: theme.spacing(8),
 }));
 
-export default function BinarySensor(props) {
-  const { name: overrideName, entityId } = props;
+interface BinarySensorProps {
+  name?: string;
+  entityId: KnownEntityId;
+}
+
+export default function BinarySensor({
+  name: overrideName,
+  entityId,
+}: BinarySensorProps) {
   const { name: entityName, icon } = useEntity(entityId);
 
   const name = overrideName ?? entityName;

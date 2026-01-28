@@ -1,6 +1,7 @@
-import useEntity from '../common/hooks/useEntity';
+import useEntity from '../common/hooks/useEntity.js';
 import { styled } from '@mui/material/styles';
-import Icon from './Icon';
+import Icon from './Icon.js';
+import type { KnownEntityId } from '../types/entities.js';
 
 const Root = styled('div')(({ theme }) => ({
   height: theme.spacing(12),
@@ -9,7 +10,7 @@ const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifycontent: 'center',
+  justifyContent: 'center',
 }));
 
 const SensorIcon = styled(Icon)`
@@ -25,10 +26,16 @@ const LabelUnit = styled('span')({
   verticalAlign: 'super',
 });
 
-export default function Sensor(props) {
-  const { entityId } = props;
+interface SensorProps {
+  entityId: KnownEntityId;
+}
+
+export default function Sensor({ entityId }: SensorProps) {
   const { state, icon, unitOfMeasurement } = useEntity(entityId);
-  const roundedValue = Math.round(state * 10) / 10;
+  const numericState = parseFloat(state);
+  const roundedValue = isNaN(numericState)
+    ? state
+    : Math.round(numericState * 10) / 10;
   const display = roundedValue;
 
   return (
