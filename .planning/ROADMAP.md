@@ -38,9 +38,9 @@ This phase replaces the legacy build system with Vite 7 and aligns the Node.js e
 
 **Plans:** 3 plans
 
-- [ ] 02-01-PLAN.md — React 19 & MUI v7 foundation
-- [ ] 02-02-PLAN.md — Type-safe data layer (HassProvider)
-- [ ] 02-03-PLAN.md — Modern CSS variable theming
+- [x] 02-01-PLAN.md — React 19 & MUI v7 foundation
+- [x] 02-02-PLAN.md — Type-safe data layer (HassProvider)
+- [x] 02-03-PLAN.md — Modern CSS variable theming
 
 **Goal:** Application runtime powers React 19 and MUI v6 with typed data.
 
@@ -48,9 +48,9 @@ This phase upgrades the primary dependencies and establishes the global data lay
 
 **Plans:** 3 plans
 
-- [ ] 02-01-PLAN.md — Core Foundation Upgrade (React 19 & MUI v7)
-- [ ] 02-02-PLAN.md — Type-Safe Data Layer (HassProvider & useSyncExternalStore)
-- [ ] 02-03-PLAN.md — CSS Variable Theming (Modern Engine Migration)
+- [x] 02-01-PLAN.md — Core Foundation Upgrade (React 19 & MUI v7)
+- [x] 02-02-PLAN.md — Type-Safe Data Layer (HassProvider & useSyncExternalStore)
+- [x] 02-03-PLAN.md — CSS Variable Theming (Modern Engine Migration)
 
 | Requirement | Description                                                            |
 | ----------- | ---------------------------------------------------------------------- |
@@ -109,6 +109,6 @@ With the codebase fully strictly typed, we can safely enable the React Compiler 
 | Phase                 | Goal                    | Status     |
 | --------------------- | ----------------------- | ---------- |
 | **1. Infrastructure** | Build system & Node env | ✓ Complete |
-| **2. Core**           | React 19 & MUI v6       | ○ Planned |
+| **2. Core**           | React 19 & MUI v6       | ✓ Complete |
 | **3. Migration**      | Strict TS & Components  | 🔴 Pending |
 | **4. Optimization**   | Compiler & Pigment CSS  | 🔴 Pending |

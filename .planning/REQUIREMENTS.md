@@ -48,18 +48,18 @@ Requirements for initial release. Each maps to roadmap phases.
 | INFRA-01    | Phase 1 | Complete |
 | INFRA-02    | Phase 1 | Complete |
 | INFRA-03    | Phase 1 | Complete |
-| CORE-01     | Phase 2 | Pending |
+| CORE-01     | Phase 2 | Complete |
 | CORE-02     | Phase 3 | Pending |
 | CORE-03     | Phase 4 | Pending |
 | CORE-04     | Phase 3 | Pending |
-| UI-01       | Phase 2 | Pending |
-| UI-02       | Phase 2 | Pending |
+| UI-01       | Phase 2 | Complete |
+| UI-02       | Phase 2 | Complete |
 | UI-03       | Phase 3 | Pending |
 | UI-04       | Phase 4 | Pending |
 | UI-05       | Phase 3 | Pending |
 | DATA-01     | Phase 3 | Pending |
-| DATA-02     | Phase 2 | Pending |
-| DATA-03     | Phase 2 | Pending |
+| DATA-02     | Phase 2 | Complete |
+| DATA-03     | Phase 2 | Complete |
 
 **Coverage:**
 
