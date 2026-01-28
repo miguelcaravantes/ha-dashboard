@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import shallowEqual from 'shallowequal';
 import type { HassEntity } from 'home-assistant-js-websocket';
 import type { HomeAssistant } from '../../types/home-assistant.js';
+import type { EntityId, KnownEntityId } from '../../types/entities.js';
 
 type DomainIcon = string | { default: string; group: string };
 
@@ -128,34 +129,39 @@ export interface UseEntityResult {
   icon: string | undefined;
 }
 
-export default function useEntity(entityId: string): UseEntityResult {
+export default function useEntity(entityId: KnownEntityId): UseEntityResult {
   const { stateObj, callService } = useSyncExternalStoreWithSelector(
     hassStore.subscribe,
     hassStore.getSnapshot,
     hassStore.getServerSnapshot,
     (snapshot: HomeAssistant) => ({
       callService: snapshot.callService,
-      stateObj: snapshot.states ? snapshot.states[entityId] : undefined,
+      stateObj: snapshot.states
+        ? snapshot.states[entityId as string]
+        : undefined,
     }),
     shallowEqual
   );
 
-  const domain = entityId.split('.')[0] || '';
+  const domain = (entityId as string).split('.')[0] || '';
 
   const actionType = actionTypesMap.get(domain);
 
   const attributes = stateObj?.attributes || {};
-  const childrenLength = (attributes as any).entity_id?.length;
-  const isGroup =
-    Array.isArray((attributes as any).entity_id) &&
-    (attributes as any).entity_id.length > 1;
+  const entityIds = (attributes as any).entity_id as string[] | undefined;
+  const childrenLength = entityIds?.length;
+  const isGroup = Array.isArray(entityIds) && entityIds.length > 1;
 
-  const unitOfMeasurement = attributes.unit_of_measurement;
-  const deviceClass = (attributes as any).device_class;
-  const supportedFeatures = (attributes as any).supported_features;
+  const unitOfMeasurement = attributes.unit_of_measurement as
+    | string
+    | undefined;
+  const deviceClass = (attributes as any).device_class as string | undefined;
+  const supportedFeatures = (attributes as any).supported_features as
+    | number
+    | undefined;
 
   const state = stateObj?.state || 'unknown';
-  const stateIcon = attributes.icon;
+  const stateIcon = attributes.icon as string | undefined;
 
   const icon = useMemo(
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
@@ -163,7 +169,7 @@ export default function useEntity(entityId: string): UseEntityResult {
   );
 
   const handleOpenMoreInfo = useCallback(
-    () => openMoreInfo(entityId),
+    () => openMoreInfo(entityId as string),
     [entityId]
   );
 
@@ -185,12 +191,12 @@ export default function useEntity(entityId: string): UseEntityResult {
 
   return {
     domain,
-    name: attributes.friendly_name,
+    name: attributes.friendly_name as string | undefined,
     state,
     stateObj,
     isGroup,
     groupCount: isGroup ? childrenLength : undefined,
-    groupEntities: isGroup ? (attributes as any).entity_id : undefined,
+    groupEntities: isGroup ? entityIds : undefined,
     unitOfMeasurement,
     supportedFeatures,
     actionType,
