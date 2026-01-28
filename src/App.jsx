@@ -4,7 +4,7 @@ import {
   createTheme,
   ThemeProvider as ThemeProvider,
 } from '@mui/material/styles';
-import lightBlue from '@mui/material/colors/lightBlue';
+import { lightBlue } from '@mui/material/colors';
 
 const prefersDarkMode = true; //useMediaQuery('(prefers-color-scheme: dark)');
 const theme = createTheme({
