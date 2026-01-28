@@ -18,9 +18,9 @@ This phase replaces the legacy build system with Vite 7 and aligns the Node.js e
 
 **Plans:** 3 plans
 
-- [ ] 01-01-PLAN.md — Node.js environment & legacy cleanup
-- [ ] 01-02-PLAN.md — Vite 7 upgrade & modern build config
-- [ ] 01-03-PLAN.md — ESLint 9 Flat Config with TS support
+- [x] 01-01-PLAN.md — Node.js environment & legacy cleanup
+- [x] 01-02-PLAN.md — Vite 7 upgrade & modern build config
+- [x] 01-03-PLAN.md — ESLint 9 Flat Config with TS support
 
 | Requirement  | Description                                                         |
 | ------------ | ------------------------------------------------------------------- |
@@ -96,7 +96,7 @@ With the codebase fully strictly typed, we can safely enable the React Compiler 
 
 | Phase                 | Goal                    | Status     |
 | --------------------- | ----------------------- | ---------- |
-| **1. Infrastructure** | Build system & Node env | 🔴 Pending |
+| **1. Infrastructure** | Build system & Node env | ✓ Complete |
 | **2. Core**           | React 19 & MUI v6       | 🔴 Pending |
 | **3. Migration**      | Strict TS & Components  | 🔴 Pending |
 | **4. Optimization**   | Compiler & Pigment CSS  | 🔴 Pending |
