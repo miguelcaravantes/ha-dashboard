@@ -64,9 +64,8 @@ const actionTypesMap = new Map([
 ]);
 
 const getIcon = (domain, isGroup, state, stateIcon, deviceClass) => {
-  let icon;
   const domainIcon = domainMapping[domain];
-  icon =
+  const icon =
     typeof domainIcon === 'object'
       ? domainIcon[isGroup ? 'group' : 'default']
       : domainIcon;
@@ -114,7 +113,7 @@ export default function useEntity(entityId) {
   const state = stateObj.state;
   const stateIcon = stateObj.attributes.icon;
 
-  let icon = useMemo(
+  const icon = useMemo(
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
     [domain, isGroup, state, stateIcon, deviceClass]
   );

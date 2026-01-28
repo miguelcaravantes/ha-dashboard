@@ -1,7 +1,7 @@
 import { Switch } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 
-const StyledSwitch = styled(({ overrideColor, ...props }) => (
+const StyledSwitch = styled(({ overrideColor: _overrideColor, ...props }) => (
   <Switch {...props} />
 ))((props) => ({
   '.MuiSwitch-switchBase': {

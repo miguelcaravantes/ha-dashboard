@@ -54,7 +54,7 @@ export default function EntityDialog(props) {
   const Detail = domainDetailMap[domain];
 
   const handleClose = () => {
-    onClose && onClose();
+    onClose?.();
   };
 
   return (

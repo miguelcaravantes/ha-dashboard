@@ -1,5 +1,4 @@
-import { Store } from 'mdi-material-ui';
-import { useContext, useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react';
 import { hassStore } from '../../index';
 
 export function useHass() {

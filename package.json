@@ -44,7 +44,7 @@
     "dev": "vite",
     "start": "vite serve",
     "build": "vite build",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint ."
   },
   "author": "Miguel Caravantes",
   "license": "ISC",

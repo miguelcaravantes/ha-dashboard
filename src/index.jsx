@@ -13,7 +13,7 @@ function createStore(initalState = {}) {
 
   function subscribe(listener) {
     listeners.add(listener);
-    () => listeners.delete(listener);
+    return () => listeners.delete(listener);
   }
   function getSnapshot() {
     return state;
