@@ -35,8 +35,8 @@ const domainDetailMap: Record<
   string,
   React.ComponentType<{ entityId: KnownEntityId }>
 > = {
-  light: LightDetail as any,
-  fan: FanDetail as any,
+  light: LightDetail,
+  fan: FanDetail,
 };
 
 interface DialogToolbarProps {

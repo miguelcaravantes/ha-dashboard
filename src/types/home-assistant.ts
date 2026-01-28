@@ -7,33 +7,37 @@ import type {
 } from 'home-assistant-js-websocket';
 
 export interface HomeAssistant {
-  auth: any;
-  connection: any;
+  auth: unknown;
+  connection: unknown;
   connected: boolean;
   states: HassEntities;
   services: HassServices;
   config: HassConfig;
-  themes: any;
-  selectedTheme?: any;
-  panels: any;
+  themes: unknown;
+  selectedTheme?: unknown;
+  panels: unknown;
   panelUrl: string;
   language: string;
   selectedLanguage: string | null;
-  locale: any;
-  resources: any;
-  localize: any;
-  translationMetadata: any;
+  locale: unknown;
+  resources: unknown;
+  localize: (...args: unknown[]) => string;
+  translationMetadata: unknown;
   suspendWhenHidden: boolean;
   enableShortcuts: boolean;
   user: HassUser;
   callService: (
     domain: string,
     service: string,
-    serviceData?: any,
-    target?: any
-  ) => Promise<any>;
-  callApi: (method: string, path: string, parameters?: any) => Promise<any>;
-  fetchWithAuth: (path: string, options?: any) => Promise<any>;
+    serviceData?: Record<string, unknown>,
+    target?: Record<string, unknown>
+  ) => Promise<unknown>;
+  callApi: (
+    method: string,
+    path: string,
+    parameters?: Record<string, unknown>
+  ) => Promise<unknown>;
+  fetchWithAuth: (path: string, options?: unknown) => Promise<unknown>;
   sendWS: (msg: MessageBase) => void;
   callWS: <T>(msg: MessageBase) => Promise<T>;
 }

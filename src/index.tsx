@@ -1,6 +1,7 @@
 import { createRoot, type Root } from 'react-dom/client';
 import App from './App.js';
-import { HassProvider, hassStore } from './common/HassProvider.js';
+import { HassProvider } from './common/HassProvider.js';
+import { hassStore } from './common/hassStore.js';
 import type { HomeAssistant } from './types/home-assistant.js';
 
 class ReactWrapper extends HTMLElement {

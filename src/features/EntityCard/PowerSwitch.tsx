@@ -1,11 +1,7 @@
 import { useActionState } from 'react';
-import { Switch } from '@mui/material';
+import { Switch, type Color, type SwitchProps } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import type { UseEntityResult } from '../../common/hooks/useEntity.js';
-
-interface Color {
-  [key: number]: string;
-}
 
 interface PowerSwitchProps {
   entity: UseEntityResult;
@@ -14,7 +10,10 @@ interface PowerSwitchProps {
 }
 
 const StyledSwitch = styled(
-  ({ overrideColor: _overrideColor, ...props }: any) => <Switch {...props} />
+  ({
+    overrideColor: _overrideColor,
+    ...props
+  }: SwitchProps & { overrideColor: Color }) => <Switch {...props} />
 )<{ overrideColor: Color }>((props) => ({
   opacity: props.disabled ? 0.7 : 1,
   '.MuiSwitch-switchBase': {
@@ -43,15 +42,17 @@ const PowerSwitch = ({
     return null;
   }, null);
 
-  return (
-    <StyledSwitch
-      className={className}
-      overrideColor={color}
-      checked={state === 'on'}
-      onChange={() => toggleAction()}
-      disabled={isPending}
-    />
-  );
+  const switchProps: SwitchProps & { overrideColor: Color } = {
+    overrideColor: color,
+    checked: state === 'on',
+    onChange: () => toggleAction(),
+    disabled: isPending,
+  };
+  if (className) {
+    switchProps.className = className;
+  }
+
+  return <StyledSwitch {...switchProps} />;
 };
 
 export default PowerSwitch;

@@ -8,9 +8,11 @@ import _AwesomeDebouncePromise from 'awesome-debounce-promise';
 import _useConstant from 'use-constant';
 import type { KnownEntityId } from '../types/entities.js';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const awesomeDebounce =
   (_AwesomeDebouncePromise as any).default || _AwesomeDebouncePromise;
 const useConstantHook = (_useConstant as any).default || _useConstant;
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const Root = styled('div')({
   display: 'flex',

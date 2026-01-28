@@ -1,10 +1,10 @@
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
-import { hassStore } from '../HassProvider.js';
+import { hassStore } from '../hassStore.js';
 import { useCallback, useMemo } from 'react';
 import shallowEqual from 'shallowequal';
 import type { HassEntity } from 'home-assistant-js-websocket';
 import type { HomeAssistant } from '../../types/home-assistant.js';
-import type { EntityId, KnownEntityId } from '../../types/entities.js';
+import type { KnownEntityId } from '../../types/entities.js';
 
 type DomainIcon = string | { default: string; group: string };
 
@@ -148,15 +148,15 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
   const actionType = actionTypesMap.get(domain);
 
   const attributes = stateObj?.attributes || {};
-  const entityIds = (attributes as any).entity_id as string[] | undefined;
+  const entityIds = attributes['entity_id'] as string[] | undefined;
   const childrenLength = entityIds?.length;
   const isGroup = Array.isArray(entityIds) && entityIds.length > 1;
 
-  const unitOfMeasurement = attributes.unit_of_measurement as
+  const unitOfMeasurement = attributes['unit_of_measurement'] as
     | string
     | undefined;
-  const deviceClass = (attributes as any).device_class as string | undefined;
-  const supportedFeatures = (attributes as any).supported_features as
+  const deviceClass = attributes['device_class'] as string | undefined;
+  const supportedFeatures = attributes['supported_features'] as
     | number
     | undefined;
 

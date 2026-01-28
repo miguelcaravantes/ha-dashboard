@@ -64,12 +64,23 @@ export default function Panel() {
   };
 
   const handleMenuClick = () => {
-    const customPanel = (window as any).parent?.customPanel;
+    const customPanel = (
+      window as Window &
+        typeof globalThis & {
+          parent: {
+            customPanel?: {
+              parentNode: { parentNode: { offsetParent: HTMLElement } };
+            };
+          };
+        }
+    ).parent?.customPanel;
     if (customPanel) {
-      customPanel.parentNode.parentNode.offsetParent
-        .querySelector('home-assistant')
-        .shadowRoot.querySelector('home-assistant-main')
-        .dispatchEvent(new Event('hass-toggle-menu'));
+      const ha = customPanel.parentNode.parentNode.offsetParent?.querySelector(
+        'home-assistant'
+      ) as HTMLElement | null;
+      ha?.shadowRoot
+        ?.querySelector('home-assistant-main')
+        ?.dispatchEvent(new Event('hass-toggle-menu'));
     }
   };
 

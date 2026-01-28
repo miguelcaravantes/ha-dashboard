@@ -232,9 +232,9 @@ interface IconProps extends SvgIconProps {
 export default function Icon(props: IconProps) {
   const { icon, ...rest } = props;
   const IconComponent =
-    (icon && (hassMappings as any)[icon]) || GoogleDownasaur;
+    (icon ? hassMappings[icon] : undefined) || GoogleDownasaur;
 
-  if (icon && !(hassMappings as any)[icon] && icon.startsWith('mdi:')) {
+  if (icon && !hassMappings[icon] && icon.startsWith('mdi:')) {
     console.log(`Icon not found "${icon}"`);
   }
 

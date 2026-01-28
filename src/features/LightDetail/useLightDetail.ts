@@ -11,9 +11,11 @@ import useEntity from '../../common/hooks/useEntity.js';
 import { useHass } from '../../common/hooks/useHass.js';
 import type { KnownEntityId } from '../../types/entities.js';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const useConstantHook = (_useConstant as any).default || _useConstant;
 const awesomeDebounce =
   (_AwesomeDebouncePromise as any).default || _AwesomeDebouncePromise;
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const SUPPORTED_COLOR_MODES_ATTRIBUTE = 'supported_color_modes';
 
@@ -67,12 +69,12 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
 
   const handleColorChange = useConstantHook(() =>
     awesomeDebounce(async (color: number[]) => {
-      const data: Record<string, any> = {
+      const data: Record<string, unknown> = {
         entity_id: entityId,
         rgb_color: color,
       };
       if (stateObj?.state === 'off') {
-        data.brightness = 255;
+        data['brightness'] = 255;
         setBrightness(255);
       }
 

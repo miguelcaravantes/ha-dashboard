@@ -1,7 +1,7 @@
 import { useMemo, useState, useCallback } from 'react';
 import type { ComponentType } from 'react';
 import { styled, keyframes, css as cssSystem } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Box, type Color } from '@mui/material';
 import ErrorBoundary from './ErrorBoundary.js';
 
 import {
@@ -51,11 +51,11 @@ const StyledIcon = styled((props: StyledIconProps) => {
     fontSize: '2.5em',
   },
   ({ rotateIcon }) => (rotateIcon ? fanAnimation : undefined)
-) as any; // Cast to avoid complex MUI styled types issues for now
+);
 
 interface ActionProps {
   entity: UseEntityResult;
-  color: any;
+  color: Color;
   className?: string;
 }
 
@@ -82,7 +82,7 @@ const detailSupported = ['light', 'fan'];
 interface EntityCardProps {
   entityId: KnownEntityId;
   title?: string;
-  color?: any;
+  color?: Color;
 }
 
 function EntityCardInner({
@@ -99,7 +99,7 @@ function EntityCardInner({
       (entityId && colorProp) ??
       randomColors[Math.floor(Math.random() * randomColors.length)],
     [entityId, colorProp]
-  );
+  ) as Color;
 
   const handleIconClick = useCallback(
     () =>
@@ -121,7 +121,7 @@ function EntityCardInner({
             ? grey[900]
             : state === 'unavailable'
             ? grey[500]
-            : (color as any)[500],
+            : color[500],
         borderRadius: '10px',
         height: (theme) => theme.spacing(12),
         width: '100%',

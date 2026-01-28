@@ -1,10 +1,10 @@
-import { Box } from '@mui/material';
+import { Box, type Color } from '@mui/material';
 import type { UseEntityResult } from '../../common/hooks/useEntity.js';
 
 interface SensorDisplayProps {
   entity: UseEntityResult;
   className?: string;
-  color?: any; // color prop is passed but not used here, but for consistency in actions map
+  color?: Color; // color prop is passed but not used here, but for consistency in actions map
 }
 
 const SensorDisplay = ({
