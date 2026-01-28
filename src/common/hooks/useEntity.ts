@@ -123,8 +123,8 @@ export interface UseEntityResult {
   unitOfMeasurement: string | undefined;
   supportedFeatures: number | undefined;
   actionType: ActionType | undefined;
-  toggle: () => void;
-  execute: () => void;
+  toggle: () => Promise<void>;
+  execute: () => Promise<void>;
   openMoreInfo: () => void;
   icon: string | undefined;
 }
@@ -173,17 +173,17 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
     [entityId]
   );
 
-  const toggle = useCallback(() => {
+  const toggle = useCallback(async () => {
     if (actionType === ActionType.Toggle && callService) {
-      callService(domain, 'toggle', {
+      await callService(domain, 'toggle', {
         entity_id: entityId,
       });
     }
   }, [actionType, callService, domain, entityId]);
 
-  const execute = useCallback(() => {
+  const execute = useCallback(async () => {
     if (callService) {
-      callService(domain, 'turn_on', {
+      await callService(domain, 'turn_on', {
         entity_id: entityId,
       });
     }
