@@ -9,7 +9,6 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/material": "^5.10.0",
     "@mui/system": "^5.10.0",
-    "@vitejs/plugin-react": "^4.3.4",
     "awesome-debounce-promise": "^2.1.0",
     "hex-rgb": "^5.0.0",
     "mdi-material-ui": "^7.5.0",
@@ -24,6 +23,7 @@
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -33,7 +33,7 @@
     "globals": "^15.13.0",
     "prettier": "^2.7.1",
     "typescript": "^5.9.3",
-    "vite": "^6.0.5"
+    "vite": "^7.3.1"
   },
   "browserslist": [
     "last 5 Chrome versions",
