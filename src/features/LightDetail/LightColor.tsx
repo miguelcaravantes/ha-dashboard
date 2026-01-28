@@ -21,7 +21,7 @@ import {
   deepOrange,
   brown,
 } from '@mui/material/colors';
-import { compose } from '../../common/composition';
+import { compose } from '../../common/composition.js';
 
 const colors = ['#ffffff'].concat(
   [
@@ -42,7 +42,7 @@ const colors = ['#ffffff'].concat(
     orange,
     deepOrange,
     brown,
-  ].flatMap((i) => [i[200], i[500], i[700]])
+  ].flatMap((i) => [i[200]!, i[500]!, i[700]!])
 );
 
 const ColorsContainer = styled('div')(({ theme }) => ({
@@ -52,25 +52,41 @@ const ColorsContainer = styled('div')(({ theme }) => ({
   padding: theme.spacing(1),
 }));
 
-const ColorButton = styled('button')(({ color, theme }) => ({
+interface ColorButtonProps {
+  color: string;
+}
+
+const ColorButton = styled('button')<ColorButtonProps>(({ color, theme }) => ({
   background: color,
   border: 'none',
   borderRadius: '100%',
   height: theme.spacing(4),
   width: theme.spacing(4),
   outline: 'none',
+  cursor: 'pointer',
 }));
 
-const removeAlpha = (rgba) => rgba.slice(0, 3);
-const hexToRgb = (hex) => hexRgb(hex, { format: 'array' });
+const removeAlpha = (rgba: number[]) => rgba.slice(0, 3);
+const hexToRgb = (hex: string) =>
+  hexRgb(hex, { format: 'array' }) as unknown as number[];
 
-const LightColor = ({ onChange }) => {
-  const handelColorClick = (hexColor) =>
+interface LightColorProps {
+  onChange: (color: number[]) => void;
+  disabled?: boolean;
+}
+
+const LightColor = ({ onChange, disabled }: LightColorProps) => {
+  const handelColorClick = (hexColor: string) =>
     compose(onChange, removeAlpha, hexToRgb)(hexColor);
   return (
     <>
       <Typography variant="h6">Color:</Typography>
-      <ColorsContainer>
+      <ColorsContainer
+        style={{
+          opacity: disabled ? 0.5 : 1,
+          pointerEvents: disabled ? 'none' : 'auto',
+        }}
+      >
         {colors.map((c) => (
           <ColorButton key={c} color={c} onClick={() => handelColorClick(c)} />
         ))}
