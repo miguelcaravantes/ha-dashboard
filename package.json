@@ -11,6 +11,7 @@
     "@mui/system": "^7.3.7",
     "awesome-debounce-promise": "^2.1.0",
     "hex-rgb": "^5.0.0",
+    "home-assistant-js-websocket": "^9.6.0",
     "mdi-material-ui": "^7.5.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
