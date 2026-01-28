@@ -16,6 +16,12 @@ This roadmap executes the "Big Bang" modernization of the Home Assistant React D
 
 This phase replaces the legacy build system with Vite 7 and aligns the Node.js environment, ensuring a stable foundation before code changes begin.
 
+**Plans:** 3 plans
+
+- [ ] 01-01-PLAN.md — Node.js environment & legacy cleanup
+- [ ] 01-02-PLAN.md — Vite 7 upgrade & modern build config
+- [ ] 01-03-PLAN.md — ESLint 9 Flat Config with TS support
+
 | Requirement  | Description                                                         |
 | ------------ | ------------------------------------------------------------------- |
 | **INFRA-01** | Build system uses Vite 7 with instant HMR                           |
