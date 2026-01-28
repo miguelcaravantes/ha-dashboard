@@ -40,6 +40,12 @@ This phase replaces the legacy build system with Vite 7 and aligns the Node.js e
 
 This phase upgrades the primary dependencies and establishes the global data layer, enabling the new theming engine and type-safe `hass` injection.
 
+**Plans:** 3 plans
+
+- [ ] 02-01-PLAN.md — Core Foundation Upgrade (React 19 & MUI v7)
+- [ ] 02-02-PLAN.md — Type-Safe Data Layer (HassProvider & useSyncExternalStore)
+- [ ] 02-03-PLAN.md — CSS Variable Theming (Modern Engine Migration)
+
 | Requirement | Description                                                            |
 | ----------- | ---------------------------------------------------------------------- |
 | **CORE-01** | Application runs on React 19                                           |
