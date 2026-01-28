@@ -8,10 +8,10 @@
 **Phase:** 2 - Core Modernization
 **Goal:** Application runtime powers React 19 and MUI v7 with typed data.
 **Status:** In Progress
-**Last activity:** 2026-01-28 - Completed 02-01-PLAN.md
+**Last activity:** 2026-01-28 - Completed 02-03-PLAN.md
 
 **Progress:**
-[██████░░░░] 66%
+[████████░░] 83%
 
 ## Performance Metrics
 
@@ -35,9 +35,10 @@
 | 2026-01-28 | **Build Target esnext:** leveraging modern browser features.                        | Improved performance and code size.    |
 | 2026-01-28 | **ESLint 9 Flat Config:** Modular and TS-ready linting.                             | Unified quality gate for JS and TS.    |
 | 2026-01-28 | **Upgraded to MUI v7:** Leveraging newest features and React 19 compatibility.      | Modernized UI framework.               |
+| 2026-01-28 | **MUI CSS Variables:** Standardized on CSS variables engine via colorSchemes.       | Enabled instant mode switching.        |
 
 ### Session Continuity
 
-**Last session:** 2026-01-28 05:51 UTC
-**Stopped at:** Completed 02-01-PLAN.md
+**Last session:** 2026-01-28 05:53 UTC
+**Stopped at:** Completed 02-03-PLAN.md
 **Resume file:** .planning/phases/02-core-modernization/02-02-PLAN.md
