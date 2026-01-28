@@ -36,6 +36,12 @@ This phase replaces the legacy build system with Vite 7 and aligns the Node.js e
 
 ### Phase 2: Core Modernization
 
+**Plans:** 3 plans
+
+- [ ] 02-01-PLAN.md — React 19 & MUI v7 foundation
+- [ ] 02-02-PLAN.md — Type-safe data layer (HassProvider)
+- [ ] 02-03-PLAN.md — Modern CSS variable theming
+
 **Goal:** Application runtime powers React 19 and MUI v6 with typed data.
 
 This phase upgrades the primary dependencies and establishes the global data layer, enabling the new theming engine and type-safe `hass` injection.
@@ -103,6 +109,6 @@ With the codebase fully strictly typed, we can safely enable the React Compiler 
 | Phase                 | Goal                    | Status     |
 | --------------------- | ----------------------- | ---------- |
 | **1. Infrastructure** | Build system & Node env | ✓ Complete |
-| **2. Core**           | React 19 & MUI v6       | 🔴 Pending |
+| **2. Core**           | React 19 & MUI v6       | ○ Planned |
 | **3. Migration**      | Strict TS & Components  | 🔴 Pending |
 | **4. Optimization**   | Compiler & Pigment CSS  | 🔴 Pending |
