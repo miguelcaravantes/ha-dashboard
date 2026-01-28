@@ -24,6 +24,8 @@
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
+    "@types/shallowequal": "^1.1.5",
+    "@types/use-sync-external-store": "^1.5.0",
     "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^8.10.2",
