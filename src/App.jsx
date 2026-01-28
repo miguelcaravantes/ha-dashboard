@@ -1,35 +1,15 @@
 import Panel from './features/Panel';
-import { GlobalStyles } from '@mui/material';
-import {
-  createTheme,
-  ThemeProvider as ThemeProvider,
-} from '@mui/material/styles';
-import { lightBlue } from '@mui/material/colors';
-
-const prefersDarkMode = true; //useMediaQuery('(prefers-color-scheme: dark)');
-const theme = createTheme({
-  spacing: (factor) => `${factor * 8}px`,
-  palette: {
-    mode: prefersDarkMode ? 'dark' : 'light',
-    primary: {
-      main: lightBlue[300],
-    },
-  },
-});
-if (prefersDarkMode) {
-  theme.palette.background.default = 'black';
-  theme.palette.background.paper = 'rgba(11,11,11,.85)';
-}
+import { GlobalStyles, CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 export default function App() {
   return (
-    <>
+    <ThemeProvider theme={theme} defaultMode="dark">
+      <CssBaseline />
       <GlobalStyles
         styles={`
           body {
-            padding: 0;
-            font-family: 'Roboto', 'sans-serif';
-            box-sizing: border-box;
             user-select: none;
           }
 
@@ -40,23 +20,11 @@ export default function App() {
 
           html,
           body {
-            margin: 0;
             height: 100%;
-          }
-
-          html {
-            box-sizing: border-box;
-          }
-          *,
-          *:before,
-          *:after {
-            box-sizing: inherit;
           }
         `}
       />
-      <ThemeProvider theme={theme}>
-        <Panel />
-      </ThemeProvider>
-    </>
+      <Panel />
+    </ThemeProvider>
   );
 }
