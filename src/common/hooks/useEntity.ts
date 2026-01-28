@@ -59,6 +59,8 @@ export enum ActionType {
   Toggle = 'TOGGLE',
 }
 
+export const actionTypes = ActionType;
+
 const actionTypesMap = new Map<string, ActionType>([
   ['switch', ActionType.Toggle],
   ['fan', ActionType.Toggle],
