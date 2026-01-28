@@ -73,6 +73,14 @@ This phase upgrades the primary dependencies and establishes the global data lay
 
 This is the bulk of the work, migrating components to strict TypeScript, implementing new hooks, and adopting modern UI patterns like Grid v2 and Container Queries.
 
+**Plans:** 5 plans
+
+- [ ] 03-01-PLAN.md — Entity Typing & Strict Foundation
+- [ ] 03-02-PLAN.md — Layout & Dashboard Migration
+- [ ] 03-03-PLAN.md — Entity Card & Sub-components Migration
+- [ ] 03-04-PLAN.md — Detail Views & Actions Migration
+- [ ] 03-05-PLAN.md — Remaining Components & Strict Finalization
+
 | Requirement | Description                                                              |
 | ----------- | ------------------------------------------------------------------------ |
 | **CORE-02** | TypeScript configured with `strict: true` and `noUncheckedIndexedAccess` |
