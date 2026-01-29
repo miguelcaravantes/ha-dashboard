@@ -1,237 +1,151 @@
-import { Typography } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import EntityCard from './EntityCard/EntityCard.js';
-import { orange, blue, teal } from '@mui/material/colors';
+import EntityCard from "./EntityCard/EntityCard.js";
+import { orange, blue, teal } from "@mui/material/colors";
 
 export default function CardDashboard() {
   return (
-    <Grid
-      container
-      spacing={3}
-      sx={{
-        containerType: 'inline-size',
-        width: '100%',
-      }}
-    >
-      <Grid
-        size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}
-        sx={{
-          '@500': {
-            '& .MuiTypography-root': {
-              color: 'primary.main',
-            },
-          },
-        }}
-      >
-        <Typography variant="h6">Bedroom</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.bedroom_light" title="Light" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="light.secondary_bedroom_light"
-              title="Secondary Light"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="light.bedroom_window_light"
-              title="Window Light"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="fan.bedroom_fan" title="Fan" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="switch.bedroom_diffuser" title="Diffuser" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="sensor.bedroom_temperature"
-              color={orange}
-              title="Temperature"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="sensor.bedroom_humidity"
-              color={blue}
-              title="Humidity"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="binary_sensor.bedroom_window"
-              title="Window"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Downstairs Bathroom</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="switch.downstairs_bathroom_diffuser"
-              title="Diffuser"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="switch.downstairs_bathroom_light"
-              title="Light"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Studio</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.studio_lights" title="Lights" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="switch.studio_diffuser" title="Diffuser" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="sensor.studio_temperature"
-              color={orange}
-              title="Temperature"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="sensor.studio_humidity"
-              color={blue}
-              title="Humidity"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="binary_sensor.studio_window" title="Window" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="cover.studio_blackout_shade"
-              title="Blackout shade"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="cover.studio_light_filtering_shade"
-              title="Light filtering shade"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Girls&apos; room</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.girls_ceiling_light" title="Light" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="fan.girls_fan" title="Fan" />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Kitchen</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.kitchen_light" title="Light" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="switch.kitchen_diffuser" title="Diffuser" />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Dinning Room</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.dinning_room_switch" title="Light" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="light.dinning_room_switch_2"
-              title="Secondary Light"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Living Room</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.living_room_lights" title="Lights" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="light.living_room_secondary_light"
-              title="Secondary Light"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="light.christmas_tree"
-              title="Christmas Tree"
-              color={teal}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Front Yard</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.front_yard_light" title="Lights" />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Lobby</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.lobby_light" title="Lights" />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Backyard</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.backyard_lights" title="Light" />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="binary_sensor.backyard_motion"
-              title="Motion"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="binary_sensor.backyard_door_1"
-              title="Door 1"
-            />
-          </Grid>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard
-              entityId="binary_sensor.backyard_door_2"
-              title="Door 2"
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
-        <Typography variant="h6">Roof garden</Typography>
-        <Grid container spacing={3}>
-          <Grid size={{ xs: 6, sm: 6 }}>
-            <EntityCard entityId="light.roof_garden_lights" title="Lights" />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-fr w-full">
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Bedroom</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.bedroom_light" title="Light" />
+          <EntityCard
+            entityId="light.secondary_bedroom_light"
+            title="Secondary Light"
+          />
+          <EntityCard
+            entityId="light.bedroom_window_light"
+            title="Window Light"
+          />
+          <EntityCard entityId="fan.bedroom_fan" title="Fan" />
+          <EntityCard entityId="switch.bedroom_diffuser" title="Diffuser" />
+          <EntityCard
+            entityId="sensor.bedroom_temperature"
+            color={orange}
+            title="Temperature"
+          />
+          <EntityCard
+            entityId="sensor.bedroom_humidity"
+            color={blue}
+            title="Humidity"
+          />
+          <EntityCard entityId="binary_sensor.bedroom_window" title="Window" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Downstairs Bathroom</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard
+            entityId="switch.downstairs_bathroom_diffuser"
+            title="Diffuser"
+          />
+          <EntityCard
+            entityId="switch.downstairs_bathroom_light"
+            title="Light"
+          />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Studio</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.studio_lights" title="Lights" />
+          <EntityCard entityId="switch.studio_diffuser" title="Diffuser" />
+          <EntityCard
+            entityId="sensor.studio_temperature"
+            color={orange}
+            title="Temperature"
+          />
+          <EntityCard
+            entityId="sensor.studio_humidity"
+            color={blue}
+            title="Humidity"
+          />
+          <EntityCard entityId="binary_sensor.studio_window" title="Window" />
+          <EntityCard
+            entityId="cover.studio_blackout_shade"
+            title="Blackout shade"
+          />
+          <EntityCard
+            entityId="cover.studio_light_filtering_shade"
+            title="Light filtering shade"
+          />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Girls&apos; room</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.girls_ceiling_light" title="Light" />
+          <EntityCard entityId="fan.girls_fan" title="Fan" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Kitchen</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.kitchen_light" title="Light" />
+          <EntityCard entityId="switch.kitchen_diffuser" title="Diffuser" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Dinning Room</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.dinning_room_switch" title="Light" />
+          <EntityCard
+            entityId="light.dinning_room_switch_2"
+            title="Secondary Light"
+          />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Living Room</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.living_room_lights" title="Lights" />
+          <EntityCard
+            entityId="light.living_room_secondary_light"
+            title="Secondary Light"
+          />
+          <EntityCard
+            entityId="light.christmas_tree"
+            title="Christmas Tree"
+            color={teal}
+          />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Front Yard</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.front_yard_light" title="Lights" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Lobby</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.lobby_light" title="Lights" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Backyard</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.backyard_lights" title="Light" />
+          <EntityCard entityId="binary_sensor.backyard_motion" title="Motion" />
+          <EntityCard entityId="binary_sensor.backyard_door_1" title="Door 1" />
+          <EntityCard entityId="binary_sensor.backyard_door_2" title="Door 2" />
+        </div>
+      </section>
+
+      <section>
+        <h3 className="text-lg font-semibold mb-2">Roof garden</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <EntityCard entityId="light.roof_garden_lights" title="Lights" />
+        </div>
+      </section>
+    </div>
   );
 }
