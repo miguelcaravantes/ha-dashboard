@@ -8,63 +8,47 @@ A custom React-based dashboard for Home Assistant, integrated as a Custom Panel.
 
 Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
 
-## Current Milestone: v1.0 Foundation & Modernization
+## Current State: v1.0 Shipped
 
-**Goal:** Establish modern stack (Vite 7, React 19, Strict TS, MUI v6) and migrate core infrastructure.
-
-**Target features:**
-
-- **Strict TypeScript**: Type-safe codebase with `home-assistant-js-websocket` types.
-- **MUI v7 System**: New theming engine with CSS variables and Grid2.
-- **Modern Build**: Vite 7 replacing legacy build tooling.
-- **Web Component Wrapper**: Robust `hass` property injection and state management.
+The foundation is fully modernized. The application runs on React 19, MUI v7, and is 100% strict TypeScript.
 
 ## Requirements
 
 ### Validated
 
-- ✓ **Custom Panel Integration** — Wraps React app in a Web Component for HA integration
-- ✓ **State Injection** — Receives `hass` object updates from host
-- ✓ **Entity Management** — `useEntity` hook for accessing entity state
-- ✓ **Dashboard Layout** — Grid-based layout for displaying entity cards
-- ✓ **Light Control** — Detailed view for controlling light attributes (brightness, color)
-- ✓ **Theming** — Dark mode support using MUI ThemeProvider
+- ✓ **Infrastructure Modernization** — Vite 7, Node 22, and ESLint 9 Flat Config — v1.0
+- ✓ **Core Framework Upgrade** — React 19 and MUI v7 — v1.0
+- ✓ **Type-Safe Data Layer** — HassProvider with strict typing and state isolation — v1.0
+- ✓ **Strict TypeScript Migration** — 100% TSX codebase with `strict: true` — v1.0
+- ✓ **Modern Layout System** — Grid v2 and CSS Container Queries — v1.0
+- ✓ **Modern Mutations** — React 19 Actions and Transitions for service calls — v1.0
 
 ### Active
 
-- [ ] **TypeScript Migration** — Convert all `.js/.jsx` files to `.ts/.tsx`
-- [ ] **Strict Configuration** — Enable `strict: true` in `tsconfig.json`
-- [ ] **MUI Upgrade** — Upgrade `@mui/material` and dependencies to v7
-- [ ] **Hass Typing** — Implement standard library types for `hass` object
-- [ ] **Linting & Formatting** — Update ESLint/Prettier for TypeScript support
+- [ ] **Planning Next Milestone** — Use `/gsd-new-milestone` to define goals.
 
 ### Out of Scope
 
-- **New Features** — Adding new cards or functionality (focus is on refactor)
-- **HA Core Changes** — Modifications to Home Assistant itself
-- **Pigment CSS** — Deferred to v2 (optimization phase)
+- **Legacy Support** — No longer supporting Node versions < 22.
+- **HA Core Changes** — Modifications to Home Assistant itself.
 
 ## Context
 
-- **Brownfield Project** — Existing working React application.
-- **Architecture** — Custom Element (`react-panel`) bridges HA state to React context.
-- **Tech Stack** — Vite, React 18, MUI v5 (target v6).
-- **Migration Strategy** — "Big Bang" migration (small codebase allow single-pass conversion).
-
-## Constraints
-
-- **Strict Mode** — TypeScript must be configured with `strict: true`.
-- **MUI v7** — Must use the latest version of Material UI (v7).
-- **Type Safety** — No explicit `any` types in final codebase.
+- **Tech Stack** — Vite 7, React 19.2.4, MUI v7.3.7, TypeScript 5.7.
+- **Architecture** — Custom Element (`react-panel`) bridges HA state to a type-safe React Context (`HassProvider`).
+- **Performance** — HMR < 200ms, Build target `esnext`.
 
 ## Key Decisions
 
-| Decision                | Rationale                                                                     | Outcome   |
-| ----------------------- | ----------------------------------------------------------------------------- | --------- |
-| **Big Bang Migration**  | Small codebase (8 files) allows for immediate full conversion.                | — Pending |
-| **Standard Hass Types** | Using community/standard libraries avoids maintenance burden of manual types. | — Pending |
-| **MUI v7**              | Keeping UI library current ensures long-term support and features.            | — Pending |
+| Decision                   | Rationale                                                                     | Outcome |
+| -------------------------- | ----------------------------------------------------------------------------- | ------- |
+| **Vite 7 Migration**       | Instant HMR and modern build pipeline.                                        | ✓ Good  |
+| **React 19 & MUI v7**      | Leveraging latest features and ensuring long-term compatibility.              | ✓ Good  |
+| **HassProvider Isolation** | Decouples React renders from high-frequency websocket events.                 | ✓ Good  |
+| **CSS Container Queries**  | Enables truly responsive cards that adapt to their specific grid slot.        | ✓ Good  |
+| **Strict TypeScript**      | Eliminates an entire class of runtime errors in entity state handling.        | ✓ Good  |
+| **Cancelled Phase 4**      | Prioritized shipping stable foundation over experimental zero-runtime styles. | ✓ Good  |
 
 ---
 
-_Last updated: 2026-01-27 after v1.0 start_
+_Last updated: 2026-01-28 after v1.0 milestone completion_
