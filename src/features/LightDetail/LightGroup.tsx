@@ -1,10 +1,10 @@
-import { useState } from "react";
-import useEntity from "../../common/hooks/useEntity.js";
-import { Button } from "../../components/ui/button.js";
-import Icon from "../Icon.js";
-import EntityDialog from "../EntityDialog.js";
-import type { KnownEntityId } from "../../types/entities.js";
-import { isEntityId } from "../../common/utils/typeGuards.js";
+import { useState } from 'react';
+import useEntity from '../../common/hooks/useEntity.js';
+import { Button } from '../../components/ui/button.js';
+import Icon from '../Icon.js';
+import EntityDialog from '../EntityDialog.js';
+import type { KnownEntityId } from '../../types/entities.js';
+import { isEntityId } from '../../common/utils/typeGuards.js';
 
 function Child({ entityId }: { entityId: KnownEntityId }) {
   const { icon, name } = useEntity(entityId);

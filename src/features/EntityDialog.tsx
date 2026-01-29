@@ -1,17 +1,17 @@
-import { useTransition } from "react";
+import { useTransition } from 'react';
 import {
   AdaptiveDialog,
   AdaptiveDialogContent,
   AdaptiveDialogHeader,
   AdaptiveDialogTitle,
-} from "../components/ui/adaptive-dialog.js";
-import { Switch } from "../components/ui/switch.js";
-import { Button } from "../components/ui/button.js";
-import { Tune as TuneIcon } from "mdi-material-ui";
-import useEntity, { actionTypes } from "../common/hooks/useEntity.js";
-import FanDetail from "./FanDetail.js";
-import LightDetail from "./LightDetail/LightDetail.js";
-import type { KnownEntityId } from "../types/entities.js";
+} from '../components/ui/adaptive-dialog.js';
+import { Switch } from '../components/ui/switch.js';
+import { Button } from '../components/ui/button.js';
+import Icon from './Icon.js';
+import useEntity, { actionTypes } from '../common/hooks/useEntity.js';
+import FanDetail from './FanDetail.js';
+import LightDetail from './LightDetail/LightDetail.js';
+import type { KnownEntityId } from '../types/entities.js';
 
 const domainDetailMap: Record<
   string,
@@ -41,7 +41,7 @@ export default function EntityDialog(props: EntityDialogProps) {
     onClose?.();
   };
 
-  if (open && domain === "light") {
+  if (open && domain === 'light') {
     return (
       <LightDetail
         entityId={entityId}
@@ -51,7 +51,7 @@ export default function EntityDialog(props: EntityDialogProps) {
     );
   }
 
-  if (open && domain === "fan") {
+  if (open && domain === 'fan') {
     return (
       <FanDetail
         entityId={entityId}
@@ -75,12 +75,12 @@ export default function EntityDialog(props: EntityDialogProps) {
               {name}
             </AdaptiveDialogTitle>
             <Button variant="ghost" size="icon" onClick={openMoreInfo}>
-              <TuneIcon className="h-5 w-5" />
+              <Icon icon="mdi:tune" />
             </Button>
           </div>
           {actionType === actionTypes.Toggle && (
             <Switch
-              checked={state === "on"}
+              checked={state === 'on'}
               onCheckedChange={handleToggle}
               disabled={isPending}
             />

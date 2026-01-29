@@ -1,22 +1,22 @@
-import { useState, useEffect, useRef, useTransition } from "react";
-import _useConstant from "use-constant";
-import _AwesomeDebouncePromise from "awesome-debounce-promise";
+import { useState, useEffect, useRef, useTransition } from 'react';
+import _useConstant from 'use-constant';
+import _AwesomeDebouncePromise from 'awesome-debounce-promise';
 import {
   COLOR_MODE_UNKNOWN,
   COLOR_MODE_ONOFF,
   COLOR_MODE_HS,
   COLOR_MODE_XY,
   COLOR_MODE_COLOR_TEMP,
-} from "../../constants.js";
-import useEntity from "../../common/hooks/useEntity.js";
-import { useHass } from "../../common/hooks/useHass.js";
-import type { KnownEntityId } from "../../types/entities.js";
+} from '../../constants.js';
+import useEntity from '../../common/hooks/useEntity.js';
+import { useHass } from '../../common/hooks/useHass.js';
+import type { KnownEntityId } from '../../types/entities.js';
 
 import {
   isString,
   isNumber,
   hasDefault,
-} from "../../common/utils/typeGuards.js";
+} from '../../common/utils/typeGuards.js';
 
 const useConstantHook = hasDefault<unknown>(_useConstant)
   ? _useConstant.default
@@ -25,7 +25,7 @@ const awesomeDebounce = hasDefault<unknown>(_AwesomeDebouncePromise)
   ? _AwesomeDebouncePromise.default
   : _AwesomeDebouncePromise;
 
-const SUPPORTED_COLOR_MODES_ATTRIBUTE = "supported_color_modes";
+const SUPPORTED_COLOR_MODES_ATTRIBUTE = 'supported_color_modes';
 
 export interface UseLightDetailResult {
   doesSupportColor: boolean;
@@ -33,6 +33,7 @@ export interface UseLightDetailResult {
   doesSupportBrightness: boolean;
   brightness: number;
   colorTemp: number;
+  rgbColor: number[] | undefined;
   minMireds: number;
   maxMireds: number;
   handleColorChange: (color: number[]) => void;
@@ -74,7 +75,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
 
   useEffect(
     function syncState() {
-      if (state && state !== "unknown") {
+      if (state && state !== 'unknown') {
         setBrightness(hassBrightness.current);
         setColorTemp(hassColorTemp.current);
       }
@@ -94,7 +95,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
 
   const updateBrightness = useConstantHook(() =>
     awesomeDebounce(async (brightnessValue: number) => {
-      await callService("light", "turn_on", {
+      await callService('light', 'turn_on', {
         entity_id: entityId,
         brightness: brightnessValue,
       });
@@ -103,7 +104,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
 
   const updateColorTemp = useConstantHook(() =>
     awesomeDebounce(async (mireds: number) => {
-      await callService("light", "turn_on", {
+      await callService('light', 'turn_on', {
         entity_id: entityId,
         color_temp: mireds,
       });
@@ -116,12 +117,12 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
         entity_id: entityId,
         rgb_color: color,
       };
-      if (stateObj?.state === "off") {
-        data["brightness"] = 255;
+      if (stateObj?.state === 'off') {
+        data['brightness'] = 255;
         setBrightness(255);
       }
 
-      await callService("light", "turn_on", data);
+      await callService('light', 'turn_on', data);
     }, 100),
   );
 
@@ -155,6 +156,9 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
     doesSupportBrightness,
     brightness,
     colorTemp,
+    rgbColor: Array.isArray(attributes.rgb_color)
+      ? attributes.rgb_color.filter(isNumber)
+      : undefined,
     minMireds: attributes.min_mireds || 153,
     maxMireds: attributes.max_mireds || 500,
     handleColorChange: onColorChange,

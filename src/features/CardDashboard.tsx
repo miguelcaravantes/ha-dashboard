@@ -1,5 +1,4 @@
-import EntityCard from "./EntityCard/EntityCard.js";
-import { orange, blue, teal } from "@mui/material/colors";
+import EntityCard from './EntityCard/EntityCard.js';
 
 export default function CardDashboard() {
   return (
@@ -20,12 +19,12 @@ export default function CardDashboard() {
           <EntityCard entityId="switch.bedroom_diffuser" title="Diffuser" />
           <EntityCard
             entityId="sensor.bedroom_temperature"
-            color={orange}
+            color="orange"
             title="Temperature"
           />
           <EntityCard
             entityId="sensor.bedroom_humidity"
-            color={blue}
+            color="blue"
             title="Humidity"
           />
           <EntityCard entityId="binary_sensor.bedroom_window" title="Window" />
@@ -53,12 +52,12 @@ export default function CardDashboard() {
           <EntityCard entityId="switch.studio_diffuser" title="Diffuser" />
           <EntityCard
             entityId="sensor.studio_temperature"
-            color={orange}
+            color="orange"
             title="Temperature"
           />
           <EntityCard
             entityId="sensor.studio_humidity"
-            color={blue}
+            color="blue"
             title="Humidity"
           />
           <EntityCard entityId="binary_sensor.studio_window" title="Window" />
@@ -111,7 +110,7 @@ export default function CardDashboard() {
           <EntityCard
             entityId="light.christmas_tree"
             title="Christmas Tree"
-            color={teal}
+            color="teal"
           />
         </div>
       </section>

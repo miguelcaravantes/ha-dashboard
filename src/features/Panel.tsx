@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Menu as MenuIcon,
   Home as HomeIcon,
   Heart as HeartIcon,
-} from "lucide-react";
-import { Button } from "../components/ui/button.js";
-import EntityPage from "./EntityPage.js";
-import ProfileImg from "./ProfileImg.js";
-import CardDashboard from "./CardDashboard.js";
-import { isObject } from "../common/utils/typeGuards.js";
-import type { HAWindow } from "../types/home-assistant.js";
+} from 'lucide-react';
+import { Button } from '../components/ui/button.js';
+import EntityPage from './EntityPage.js';
+import ProfileImg from './ProfileImg.js';
+import CardDashboard from './CardDashboard.js';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -26,11 +24,10 @@ export default function Panel() {
   const [value, setValue] = useState(0);
 
   const handleMenuClick = () => {
-    const haWindow = window.parent as HAWindow;
-    haWindow.customPanel?.parentNode.parentNode.offsetParent
-      ?.querySelector("home-assistant")
-      ?.shadowRoot?.querySelector("home-assistant-main")
-      ?.dispatchEvent(new Event("hass-toggle-menu"));
+    window.parent.customPanel?.parentNode.parentNode.offsetParent
+      ?.querySelector('home-assistant')
+      ?.shadowRoot?.querySelector('home-assistant-main')
+      ?.dispatchEvent(new Event('hass-toggle-menu'));
   };
 
   return (
@@ -54,7 +51,7 @@ export default function Panel() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               <Button
-                variant={value === 0 ? "secondary" : "ghost"}
+                variant={value === 0 ? 'secondary' : 'ghost'}
                 size="sm"
                 onClick={() => setValue(0)}
                 className="gap-2"
@@ -63,7 +60,7 @@ export default function Panel() {
                 <span>Home</span>
               </Button>
               <Button
-                variant={value === 1 ? "secondary" : "ghost"}
+                variant={value === 1 ? 'secondary' : 'ghost'}
                 size="sm"
                 onClick={() => setValue(1)}
                 className="gap-2"
@@ -96,7 +93,7 @@ export default function Panel() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 border-t bg-background flex items-center justify-around">
         <button
           onClick={() => setValue(0)}
-          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 0 ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 0 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
         >
           <HomeIcon className="h-6 w-6" />
           <span className="text-[10px] font-medium uppercase tracking-wider">
@@ -105,7 +102,7 @@ export default function Panel() {
         </button>
         <button
           onClick={() => setValue(1)}
-          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 1 ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 1 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
         >
           <HeartIcon className="h-6 w-6" />
           <span className="text-[10px] font-medium uppercase tracking-wider">

@@ -1,11 +1,10 @@
-import type { UseEntityResult } from "../../common/hooks/useEntity.js";
-import { type Color } from "@mui/material";
-import { cn } from "@/lib/utils.js";
+import type { UseEntityResult } from '../../common/hooks/useEntity.js';
+import { cn } from '@/lib/utils.js';
 
 interface SensorDisplayProps {
   entity: UseEntityResult;
   className?: string;
-  color?: Color; // color prop is passed but not used here, but for consistency in actions map
+  color?: string; // color prop is passed but not used here, but for consistency in actions map
 }
 
 const SensorDisplay = ({
@@ -20,11 +19,11 @@ const SensorDisplay = ({
     )}
     <span
       className={cn(
-        "text-2xl font-black tracking-tight tabular-nums",
+        'text-3xl font-semibold tracking-tight tabular-nums',
         className,
       )}
     >
-      {state !== "unavailable" ? state : "—"}
+      {state !== 'unavailable' ? state : '—'}
     </span>
   </div>
 );

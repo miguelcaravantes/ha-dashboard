@@ -1,25 +1,25 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   AdaptiveDialog,
   AdaptiveDialogContent,
   AdaptiveDialogHeader,
   AdaptiveDialogTitle,
-} from "../../components/ui/adaptive-dialog.js";
-import { Switch } from "../../components/ui/switch.js";
-import { Slider } from "../../components/ui/slider.js";
-import { Button } from "../../components/ui/button.js";
-import { Tune as TuneIcon } from "mdi-material-ui";
+} from '../../components/ui/adaptive-dialog.js';
+import { Switch } from '../../components/ui/switch.js';
+import { Slider } from '../../components/ui/slider.js';
+import { Button } from '../../components/ui/button.js';
+import Icon from '../Icon.js';
 import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "../../components/ui/tabs.js";
-import ColorPresets from "./ColorPresets.js";
-import useLightDetail from "./useLightDetail.js";
-import useEntity from "../../common/hooks/useEntity.js";
-import LightGroup from "./LightGroup.js";
-import type { KnownEntityId } from "../../types/entities.js";
+} from '../../components/ui/tabs.js';
+import ColorPresets from './ColorPresets.js';
+import useLightDetail from './useLightDetail.js';
+import useEntity from '../../common/hooks/useEntity.js';
+import LightGroup from './LightGroup.js';
+import type { KnownEntityId } from '../../types/entities.js';
 
 interface LightDetailProps {
   entityId: KnownEntityId;
@@ -39,6 +39,7 @@ export default function LightDetail({
     doesSupportBrightness,
     brightness,
     colorTemp,
+    rgbColor,
     minMireds,
     maxMireds,
     handleColorChange,
@@ -55,6 +56,12 @@ export default function LightDetail({
     });
   };
 
+  const activeColor = rgbColor
+    ? `rgb(${rgbColor[0]}, ${rgbColor[1]}, ${rgbColor[2]})`
+    : state === 'on'
+      ? '#ffffff'
+      : undefined;
+
   const renderBrightnessSlider = () => (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -67,6 +74,7 @@ export default function LightDetail({
         value={[brightness]}
         max={255}
         step={1}
+        trackColor={activeColor}
         onValueChange={(val) => handleBrightnessChange(val[0] ?? 0)}
         disabled={isPending}
       />
@@ -105,11 +113,11 @@ export default function LightDetail({
               {name}
             </AdaptiveDialogTitle>
             <Button variant="ghost" size="icon" onClick={openMoreInfo}>
-              <TuneIcon className="h-5 w-5" />
+              <Icon icon="mdi:tune" />
             </Button>
           </div>
           <Switch
-            checked={state === "on"}
+            checked={state === 'on'}
             onCheckedChange={handleToggle}
             disabled={isPending || isTogglePending}
           />

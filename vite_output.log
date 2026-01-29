@@ -1,0 +1,7 @@
+1:42:20 AM [vite] (client) Re-optimizing dependencies because lockfile has changed
+Port 8080 is in use, trying another one...
+
+  VITE v7.3.1  ready in 334 ms
+
+  ➜  Local:   http://localhost:8081/
+  ➜  Network: http://192.168.0.99:8081/

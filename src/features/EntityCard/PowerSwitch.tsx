@@ -1,11 +1,11 @@
-import { useActionState, useOptimistic, startTransition } from "react";
-import { Switch } from "@/components/ui/switch.js";
-import type { UseEntityResult } from "../../common/hooks/useEntity.js";
-import { type Color } from "@mui/material";
+import { useActionState, useOptimistic, startTransition } from 'react';
+import { Switch } from '@/components/ui/switch.js';
+import type { UseEntityResult } from '../../common/hooks/useEntity.js';
+import { cn } from '@/lib/utils.js';
 
 interface PowerSwitchProps {
   entity: UseEntityResult;
-  color?: Color;
+  color?: string;
   className?: string;
 }
 
@@ -14,7 +14,7 @@ const PowerSwitch = ({
   className,
 }: PowerSwitchProps) => {
   const [optimisticOn, setOptimisticOn] = useOptimistic(
-    state === "on",
+    state === 'on',
     (_, newState: boolean) => newState,
   );
 
@@ -30,12 +30,14 @@ const PowerSwitch = ({
     });
   };
 
+  const isColored = state === 'on';
+
   return (
     <Switch
       checked={optimisticOn}
       onCheckedChange={handleCheckedChange}
       disabled={isPending}
-      className={className}
+      className={cn(className, isColored && 'data-[state=checked]:bg-white/30')}
       size="default"
     />
   );

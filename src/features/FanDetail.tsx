@@ -1,25 +1,25 @@
-import { useState, useTransition } from "react";
-import { Fan as FanIcon } from "lucide-react";
-import _AwesomeDebouncePromise from "awesome-debounce-promise";
-import _useConstant from "use-constant";
+import { useState, useTransition } from 'react';
+import { Fan as FanIcon } from 'lucide-react';
+import _AwesomeDebouncePromise from 'awesome-debounce-promise';
+import _useConstant from 'use-constant';
 
 import {
   AdaptiveDialog,
   AdaptiveDialogContent,
   AdaptiveDialogHeader,
   AdaptiveDialogTitle,
-} from "@/components/ui/adaptive-dialog";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import { Tune as TuneIcon } from "mdi-material-ui";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/adaptive-dialog';
+import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
+import { Button } from '@/components/ui/button';
+import Icon from './Icon.js';
+import { cn } from '@/lib/utils';
 
-import useEntity from "../common/hooks/useEntity.js";
-import { useHass } from "../common/hooks/useHass.js";
-import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from "../constants.js";
-import type { KnownEntityId } from "../types/entities.js";
-import { isNumber, hasDefault } from "../common/utils/typeGuards.js";
+import useEntity from '../common/hooks/useEntity.js';
+import { useHass } from '../common/hooks/useHass.js';
+import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from '../constants.js';
+import type { KnownEntityId } from '../types/entities.js';
+import { isNumber, hasDefault } from '../common/utils/typeGuards.js';
 
 const awesomeDebounce = hasDefault<unknown>(_AwesomeDebouncePromise)
   ? _AwesomeDebouncePromise.default
@@ -46,7 +46,7 @@ export default function FanDetail({
 
   const attributes = stateObj?.attributes || {};
   const oscillating =
-    typeof attributes.oscillating === "boolean"
+    typeof attributes.oscillating === 'boolean'
       ? attributes.oscillating
       : undefined;
   const percentageStep = isNumber(attributes.percentage_step)
@@ -67,7 +67,7 @@ export default function FanDetail({
 
   const handleChangeOscillation = (checked: boolean) => {
     startTransition(async () => {
-      await callService("fan", "oscillate", {
+      await callService('fan', 'oscillate', {
         entity_id: entityId,
         oscillating: checked,
       });
@@ -76,7 +76,7 @@ export default function FanDetail({
 
   const updatePercentage = useConstantHook(() =>
     awesomeDebounce(async (percentageValue: number) => {
-      await callService("fan", "set_percentage", {
+      await callService('fan', 'set_percentage', {
         entity_id: entityId,
         percentage: percentageValue,
       });
@@ -98,7 +98,7 @@ export default function FanDetail({
     });
   };
 
-  const isOn = state === "on";
+  const isOn = state === 'on';
 
   return (
     <AdaptiveDialog open={open} onOpenChange={onOpenChange}>
@@ -109,7 +109,7 @@ export default function FanDetail({
               {name}
             </AdaptiveDialogTitle>
             <Button variant="ghost" size="icon" onClick={openMoreInfo}>
-              <TuneIcon className="h-5 w-5" />
+              <Icon icon="mdi:tune" />
             </Button>
           </div>
           <Switch
@@ -121,23 +121,23 @@ export default function FanDetail({
 
         <div
           className={cn(
-            "flex flex-col gap-6 py-4",
-            (isPending || isTogglePending) && "opacity-70",
+            'flex flex-col gap-6 py-4',
+            (isPending || isTogglePending) && 'opacity-70',
           )}
         >
           <div className="flex justify-center py-8">
             <div
               className={cn(
-                "rounded-full bg-muted p-6 transition-all duration-1000",
-                isOn && "bg-primary/10",
+                'rounded-full bg-muted p-6 transition-all duration-1000',
+                isOn && 'bg-primary/10',
               )}
             >
               <FanIcon
                 className={cn(
-                  "h-24 w-24 text-muted-foreground transition-all duration-1000",
-                  isOn && "text-primary animate-spin",
+                  'h-24 w-24 text-muted-foreground transition-all duration-1000',
+                  isOn && 'text-primary animate-spin',
                 )}
-                style={{ animationDuration: "3s" }}
+                style={{ animationDuration: '3s' }}
               />
             </div>
           </div>

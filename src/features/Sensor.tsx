@@ -1,30 +1,6 @@
 import useEntity from '../common/hooks/useEntity.js';
-import { styled } from '@mui/material/styles';
 import Icon from './Icon.js';
 import type { KnownEntityId } from '../types/entities.js';
-
-const Root = styled('div')(({ theme }) => ({
-  height: theme.spacing(12),
-  width: theme.spacing(12),
-  background: 'none',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const SensorIcon = styled(Icon)`
-  width: 1.5em;
-  height: 1.5em;
-`;
-const Label = styled('span')({
-  fontSize: '2.6rem',
-});
-
-const LabelUnit = styled('span')({
-  fontSize: '1rem',
-  verticalAlign: 'super',
-});
 
 interface SensorProps {
   entityId: KnownEntityId;
@@ -39,12 +15,16 @@ export default function Sensor({ entityId }: SensorProps) {
   const display = roundedValue;
 
   return (
-    <Root>
-      <SensorIcon icon={icon} />
-      <Label>
+    <div className="h-24 w-24 flex flex-col items-center justify-center bg-transparent">
+      <div className="w-8 h-8 flex items-center justify-center mb-1">
+        <Icon icon={icon} className="w-full h-full" />
+      </div>
+      <span className="text-3xl font-semibold leading-none">
         {display}
-        <LabelUnit>{unitOfMeasurement}</LabelUnit>
-      </Label>
-    </Root>
+        <span className="text-sm align-super ml-0.5 font-medium">
+          {unitOfMeasurement}
+        </span>
+      </span>
+    </div>
   );
 }

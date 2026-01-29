@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Button } from "@/components/ui/button";
+import * as React from 'react';
+import { Button } from '@/components/ui/button';
 import {
   AdaptiveDialog,
   AdaptiveDialogTrigger,
@@ -9,8 +9,8 @@ import {
   AdaptiveDialogDescription,
   AdaptiveDialogFooter,
   AdaptiveDialogClose,
-} from "@/components/ui/adaptive-dialog";
-import { Slider } from "@/components/ui/slider";
+} from '@/components/ui/adaptive-dialog';
+import { Slider } from '@/components/ui/slider';
 
 export default function TestComplexUI() {
   const [value, setValue] = React.useState([50]);

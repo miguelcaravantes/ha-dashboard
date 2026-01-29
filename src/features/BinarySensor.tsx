@@ -1,22 +1,6 @@
 import useEntity from '../common/hooks/useEntity.js';
 import Icon from './Icon.js';
-import { styled } from '@mui/material/styles';
 import type { KnownEntityId } from '../types/entities.js';
-
-const Root = styled('div')(({ theme }) => ({
-  height: theme.spacing(12),
-  width: theme.spacing(12),
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'start',
-  alignItems: 'center',
-  textAlign: 'center',
-}));
-
-const SensorIcon = styled(Icon)(({ theme }) => ({
-  width: theme.spacing(8),
-  height: theme.spacing(8),
-}));
 
 interface BinarySensorProps {
   name?: string;
@@ -31,9 +15,11 @@ export default function BinarySensor({
 
   const name = overrideName ?? entityName;
   return (
-    <Root>
-      <SensorIcon icon={icon} />
-      {name}
-    </Root>
+    <div className="h-24 w-24 flex flex-col justify-start items-center text-center">
+      <div className="w-20 h-20 flex items-center justify-center">
+        <Icon icon={icon} className="w-full h-full" />
+      </div>
+      <span className="text-sm truncate w-full">{name}</span>
+    </div>
   );
 }

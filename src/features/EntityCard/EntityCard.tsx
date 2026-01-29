@@ -1,30 +1,18 @@
-import { useMemo, useState, useCallback } from "react";
-import type { ComponentType } from "react";
-import { type Color } from "@mui/material";
-import {
-  red,
-  purple,
-  deepPurple,
-  indigo,
-  cyan,
-  teal,
-  green,
-  deepOrange,
-  grey,
-} from "@mui/material/colors";
+import { useMemo, useState, useCallback } from 'react';
+import type { ComponentType } from 'react';
 
-import { Card } from "@/components/ui/card.js";
-import { Skeleton } from "@/components/ui/skeleton.js";
-import { cn } from "@/lib/utils.js";
-import ErrorBoundary from "./ErrorBoundary.js";
-import Icon from "../Icon.js";
-import useEntity from "../../common/hooks/useEntity.js";
-import type { UseEntityResult } from "../../common/hooks/useEntity.js";
-import PowerSwitch from "./PowerSwitch.js";
-import { FAN, LIGHT, SENSOR, SWITCH } from "../../common/domains.js";
-import SensorDisplay from "./SensorDisplay.js";
-import EntityDialog from "../EntityDialog.js";
-import type { KnownEntityId } from "../../types/entities.js";
+import { Card } from '@/components/ui/card.js';
+import { Skeleton } from '@/components/ui/skeleton.js';
+import { cn } from '@/lib/utils.js';
+import ErrorBoundary from './ErrorBoundary.js';
+import Icon from '../Icon.js';
+import useEntity from '../../common/hooks/useEntity.js';
+import type { UseEntityResult } from '../../common/hooks/useEntity.js';
+import PowerSwitch from './PowerSwitch.js';
+import { FAN, LIGHT, SENSOR, SWITCH } from '../../common/domains.js';
+import SensorDisplay from './SensorDisplay.js';
+import EntityDialog from '../EntityDialog.js';
+import type { KnownEntityId } from '../../types/entities.js';
 
 interface StyledIconProps {
   rotateIcon?: boolean;
@@ -38,19 +26,19 @@ const StyledIcon = (props: StyledIconProps) => {
   return (
     <div
       className={cn(
-        "text-[2.5em] flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
-        rotateIcon && "animate-spin [animation-duration:1s]",
+        'flex items-center justify-center transition-transform duration-300 group-hover:scale-110',
+        rotateIcon && 'animate-spin [animation-duration:1s]',
         className,
       )}
     >
-      <Icon {...iconProps} />
+      <Icon size="2.5rem" {...iconProps} />
     </div>
   );
 };
 
 interface ActionProps {
   entity: UseEntityResult;
-  color: Color;
+  color: string;
   className?: string;
 }
 
@@ -61,23 +49,23 @@ const actions: Record<string, ComponentType<ActionProps>> = {
   [SENSOR]: SensorDisplay,
 };
 
-const randomColors: Color[] = [
-  red,
-  purple,
-  deepPurple,
-  indigo,
-  cyan,
-  teal,
-  green,
-  deepOrange,
+const randomColors: string[] = [
+  '#f44336', // red
+  '#9c27b0', // purple
+  '#673ab7', // deepPurple
+  '#3f51b5', // indigo
+  '#00bcd4', // cyan
+  '#009688', // teal
+  '#4caf50', // green
+  '#ff5722', // deepOrange
 ];
 
-const detailSupported = ["light", "fan"];
+const detailSupported = ['light', 'fan'];
 
 interface EntityCardProps {
   entityId: KnownEntityId;
   title?: string;
-  color?: Color;
+  color?: string;
 }
 
 function EntityCardInner({
@@ -93,7 +81,7 @@ function EntityCardInner({
     if (entityId && colorProp) return colorProp;
     const randomColor =
       randomColors[Math.floor(Math.random() * randomColors.length)];
-    return randomColor || grey;
+    return randomColor || '#9e9e9e'; // grey
   }, [entityId, colorProp]);
 
   const handleIconClick = useCallback(
@@ -124,25 +112,25 @@ function EntityCardInner({
   return (
     <Card
       className={cn(
-        "group relative flex h-32 w-full min-w-40 max-w-64 flex-col p-3 transition-all duration-300 select-none cursor-pointer shadow-md",
-        "border border-[var(--ha-card-border-color,var(--divider-color,transparent))]",
-        "hover:brightness-110 hover:shadow-lg active:scale-[0.98] active:duration-75",
-        "@[container]",
+        'group relative flex h-32 w-full min-w-40 max-w-64 flex-col p-3 transition-all duration-300 select-none cursor-pointer shadow-md',
+        'border border-[var(--ha-card-border-color,var(--divider-color,transparent))]',
+        'hover:brightness-110 hover:shadow-lg active:scale-[0.98] active:duration-75',
+        '@[container]',
       )}
       style={{
         backgroundColor:
-          state === "off"
-            ? "var(--ha-card-background, var(--card-background-color, #1c1c1c))"
-            : state === "unavailable"
-              ? "var(--disabled-text-color, #727272)"
-              : color[500],
-        color: state === "off" ? "var(--primary-text-color)" : "#fff",
+          state === 'off'
+            ? 'var(--ha-card-background, var(--card-background-color, #1c1c1c))'
+            : state === 'unavailable'
+              ? 'var(--disabled-text-color, #727272)'
+              : color,
+        color: state === 'off' ? 'var(--primary-text-color)' : '#fff',
       }}
       onClick={handleIconClick}
     >
       <div className="flex flex-row items-start justify-between">
         <StyledIcon
-          rotateIcon={state === "on" && icon === "mdi:fan"}
+          rotateIcon={state === 'on' && icon === 'mdi:fan'}
           icon={icon}
         />
         {Action && (

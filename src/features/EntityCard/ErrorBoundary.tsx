@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
-import { Box } from '@mui/material';
 
 interface Props {
   entityId: string;
@@ -32,20 +31,11 @@ export default class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <Box
-          sx={{
-            backgroundColor: 'red',
-            borderRadius: '10px',
-            height: (theme) => theme.spacing(12),
-            width: '100%',
-            maxWidth: (theme) => theme.spacing(25),
-            display: 'flex',
-            flexDirection: 'column',
-            padding: 1.5,
-          }}
-        >
-          <h5>Error occurred on {this.props.entityId}</h5>
-        </Box>
+        <div className="bg-destructive text-destructive-foreground rounded-lg h-32 w-full max-w-64 flex flex-col p-3 shadow-md border border-destructive/50">
+          <h5 className="text-sm font-bold">
+            Error occurred on {this.props.entityId}
+          </h5>
+        </div>
       );
     }
     return this.props.children;

@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import * as React from 'react';
+import { useMediaQuery } from '@/hooks/use-media-query';
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Drawer,
   DrawerContent,
@@ -19,7 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
   DrawerClose,
-} from "@/components/ui/drawer";
+} from '@/components/ui/drawer';
 
 interface AdaptiveDialogProps extends React.ComponentProps<typeof Dialog> {
   children: React.ReactNode;
@@ -32,7 +32,7 @@ const AdaptiveDialogContext = React.createContext<{ isDesktop: boolean }>({
 });
 
 export function AdaptiveDialog({ children, ...props }: AdaptiveDialogProps) {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   return (
     <AdaptiveDialogContext.Provider value={{ isDesktop }}>
