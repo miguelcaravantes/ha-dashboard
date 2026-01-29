@@ -1,58 +1,44 @@
-import { useActionState } from 'react';
-import { Switch, type Color, type SwitchProps } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
-import type { UseEntityResult } from '../../common/hooks/useEntity.js';
+import { useActionState, useOptimistic, startTransition } from "react";
+import { Switch } from "@/components/ui/switch.js";
+import type { UseEntityResult } from "../../common/hooks/useEntity.js";
+import { type Color } from "@mui/material";
 
 interface PowerSwitchProps {
   entity: UseEntityResult;
-  color: Color;
+  color?: Color;
   className?: string;
 }
 
-const StyledSwitch = styled(
-  ({
-    overrideColor: _overrideColor,
-    ...props
-  }: SwitchProps & { overrideColor: Color }) => <Switch {...props} />,
-)<{ overrideColor: Color }>((props) => ({
-  opacity: props.disabled ? 0.7 : 1,
-  '.MuiSwitch-switchBase': {
-    '&.Mui-checked': {
-      color: props.overrideColor[100],
-      '&:hover': {
-        backgroundColor: alpha(
-          props.overrideColor[100],
-          props.theme.palette.action.hoverOpacity,
-        ),
-      },
-    },
-    '&.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: props.overrideColor[100],
-    },
-  },
-}));
-
 const PowerSwitch = ({
   entity: { state, toggle },
-  color,
   className,
 }: PowerSwitchProps) => {
+  const [optimisticOn, setOptimisticOn] = useOptimistic(
+    state === "on",
+    (_, newState: boolean) => newState,
+  );
+
   const [_, toggleAction, isPending] = useActionState(async () => {
     await toggle();
     return null;
   }, null);
 
-  const switchProps: SwitchProps & { overrideColor: Color } = {
-    overrideColor: color,
-    checked: state === 'on',
-    onChange: () => toggleAction(),
-    disabled: isPending,
+  const handleCheckedChange = (checked: boolean) => {
+    startTransition(() => {
+      setOptimisticOn(checked);
+      toggleAction();
+    });
   };
-  if (className) {
-    switchProps.className = className;
-  }
 
-  return <StyledSwitch {...switchProps} />;
+  return (
+    <Switch
+      checked={optimisticOn}
+      onCheckedChange={handleCheckedChange}
+      disabled={isPending}
+      className={className}
+      size="default"
+    />
+  );
 };
 
 export default PowerSwitch;
