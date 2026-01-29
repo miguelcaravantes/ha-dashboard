@@ -9,9 +9,9 @@
 ## Current Position
 
 - **Current Phase:** Phase 7: Core UI Migration
-- **Current Plan:** 01 (Migrate Panel shell)
+- **Current Plan:** 02 (Migrate CardDashboard)
 - **Status:** 🟢 ON TRACK
-- **Progress:** [█████████░░░░░░░░░░░] 45% (Milestone v2.0)
+- **Progress:** [██████████░░░░░░░░░░] 50% (Milestone v2.0)
 
 ## Performance Metrics
 
@@ -48,6 +48,6 @@
 - [x] Phase 5: Synchronize Dark Mode with HA
 - [ ] Phase 7: Core UI Migration
   - [x] Plan 01: Migrate Panel shell
-  - [ ] Plan 02: Migrate CardDashboard
+  - [x] Plan 02: Migrate CardDashboard
   - [ ] Plan 03: Migrate EntityPage
   - [ ] Plan 04: Finalize transition
