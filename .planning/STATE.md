@@ -9,9 +9,9 @@
 ## Current Position
 
 - **Current Phase:** Phase 8: Complex UI Migration
-- **Current Plan:** Initializing Phase 8 context
+- **Current Plan:** 01 (UI Infrastructure) Completed
 - **Status:** 🟢 ON TRACK
-- **Progress:** [████████████░░░░░░░░] 60% (Milestone v2.0)
+- **Progress:** [█████████████░░░░░░░] 65% (Milestone v2.0)
 
 ## Performance Metrics
 
@@ -31,12 +31,15 @@
   - Mapped shadcn/Tailwind variables to Home Assistant native CSS variables for seamless theming.
   - Established Top Header + Bottom Nav shell pattern.
   - Standardized on Icon-first entity cards with stacked sensor values.
+  - **New:** Adopted `AdaptiveDialog` pattern (Drawer on mobile, Dialog on desktop) with `backdrop-blur-sm`.
+  - **New:** Standardized on thick, touch-optimized Sliders (24px thumb, 8px track).
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
   - Phase 5 completed: UI Infrastructure setup.
   - Phase 7 completed: Core UI Migration (Shell, Grid, Switch, Sensor).
   - Phase 6: Merged into Phase 4.
-  - Next: Phase 8: Complex UI Migration (Dialogs, Sliders, Climate/Fan).
+  - Phase 8 Plan 01 completed: UI Infrastructure (Dialogs, Sliders).
+  - Next: Phase 8 Plan 02: Light Detail View Migration.
 
 ## Continuity Checklist
 
