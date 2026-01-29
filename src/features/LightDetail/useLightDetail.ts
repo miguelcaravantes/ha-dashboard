@@ -48,7 +48,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
         setBrightness(hassBrightness.current);
       }
     },
-    [state]
+    [state],
   );
 
   const doesSupportColor =
@@ -64,7 +64,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
         entity_id: entityId,
         brightness: brightnessValue,
       });
-    }, 100)
+    }, 100),
   );
 
   const handleColorChange = useConstantHook(() =>
@@ -79,7 +79,7 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
       }
 
       await callService('light', 'turn_on', data);
-    }, 100)
+    }, 100),
   );
 
   const onColorChange = (color: number[]) => {

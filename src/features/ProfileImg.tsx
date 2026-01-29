@@ -6,8 +6,8 @@ const isPerson = ([entityId]: [string, HassEntity]) =>
   entityId.startsWith('person.');
 const withUser =
   (userId: string) =>
-  ([, stateObj]: [string, HassEntity]) =>
-    stateObj.attributes.user_id === userId;
+    ([, stateObj]: [string, HassEntity]) =>
+      stateObj.attributes.user_id === userId;
 
 export default function ProfileImg() {
   const { user, states } = useHass();

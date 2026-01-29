@@ -37,10 +37,10 @@ export default function FanDetail({ entityId }: FanDetailProps) {
   const [localPercentage, setLocalPercentage] = useState(percentage ?? 0);
 
   const doesSupportSpeed = Boolean(
-    (supportedFeatures ?? 0) & FAN_SUPPORT_SET_SPEED
+    (supportedFeatures ?? 0) & FAN_SUPPORT_SET_SPEED,
   );
   const doesSupportOscillate = Boolean(
-    (supportedFeatures ?? 0) & FAN_SUPPORT_OSCILLATE
+    (supportedFeatures ?? 0) & FAN_SUPPORT_OSCILLATE,
   );
 
   const handleChangeOscillation = () => {
@@ -58,7 +58,7 @@ export default function FanDetail({ entityId }: FanDetailProps) {
         entity_id: entityId,
         percentage: percentageValue,
       });
-    }, 100)
+    }, 100),
   );
 
   const handleSpeedChange = (value: number) => {

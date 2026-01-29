@@ -30,12 +30,12 @@ export interface HomeAssistant {
     domain: string,
     service: string,
     serviceData?: Record<string, unknown>,
-    target?: Record<string, unknown>
+    target?: Record<string, unknown>,
   ) => Promise<unknown>;
   callApi: (
     method: string,
     path: string,
-    parameters?: Record<string, unknown>
+    parameters?: Record<string, unknown>,
   ) => Promise<unknown>;
   fetchWithAuth: (path: string, options?: unknown) => Promise<unknown>;
   sendWS: (msg: MessageBase) => void;

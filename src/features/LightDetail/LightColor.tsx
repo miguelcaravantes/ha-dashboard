@@ -42,7 +42,7 @@ const colors = ['#ffffff'].concat(
     orange,
     deepOrange,
     brown,
-  ].flatMap((i) => [i[200]!, i[500]!, i[700]!])
+  ].flatMap((i) => [i[200]!, i[500]!, i[700]!]),
 );
 
 const ColorsContainer = styled('div')(({ theme }) => ({

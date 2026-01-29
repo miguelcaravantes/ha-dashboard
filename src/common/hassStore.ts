@@ -8,7 +8,7 @@ interface HassStore {
 }
 
 function createStore(
-  initialState: HomeAssistant = {} as HomeAssistant
+  initialState: HomeAssistant = {} as HomeAssistant,
 ): HassStore {
   let state = initialState;
   const listeners = new Set<() => void>();

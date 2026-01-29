@@ -13,7 +13,7 @@ const StyledSwitch = styled(
   ({
     overrideColor: _overrideColor,
     ...props
-  }: SwitchProps & { overrideColor: Color }) => <Switch {...props} />
+  }: SwitchProps & { overrideColor: Color }) => <Switch {...props} />,
 )<{ overrideColor: Color }>((props) => ({
   opacity: props.disabled ? 0.7 : 1,
   '.MuiSwitch-switchBase': {
@@ -22,7 +22,7 @@ const StyledSwitch = styled(
       '&:hover': {
         backgroundColor: alpha(
           props.overrideColor[100],
-          props.theme.palette.action.hoverOpacity
+          props.theme.palette.action.hoverOpacity,
         ),
       },
     },

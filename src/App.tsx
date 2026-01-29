@@ -5,7 +5,7 @@ import theme from './theme.js';
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme} defaultMode="dark">
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <GlobalStyles
         styles={`
@@ -21,6 +21,7 @@ export default function App() {
           html,
           body {
             height: 100%;
+            background-color: #000000;
           }
         `}
       />

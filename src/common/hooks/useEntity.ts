@@ -75,7 +75,7 @@ const getIcon = (
   isGroup: boolean,
   state: string,
   stateIcon?: string,
-  deviceClass?: string
+  deviceClass?: string,
 ): string | undefined => {
   const domainIcon = domainMapping[domain];
   const icon =
@@ -103,6 +103,27 @@ const openMoreInfo = (entityId: string) => {
     bubbles: true,
     composed: true,
   });
+
+  const customPanel = (
+    window as Window &
+      typeof globalThis & {
+        parent: {
+          customPanel?: {
+            parentNode: { parentNode: { offsetParent: HTMLElement } };
+          };
+        };
+      }
+  ).parent?.customPanel;
+
+  if (customPanel) {
+    const ha = customPanel.parentNode.parentNode.offsetParent?.querySelector(
+      'home-assistant',
+    ) as HTMLElement | null;
+    if (ha) {
+      ha.dispatchEvent(eventMoreInfo);
+      return;
+    }
+  }
 
   const ha = document.querySelector('home-assistant');
   if (ha) {
@@ -140,7 +161,7 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
         ? snapshot.states[entityId as string]
         : undefined,
     }),
-    shallowEqual
+    shallowEqual,
   );
 
   const domain = (entityId as string).split('.')[0] || '';
@@ -165,12 +186,12 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
 
   const icon = useMemo(
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
-    [domain, isGroup, state, stateIcon, deviceClass]
+    [domain, isGroup, state, stateIcon, deviceClass],
   );
 
   const handleOpenMoreInfo = useCallback(
     () => openMoreInfo(entityId as string),
-    [entityId]
+    [entityId],
   );
 
   const toggle = useCallback(async () => {

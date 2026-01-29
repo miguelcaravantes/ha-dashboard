@@ -10,7 +10,7 @@ export function HassProvider({ children }: HassProviderProps) {
   const hass = useSyncExternalStore(
     hassStore.subscribe,
     hassStore.getSnapshot,
-    hassStore.getServerSnapshot
+    hassStore.getServerSnapshot,
   );
 
   return <HassContext.Provider value={hass}>{children}</HassContext.Provider>;

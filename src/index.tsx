@@ -20,7 +20,7 @@ class ReactWrapper extends HTMLElement {
     this.root.render(
       <HassProvider>
         <App />
-      </HassProvider>
+      </HassProvider>,
     );
   }
 }

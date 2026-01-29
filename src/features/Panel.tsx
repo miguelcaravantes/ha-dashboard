@@ -24,6 +24,7 @@ import React, { useState } from 'react';
 
 const Container = styled('div')(({ theme }) => ({
   width: '100%',
+  minHeight: '100vh',
   color: theme.palette.text.primary,
   background: theme.palette.background.default,
 }));
@@ -76,7 +77,7 @@ export default function Panel() {
     ).parent?.customPanel;
     if (customPanel) {
       const ha = customPanel.parentNode.parentNode.offsetParent?.querySelector(
-        'home-assistant'
+        'home-assistant',
       ) as HTMLElement | null;
       ha?.shadowRoot
         ?.querySelector('home-assistant-main')

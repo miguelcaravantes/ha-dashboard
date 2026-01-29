@@ -18,7 +18,7 @@ export default defineConfig({
       // overwrite default .html entry
       input: 'src/index.tsx',
       output: {
-        entryFileNames: `[name].js`,
+        entryFileNames: '[name].js',
       },
     },
   },

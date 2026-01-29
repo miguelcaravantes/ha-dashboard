@@ -25,7 +25,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     console.error(
       `ErrorBoundary caught an error for ${this.props.entityId}:`,
       _error,
-      _errorInfo
+      _errorInfo,
     );
   }
 

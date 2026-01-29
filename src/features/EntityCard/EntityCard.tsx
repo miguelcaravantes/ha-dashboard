@@ -50,7 +50,7 @@ const StyledIcon = styled((props: StyledIconProps) => {
   {
     fontSize: '2.5em',
   },
-  ({ rotateIcon }) => (rotateIcon ? fanAnimation : undefined)
+  ({ rotateIcon }) => (rotateIcon ? fanAnimation : undefined),
 );
 
 interface ActionProps {
@@ -98,18 +98,18 @@ function EntityCardInner({
     () =>
       (entityId && colorProp) ??
       randomColors[Math.floor(Math.random() * randomColors.length)],
-    [entityId, colorProp]
+    [entityId, colorProp],
   ) as Color;
 
   const handleIconClick = useCallback(
     () =>
       detailSupported.includes(domain) ? setModalOpen(true) : openMoreInfo(),
-    [domain, openMoreInfo]
+    [domain, openMoreInfo],
   );
 
   const handleModelClose = useCallback(
     () => setModalOpen(false),
-    [setModalOpen]
+    [setModalOpen],
   );
 
   const Action = actions[domain];
@@ -120,8 +120,8 @@ function EntityCardInner({
           state === 'off'
             ? grey[900]
             : state === 'unavailable'
-            ? grey[500]
-            : color[500],
+              ? grey[500]
+              : color[500],
         borderRadius: '10px',
         height: (theme) => theme.spacing(12),
         width: '100%',
@@ -129,6 +129,7 @@ function EntityCardInner({
         display: 'flex',
         flexDirection: 'column',
         padding: 1.5,
+        color: '#fff',
         containerType: 'inline-size',
         '@container (max-width: 150px)': {
           padding: 1,
