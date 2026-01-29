@@ -1,9 +1,6 @@
-import { useMemo, useState, useCallback } from 'react';
-import type { ComponentType } from 'react';
-import { styled, keyframes, css as cssSystem } from '@mui/material/styles';
-import { Box, type Color } from '@mui/material';
-import ErrorBoundary from './ErrorBoundary.js';
-
+import { useMemo, useState, useCallback } from "react";
+import type { ComponentType } from "react";
+import { type Color } from "@mui/material";
 import {
   red,
   purple,
@@ -14,44 +11,41 @@ import {
   green,
   deepOrange,
   grey,
-} from '@mui/material/colors';
-import Icon from '../Icon.js';
-import useEntity from '../../common/hooks/useEntity.js';
-import type { UseEntityResult } from '../../common/hooks/useEntity.js';
-import PowerSwitch from './PowerSwitch.js';
-import { FAN, LIGHT, SENSOR, SWITCH } from '../../common/domains.js';
-import SensorDisplay from './SensorDisplay.js';
-import EntityDialog from '../EntityDialog.js';
-import type { KnownEntityId } from '../../types/entities.js';
+} from "@mui/material/colors";
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const fanAnimation = cssSystem`
-  animation: ${rotate} 1s linear infinite;
-`;
+import { Card } from "@/components/ui/card.js";
+import { cn } from "@/lib/utils.js";
+import ErrorBoundary from "./ErrorBoundary.js";
+import Icon from "../Icon.js";
+import useEntity from "../../common/hooks/useEntity.js";
+import type { UseEntityResult } from "../../common/hooks/useEntity.js";
+import PowerSwitch from "./PowerSwitch.js";
+import { FAN, LIGHT, SENSOR, SWITCH } from "../../common/domains.js";
+import SensorDisplay from "./SensorDisplay.js";
+import EntityDialog from "../EntityDialog.js";
+import type { KnownEntityId } from "../../types/entities.js";
 
 interface StyledIconProps {
   rotateIcon?: boolean;
   icon?: string | undefined;
   onClick?: () => void;
+  className?: string;
 }
 
-const StyledIcon = styled((props: StyledIconProps) => {
-  const { rotateIcon: _, ...iconProps } = props;
-  return <Icon {...iconProps} />;
-})<StyledIconProps>(
-  {
-    fontSize: '2.5em',
-  },
-  ({ rotateIcon }) => (rotateIcon ? fanAnimation : undefined),
-);
+const StyledIcon = (props: StyledIconProps) => {
+  const { rotateIcon, className, ...iconProps } = props;
+  return (
+    <div
+      className={cn(
+        "text-[2.5em] flex items-center justify-center",
+        rotateIcon && "animate-spin [animation-duration:1s]",
+        className,
+      )}
+    >
+      <Icon {...iconProps} />
+    </div>
+  );
+};
 
 interface ActionProps {
   entity: UseEntityResult;
@@ -77,7 +71,7 @@ const randomColors: Color[] = [
   deepOrange,
 ];
 
-const detailSupported = ['light', 'fan'];
+const detailSupported = ["light", "fan"];
 
 interface EntityCardProps {
   entityId: KnownEntityId;
@@ -114,75 +108,48 @@ function EntityCardInner({
 
   const Action = actions[domain];
   return (
-    <Box
-      sx={{
+    <Card
+      className={cn(
+        "group relative flex h-32 w-full min-w-40 max-w-64 flex-col p-3 transition-all duration-200 select-none cursor-pointer border-none shadow-md",
+        "hover:brightness-110 active:scale-[0.98]",
+        "@container",
+      )}
+      style={{
         backgroundColor:
-          state === 'off'
+          state === "off"
             ? grey[900]
-            : state === 'unavailable'
+            : state === "unavailable"
               ? grey[500]
               : color[500],
-        borderRadius: '10px',
-        height: (theme) => theme.spacing(12),
-        width: '100%',
-        maxWidth: (theme) => theme.spacing(25),
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 1.5,
-        color: '#fff',
-        containerType: 'inline-size',
-        '@container (max-width: 150px)': {
-          padding: 1,
-          '& .entity-title': {
-            fontSize: '0.7em',
-          },
-          '& .action-container': {
-            display: 'none',
-          },
-        },
-        '@container (min-width: 300px)': {
-          padding: 2,
-          '& .entity-title': {
-            fontSize: '1em',
-          },
-        },
+        color: "#fff",
       }}
+      onClick={handleIconClick}
     >
-      <Box
-        className="header-container"
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
+      <div className="flex flex-row items-start justify-between">
         <StyledIcon
-          onClick={handleIconClick}
-          rotateIcon={state === 'on' && icon === 'mdi:fan'}
+          rotateIcon={state === "on" && icon === "mdi:fan"}
           icon={icon}
         />
         {Action && (
-          <Box className="action-container" sx={{ ml: 'auto' }}>
+          <div
+            className="action-container ml-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Action entity={entity} color={color} />
-          </Box>
+          </div>
         )}
-      </Box>
-      <Box
-        className="entity-title"
-        sx={{
-          mt: 'auto',
-          pb: '0.2em',
-          fontWeight: '700',
-          fontSize: '0.8em',
-        }}
-      >
-        <span>{title}</span>
-      </Box>
+      </div>
+
+      <div className="entity-title mt-auto pb-1 text-[0.8em] font-bold leading-tight @[max-width:150px]:text-[0.7em] @[min-width:300px]:text-[1em]">
+        <span className="truncate">{title}</span>
+      </div>
+
       <EntityDialog
         entityId={entityId}
         open={modalOpen}
         onClose={handleModelClose}
       />
-    </Box>
+    </Card>
   );
 }
 
