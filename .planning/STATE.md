@@ -9,9 +9,9 @@
 ## Current Position
 
 - **Current Phase:** Phase 7: Core UI Migration
-- **Current Plan:** Initializing Phase 7 context
+- **Current Plan:** 01 (Migrate Panel shell)
 - **Status:** 🟢 ON TRACK
-- **Progress:** [████████░░░░░░░░░░░░] 40% (Milestone v2.0)
+- **Progress:** [█████████░░░░░░░░░░░] 45% (Milestone v2.0)
 
 ## Performance Metrics
 
@@ -29,11 +29,13 @@
   - Established CSS Layer Order: `mui, base, components, utilities`.
   - Wrapped MUI styles in `@layer mui` using custom Emotion Stylis plugin.
   - Mapped shadcn/Tailwind variables to Home Assistant native CSS variables for seamless theming.
+  - Established h-16 as standard header and bottom nav height for the dashboard shell.
+  - Adopted Lucide icons as the primary replacement for MDI in the core UI.
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
   - Phase 5 completed: UI Infrastructure (Tailwind v4, shadcn init, MUI layering, Dark mode sync).
   - Phase 6: Merged into Phase 4.
-  - Next: Phase 7: Core UI Migration.
+  - Phase 7 Plan 01 completed: Migrated dashboard shell to shadcn/Tailwind.
 
 ## Continuity Checklist
 
@@ -45,3 +47,7 @@
 - [x] Phase 5: Implement MUI Layering
 - [x] Phase 5: Synchronize Dark Mode with HA
 - [ ] Phase 7: Core UI Migration
+  - [x] Plan 01: Migrate Panel shell
+  - [ ] Plan 02: Migrate CardDashboard
+  - [ ] Plan 03: Migrate EntityPage
+  - [ ] Plan 04: Finalize transition
