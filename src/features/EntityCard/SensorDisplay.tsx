@@ -1,5 +1,5 @@
-import { Box, type Color } from '@mui/material';
-import type { UseEntityResult } from '../../common/hooks/useEntity.js';
+import type { UseEntityResult } from "../../common/hooks/useEntity.js";
+import { type Color } from "@mui/material";
 
 interface SensorDisplayProps {
   entity: UseEntityResult;
@@ -11,18 +11,18 @@ const SensorDisplay = ({
   entity: { state, unitOfMeasurement },
   className,
 }: SensorDisplayProps) => (
-  <Box sx={{ fontSize: '1.5em', padding: '5px' }}>
+  <div className="p-1 text-[1.5em]">
     <span className={className}>
-      {state !== 'unavailable' ? (
+      {state !== "unavailable" ? (
         <>
           {state}
           {unitOfMeasurement}
         </>
       ) : (
-        <Box sx={{ fontSize: '1rem' }}>Unavailable</Box>
+        <div className="text-[1rem]">Unavailable</div>
       )}
     </span>
-  </Box>
+  </div>
 );
 
 export default SensorDisplay;
