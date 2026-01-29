@@ -13,7 +13,7 @@ import {
   TabsTrigger,
   TabsContent,
 } from "../../components/ui/tabs.js";
-import LightColor from "./LightColor.js";
+import ColorPresets from "./ColorPresets.js";
 import useLightDetail from "./useLightDetail.js";
 import useEntity from "../../common/hooks/useEntity.js";
 import LightGroup from "./LightGroup.js";
@@ -118,7 +118,10 @@ export default function LightDetail({
                 <TabsTrigger value="white">White</TabsTrigger>
               </TabsList>
               <TabsContent value="color" className="pt-4">
-                <LightColor onChange={handleColorChange} disabled={isPending} />
+                <ColorPresets
+                  onChange={handleColorChange}
+                  disabled={isPending}
+                />
               </TabsContent>
               <TabsContent value="white">{renderColorTempSlider()}</TabsContent>
             </Tabs>
@@ -126,7 +129,7 @@ export default function LightDetail({
 
           {showColorOnly && (
             <div className="pt-4">
-              <LightColor onChange={handleColorChange} disabled={isPending} />
+              <ColorPresets onChange={handleColorChange} disabled={isPending} />
             </div>
           )}
 

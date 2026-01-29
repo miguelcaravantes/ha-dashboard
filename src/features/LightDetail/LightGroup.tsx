@@ -1,24 +1,21 @@
-import { useState } from 'react';
-import useEntity from '../../common/hooks/useEntity.js';
-import { Typography, Button } from '@mui/material';
-import Icon from '../Icon.js';
-import { styled } from '@mui/material/styles';
-import EntityDialog from '../EntityDialog.js';
-import type { KnownEntityId } from '../../types/entities.js';
-import { isEntityId } from '../../common/utils/typeGuards.js';
-
-const Root = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-});
+import { useState } from "react";
+import useEntity from "../../common/hooks/useEntity.js";
+import { Button } from "../../components/ui/button.js";
+import Icon from "../Icon.js";
+import EntityDialog from "../EntityDialog.js";
+import type { KnownEntityId } from "../../types/entities.js";
+import { isEntityId } from "../../common/utils/typeGuards.js";
 
 function Child({ entityId }: { entityId: KnownEntityId }) {
   const { icon, name } = useEntity(entityId);
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <div>
-      <Button onClick={() => setModalOpen(true)}>
+      <Button
+        variant="outline"
+        className="w-full justify-start gap-2"
+        onClick={() => setModalOpen(true)}
+      >
         <Icon icon={icon} /> {name}
       </Button>
       <EntityDialog
@@ -33,11 +30,13 @@ function Child({ entityId }: { entityId: KnownEntityId }) {
 export default function LightGroup({ entityId }: { entityId: KnownEntityId }) {
   const { groupEntities } = useEntity(entityId);
   return (
-    <Root>
-      <Typography variant="h6">Group:</Typography>
-      {groupEntities?.map((e) =>
-        isEntityId(e) ? <Child key={e} entityId={e} /> : null,
-      )}
-    </Root>
+    <div className="flex flex-col gap-2 pt-2">
+      <h4 className="text-sm font-medium">Group Members:</h4>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        {groupEntities?.map((e) =>
+          isEntityId(e) ? <Child key={e} entityId={e} /> : null,
+        )}
+      </div>
+    </div>
   );
 }
