@@ -8,11 +8,12 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Goal:** Establish a unified stylistic and strict typing foundation by consolidating tools and enforcing assertion rules.
 
-**Plans:** 3 plans
+**Plans:** 4 plans
 
 - [ ] 04-01-PLAN.md — Prettier Purge & Stylistic Setup
 - [ ] 04-02-PLAN.md — Type Guard Infrastructure & Hook Refactor
-- [ ] 04-03-PLAN.md — Codebase-wide Type Hardening (DATA-04)
+- [ ] 04-03-PLAN.md — High-Violation Feature Refactor
+- [ ] 04-04-PLAN.md — Remaining Assertion Sweep & Hardening (DATA-04)
 
 - **Requirements:** TOOL-01, TOOL-02, TOOL-03, DATA-04
 - **Dependencies:** None (foundation for v2.0)
