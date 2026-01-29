@@ -1,49 +1,14 @@
-import { styled } from '@mui/material/styles';
+import React, { useState } from 'react';
 import {
-  Box,
-  Typography,
-  AppBar,
-  IconButton,
-  Toolbar,
-  Tabs,
-  Tab,
-  useTheme,
-  useMediaQuery,
-} from '@mui/material';
-
-import {
-  Home as HomeIcon,
   Menu as MenuIcon,
+  Home as HomeIcon,
   Heart as HeartIcon,
-} from 'mdi-material-ui';
-
+} from 'lucide-react';
+import { Button } from '../components/ui/button.js';
 import EntityPage from './EntityPage.js';
 import ProfileImg from './ProfileImg.js';
 import CardDashboard from './CardDashboard.js';
-import React, { useState } from 'react';
 import { isObject } from '../common/utils/typeGuards.js';
-
-const Container = styled('div')(({ theme }) => ({
-  width: '100%',
-  minHeight: '100vh',
-  color: theme.palette.text.primary,
-  background: theme.palette.background.default,
-}));
-
-const Header = styled(AppBar)(({ theme }) => ({
-  background: theme.palette.background.default,
-}));
-
-const Title = styled(Typography)({
-  flexGrow: 1,
-});
-
-const Menu = styled(IconButton)(({ theme }) => ({
-  display: 'none',
-  [theme.breakpoints.down(870)]: {
-    display: 'block',
-  },
-}));
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -53,17 +18,11 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index } = props;
-  return value === index && <Box sx={{ p: 3 }}>{children}</Box>;
+  return value === index ? <div className="p-4 md:p-6">{children}</div> : null;
 }
 
 export default function Panel() {
-  const theme = useTheme();
-  const matchesUpSm = useMediaQuery(theme.breakpoints.up('sm'));
   const [value, setValue] = useState(0);
-
-  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
 
   const handleMenuClick = () => {
     const parent = window.parent;
@@ -88,37 +47,87 @@ export default function Panel() {
       }
     }
   };
-  return (
-    <Container>
-      <Header position="static" color="default">
-        <Toolbar>
-          <Menu edge="start" aria-label="menu" onClick={handleMenuClick}>
-            <MenuIcon />
-          </Menu>
-          <Title variant="h6">Home</Title>
-          <ProfileImg />
-        </Toolbar>
 
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant={matchesUpSm ? 'standard' : 'fullWidth'}
-          centered
+  return (
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
+      {/* Top Header */}
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 max-w-screen-2xl items-center mx-auto px-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mr-2 md:hidden"
+            onClick={handleMenuClick}
+            aria-label="menu"
+          >
+            <MenuIcon className="h-5 w-5" />
+          </Button>
+
+          <div className="flex flex-1 items-center justify-between">
+            <h1 className="text-xl font-bold md:mr-8">Home</h1>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+              <Button
+                variant={value === 0 ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => setValue(0)}
+                className="gap-2"
+              >
+                <HomeIcon className="h-4 w-4" />
+                <span>Home</span>
+              </Button>
+              <Button
+                variant={value === 1 ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => setValue(1)}
+                className="gap-2"
+              >
+                <HeartIcon className="h-4 w-4" />
+                <span>Favorite</span>
+              </Button>
+            </nav>
+
+            <div className="flex flex-1 md:flex-initial items-center justify-end space-x-4">
+              <ProfileImg />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 pb-16 md:pb-0">
+        <div className="container max-w-screen-2xl mx-auto">
+          <TabPanel value={value} index={0}>
+            <CardDashboard />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <EntityPage />
+          </TabPanel>
+        </div>
+      </main>
+
+      {/* Bottom Navigation for Mobile */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 border-t bg-background flex items-center justify-around">
+        <button
+          onClick={() => setValue(0)}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 0 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
         >
-          <Tab icon={<HomeIcon />} aria-label="Home" />
-          <Tab icon={<HeartIcon />} aria-label="favorite" />
-        </Tabs>
-      </Header>
-      <div>
-        <TabPanel value={value} index={0}>
-          <CardDashboard />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <EntityPage />
-        </TabPanel>
-      </div>
-    </Container>
+          <HomeIcon className="h-6 w-6" />
+          <span className="text-[10px] font-medium uppercase tracking-wider">
+            Home
+          </span>
+        </button>
+        <button
+          onClick={() => setValue(1)}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 1 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+        >
+          <HeartIcon className="h-6 w-6" />
+          <span className="text-[10px] font-medium uppercase tracking-wider">
+            Favorite
+          </span>
+        </button>
+      </nav>
+    </div>
   );
 }
