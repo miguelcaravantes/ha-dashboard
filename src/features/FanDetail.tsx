@@ -8,11 +8,14 @@ import _AwesomeDebouncePromise from 'awesome-debounce-promise';
 import _useConstant from 'use-constant';
 import type { KnownEntityId } from '../types/entities.js';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const awesomeDebounce =
-  (_AwesomeDebouncePromise as any).default || _AwesomeDebouncePromise;
-const useConstantHook = (_useConstant as any).default || _useConstant;
-/* eslint-enable @typescript-eslint/no-explicit-any */
+import { isNumber, hasDefault } from '../common/utils/typeGuards.js';
+
+const awesomeDebounce = hasDefault<unknown>(_AwesomeDebouncePromise)
+  ? _AwesomeDebouncePromise.default
+  : _AwesomeDebouncePromise;
+const useConstantHook = hasDefault<unknown>(_useConstant)
+  ? _useConstant.default
+  : _useConstant;
 
 const Root = styled('div')({
   display: 'flex',
@@ -30,9 +33,16 @@ export default function FanDetail({ entityId }: FanDetailProps) {
   const [isPending, startTransition] = useTransition();
 
   const attributes = stateObj?.attributes || {};
-  const oscillating = attributes.oscillating as boolean | undefined;
-  const percentageStep = attributes.percentage_step as number | undefined;
-  const percentage = attributes.percentage as number | undefined;
+  const oscillating =
+    typeof attributes.oscillating === 'boolean'
+      ? attributes.oscillating
+      : undefined;
+  const percentageStep = isNumber(attributes.percentage_step)
+    ? attributes.percentage_step
+    : undefined;
+  const percentage = isNumber(attributes.percentage)
+    ? attributes.percentage
+    : undefined;
 
   const [localPercentage, setLocalPercentage] = useState(percentage ?? 0);
 
@@ -90,7 +100,11 @@ export default function FanDetail({ entityId }: FanDetailProps) {
               step={percentageStep ?? 1}
               value={localPercentage}
               valueLabelDisplay="auto"
-              onChange={(_e, value) => handleSpeedChange(value as number)}
+              onChange={(_e, value) => {
+                if (isNumber(value)) {
+                  handleSpeedChange(value);
+                }
+              }}
               disabled={isPending}
             />
           </Box>

@@ -22,6 +22,7 @@ import {
   brown,
 } from '@mui/material/colors';
 import { compose } from '../../common/composition.js';
+import { isNumber, isDefined } from '../../common/utils/typeGuards.js';
 
 const colors = ['#ffffff'].concat(
   [
@@ -42,7 +43,7 @@ const colors = ['#ffffff'].concat(
     orange,
     deepOrange,
     brown,
-  ].flatMap((i) => [i[200]!, i[500]!, i[700]!]),
+  ].flatMap((i) => [i[200], i[500], i[700]].filter(isDefined)),
 );
 
 const ColorsContainer = styled('div')(({ theme }) => ({
@@ -67,8 +68,13 @@ const ColorButton = styled('button')<ColorButtonProps>(({ color, theme }) => ({
 }));
 
 const removeAlpha = (rgba: number[]) => rgba.slice(0, 3);
-const hexToRgb = (hex: string) =>
-  hexRgb(hex, { format: 'array' }) as unknown as number[];
+const hexToRgb = (hex: string): number[] => {
+  const result: unknown = hexRgb(hex, { format: 'array' });
+  if (Array.isArray(result) && result.every(isNumber)) {
+    return result;
+  }
+  return [0, 0, 0, 0];
+};
 
 interface LightColorProps {
   onChange: (color: number[]) => void;

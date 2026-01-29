@@ -11,11 +11,18 @@ import useEntity from '../../common/hooks/useEntity.js';
 import { useHass } from '../../common/hooks/useHass.js';
 import type { KnownEntityId } from '../../types/entities.js';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const useConstantHook = (_useConstant as any).default || _useConstant;
-const awesomeDebounce =
-  (_AwesomeDebouncePromise as any).default || _AwesomeDebouncePromise;
-/* eslint-enable @typescript-eslint/no-explicit-any */
+import {
+  isString,
+  isNumber,
+  hasDefault,
+} from '../../common/utils/typeGuards.js';
+
+const useConstantHook = hasDefault<unknown>(_useConstant)
+  ? _useConstant.default
+  : _useConstant;
+const awesomeDebounce = hasDefault<unknown>(_AwesomeDebouncePromise)
+  ? _AwesomeDebouncePromise.default
+  : _AwesomeDebouncePromise;
 
 const SUPPORTED_COLOR_MODES_ATTRIBUTE = 'supported_color_modes';
 
@@ -34,13 +41,19 @@ const useLightDetail = (entityId: KnownEntityId): UseLightDetailResult => {
   const [isPending, startTransition] = useTransition();
 
   const attributes = stateObj?.attributes || {};
-  const supportedColorModes =
-    (attributes[SUPPORTED_COLOR_MODES_ATTRIBUTE] as string[]) || [];
+  const rawSupportedColorModes = attributes[SUPPORTED_COLOR_MODES_ATTRIBUTE];
+  const supportedColorModes = Array.isArray(rawSupportedColorModes)
+    ? rawSupportedColorModes.filter(isString)
+    : [];
 
-  const hassBrightness = useRef((attributes.brightness as number) ?? 0);
+  const rawBrightness = attributes.brightness;
+  const initialBrightness = isNumber(rawBrightness) ? rawBrightness : 0;
+  const hassBrightness = useRef(initialBrightness);
   const [brightness, setBrightness] = useState(hassBrightness.current);
 
-  hassBrightness.current = (attributes.brightness as number) ?? 0;
+  hassBrightness.current = isNumber(attributes.brightness)
+    ? attributes.brightness
+    : 0;
 
   useEffect(
     function syncBrightness() {
