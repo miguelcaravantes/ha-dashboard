@@ -41,6 +41,13 @@ export default tseslint.config(
       '@stylistic/indent': ['error', 2],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/jsx-quotes': ['error', 'prefer-double'],
+      '@typescript-eslint/consistent-type-assertions': [
+        'error',
+        {
+          assertionStyle: 'never',
+        },
+      ],
+      '@typescript-eslint/no-non-null-assertion': 'error',
     },
   },
   // JSON files
