@@ -27,6 +27,13 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Goal:** Initialize the hybrid styling environment where Tailwind CSS v4 and MUI coexist via CSS Cascade Layers.
 
+**Plans:** 4 plans
+
+- [ ] 05-01-PLAN.md — Tailwind v4 Core Setup
+- [ ] 05-02-PLAN.md — MUI Cascade Layering
+- [ ] 05-03-PLAN.md — Shadcn/UI registry initialization
+- [ ] 05-04-PLAN.md — Dark Mode sync
+
 - **Requirements:** UI-06, UI-07, UI-08, UI-09
 - **Dependencies:** Phase 4
 - **Success Criteria:**
@@ -70,10 +77,10 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 ## Progress Tracking
 
-| Phase | Goal                 | Status  | Progress |
-| ----- | -------------------- | ------- | -------- |
+| Phase | Goal                 | Status   | Progress |
+| ----- | -------------------- | -------- | -------- |
 | 4     | Tooling & Standards  | Complete | 100%     |
-| 5     | UI Infrastructure    | Pending | 0%       |
-| 6     | Type Hardening       | Merged  | 100%     |
-| 7     | Core UI Migration    | Pending | 0%       |
-| 8     | Complex UI Migration | Pending | 0%       |
+| 5     | UI Infrastructure    | Pending  | 0%       |
+| 6     | Type Hardening       | Merged   | 100%     |
+| 7     | Core UI Migration    | Pending  | 0%       |
+| 8     | Complex UI Migration | Pending  | 0%       |
