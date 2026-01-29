@@ -14,6 +14,7 @@ import {
 } from "@mui/material/colors";
 
 import { Card } from "@/components/ui/card.js";
+import { Skeleton } from "@/components/ui/skeleton.js";
 import { cn } from "@/lib/utils.js";
 import ErrorBoundary from "./ErrorBoundary.js";
 import Icon from "../Icon.js";
@@ -37,7 +38,7 @@ const StyledIcon = (props: StyledIconProps) => {
   return (
     <div
       className={cn(
-        "text-[2.5em] flex items-center justify-center",
+        "text-[2.5em] flex items-center justify-center transition-transform duration-300 group-hover:scale-110",
         rotateIcon && "animate-spin [animation-duration:1s]",
         className,
       )}
@@ -85,7 +86,7 @@ function EntityCardInner({
   color: colorProp,
 }: EntityCardProps) {
   const entity = useEntity(entityId);
-  const { state, name, domain, icon, openMoreInfo } = entity;
+  const { state, name, domain, icon, openMoreInfo, stateObj } = entity;
   const [modalOpen, setModalOpen] = useState(false);
   const title = customTitle || name;
   const color = useMemo(() => {
@@ -107,21 +108,35 @@ function EntityCardInner({
   );
 
   const Action = actions[domain];
+
+  if (!stateObj) {
+    return (
+      <Card className="flex h-32 w-full min-w-40 max-w-64 flex-col p-3 border border-border/50 bg-card/50 shadow-sm animate-pulse">
+        <div className="flex flex-row items-start justify-between">
+          <Skeleton className="h-10 w-10 rounded-full bg-white/10" />
+          <Skeleton className="h-8 w-12 bg-white/10" />
+        </div>
+        <Skeleton className="mt-auto h-4 w-3/4 bg-white/10" />
+      </Card>
+    );
+  }
+
   return (
     <Card
       className={cn(
-        "group relative flex h-32 w-full min-w-40 max-w-64 flex-col p-3 transition-all duration-200 select-none cursor-pointer border-none shadow-md",
-        "hover:brightness-110 active:scale-[0.98]",
-        "@container",
+        "group relative flex h-32 w-full min-w-40 max-w-64 flex-col p-3 transition-all duration-300 select-none cursor-pointer shadow-md",
+        "border border-[var(--ha-card-border-color,var(--divider-color,transparent))]",
+        "hover:brightness-110 hover:shadow-lg active:scale-[0.98] active:duration-75",
+        "@[container]",
       )}
       style={{
         backgroundColor:
           state === "off"
-            ? grey[900]
+            ? "var(--ha-card-background, var(--card-background-color, #1c1c1c))"
             : state === "unavailable"
-              ? grey[500]
+              ? "var(--disabled-text-color, #727272)"
               : color[500],
-        color: "#fff",
+        color: state === "off" ? "var(--primary-text-color)" : "#fff",
       }}
       onClick={handleIconClick}
     >
@@ -140,8 +155,10 @@ function EntityCardInner({
         )}
       </div>
 
-      <div className="entity-title mt-auto pb-1 text-[0.8em] font-bold leading-tight @[max-width:150px]:text-[0.7em] @[min-width:300px]:text-[1em]">
-        <span className="truncate">{title}</span>
+      <div className="entity-title mt-auto pb-1 text-[0.9em] font-bold leading-tight tracking-tight @[max-width:150px]:text-[0.7em] @[min-width:300px]:text-[1em]">
+        <span className="truncate opacity-90 group-hover:opacity-100 transition-opacity">
+          {title}
+        </span>
       </div>
 
       <EntityDialog
