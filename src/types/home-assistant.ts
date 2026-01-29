@@ -4,7 +4,7 @@ import type {
   HassConfig,
   HassUser,
   MessageBase,
-} from 'home-assistant-js-websocket';
+} from "home-assistant-js-websocket";
 
 export interface HomeAssistant {
   auth: unknown;
@@ -40,4 +40,21 @@ export interface HomeAssistant {
   fetchWithAuth: (path: string, options?: unknown) => Promise<unknown>;
   sendWS: (msg: MessageBase) => void;
   callWS: <T>(msg: MessageBase) => Promise<T>;
+}
+
+export interface HomeAssistantElement extends HTMLElement {
+  hass: HomeAssistant;
+  shadowRoot: ShadowRoot;
+}
+
+export interface CustomPanelElement extends HTMLElement {
+  parentNode: HomeAssistantElement & {
+    parentNode: HTMLElement & {
+      offsetParent: HTMLElement;
+    };
+  };
+}
+
+export interface HAWindow extends Window {
+  customPanel?: CustomPanelElement;
 }

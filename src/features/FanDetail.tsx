@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/adaptive-dialog";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Tune as TuneIcon } from "mdi-material-ui";
 import { cn } from "@/lib/utils";
 
 import useEntity from "../common/hooks/useEntity.js";
@@ -38,7 +40,7 @@ export default function FanDetail({
   onOpenChange,
 }: FanDetailProps) {
   const { callService } = useHass();
-  const { stateObj, supportedFeatures, name, state, toggle } =
+  const { stateObj, supportedFeatures, name, state, toggle, openMoreInfo } =
     useEntity(entityId);
   const [isPending, startTransition] = useTransition();
 
@@ -101,10 +103,15 @@ export default function FanDetail({
   return (
     <AdaptiveDialog open={open} onOpenChange={onOpenChange}>
       <AdaptiveDialogContent className="max-w-md">
-        <AdaptiveDialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <AdaptiveDialogTitle className="text-xl font-semibold">
-            {name}
-          </AdaptiveDialogTitle>
+        <AdaptiveDialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 pr-8">
+          <div className="flex items-center gap-2">
+            <AdaptiveDialogTitle className="text-xl font-semibold">
+              {name}
+            </AdaptiveDialogTitle>
+            <Button variant="ghost" size="icon" onClick={openMoreInfo}>
+              <TuneIcon className="h-5 w-5" />
+            </Button>
+          </div>
           <Switch
             checked={isOn}
             onCheckedChange={handleToggle}

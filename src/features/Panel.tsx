@@ -9,6 +9,7 @@ import EntityPage from "./EntityPage.js";
 import ProfileImg from "./ProfileImg.js";
 import CardDashboard from "./CardDashboard.js";
 import { isObject } from "../common/utils/typeGuards.js";
+import type { HAWindow } from "../types/home-assistant.js";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,27 +26,11 @@ export default function Panel() {
   const [value, setValue] = useState(0);
 
   const handleMenuClick = () => {
-    const parent = window.parent;
-    if (isObject(parent) && "customPanel" in parent) {
-      const customPanel = parent.customPanel;
-      if (isObject(customPanel) && "parentNode" in customPanel) {
-        const p1 = customPanel.parentNode;
-        if (isObject(p1) && "parentNode" in p1) {
-          const p2 = p1.parentNode;
-          if (isObject(p2) && "offsetParent" in p2) {
-            const op = p2.offsetParent;
-            if (isObject(op) && typeof op.querySelector === "function") {
-              const ha = op.querySelector("home-assistant");
-              if (ha instanceof HTMLElement) {
-                ha.shadowRoot
-                  ?.querySelector("home-assistant-main")
-                  ?.dispatchEvent(new Event("hass-toggle-menu"));
-              }
-            }
-          }
-        }
-      }
-    }
+    const haWindow = window.parent as HAWindow;
+    haWindow.customPanel?.parentNode.parentNode.offsetParent
+      ?.querySelector("home-assistant")
+      ?.shadowRoot?.querySelector("home-assistant-main")
+      ?.dispatchEvent(new Event("hass-toggle-menu"));
   };
 
   return (

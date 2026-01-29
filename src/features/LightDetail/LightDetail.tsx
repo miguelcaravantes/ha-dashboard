@@ -7,6 +7,8 @@ import {
 } from "../../components/ui/adaptive-dialog.js";
 import { Switch } from "../../components/ui/switch.js";
 import { Slider } from "../../components/ui/slider.js";
+import { Button } from "../../components/ui/button.js";
+import { Tune as TuneIcon } from "mdi-material-ui";
 import {
   Tabs,
   TabsList,
@@ -30,7 +32,7 @@ export default function LightDetail({
   open,
   onOpenChange,
 }: LightDetailProps) {
-  const { isGroup, name, state, toggle } = useEntity(entityId);
+  const { isGroup, name, state, toggle, openMoreInfo } = useEntity(entityId);
   const {
     doesSupportColor,
     doesSupportColorTemp,
@@ -97,10 +99,15 @@ export default function LightDetail({
   return (
     <AdaptiveDialog open={open} onOpenChange={onOpenChange}>
       <AdaptiveDialogContent className="max-w-md">
-        <AdaptiveDialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <AdaptiveDialogTitle className="text-xl font-semibold">
-            {name}
-          </AdaptiveDialogTitle>
+        <AdaptiveDialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4 pr-8">
+          <div className="flex items-center gap-2">
+            <AdaptiveDialogTitle className="text-xl font-semibold">
+              {name}
+            </AdaptiveDialogTitle>
+            <Button variant="ghost" size="icon" onClick={openMoreInfo}>
+              <TuneIcon className="h-5 w-5" />
+            </Button>
+          </div>
           <Switch
             checked={state === "on"}
             onCheckedChange={handleToggle}
