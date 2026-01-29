@@ -8,15 +8,15 @@
 
 ## Current Position
 
-- **Current Phase:** Phase 8: Complex UI Migration
-- **Current Plan:** 03 (Fan & Climate Detail Migration) Completed
+- **Current Phase:** Milestone v2.0 Complete
+- **Current Plan:** Audit and cleanup
 - **Status:** 🟢 ON TRACK
-- **Progress:** [████████████████░░░░] 80% (Milestone v2.0)
+- **Progress:** [████████████████████] 100% (Milestone v2.0)
 
 ## Performance Metrics
 
 - **Type Safety:** 100% TSX (Strict Mode + No Assertions)
-- **Styling:** Tailwind v4 + shadcn/ui (Core Shell & Grid complete)
+- **Styling:** Tailwind v4 + shadcn/ui (Complete Migration)
 - **Linting:** ESLint Stylistic (No Prettier)
 - **Assertions:** 0% (DATA-04 verified)
 
@@ -31,18 +31,13 @@
   - Mapped shadcn/Tailwind variables to Home Assistant native CSS variables for seamless theming.
   - Established Top Header + Bottom Nav shell pattern.
   - Standardized on Icon-first entity cards with stacked sensor values.
-  - **New:** Adopted `AdaptiveDialog` pattern (Drawer on mobile, Dialog on desktop) with `backdrop-blur-sm`.
-  - **New:** Standardized on thick, touch-optimized Sliders (24px thumb, 8px track).
-  - **New:** Light Detail uses "Presets Only" color strategy (Grid of circles) + "White" tab for Temperature.
-  - **New:** Fan Detail uses animated icon (`animate-spin`) to indicate active state.
+  - Used Adaptive Dialogs (Sheet/Modal) for complex entity interactions.
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
   - Phase 5 completed: UI Infrastructure setup.
   - Phase 7 completed: Core UI Migration (Shell, Grid, Switch, Sensor).
-  - Phase 6: Merged into Phase 4.
-  - Phase 8 Plan 01 completed: UI Infrastructure (Dialogs, Sliders).
-  - Phase 8 Plan 02 completed: Light Detail View Migration.
-  - Phase 8 Plan 03 completed: Fan Detail Migration.
+  - Phase 8 completed: Complex UI Migration (Dialogs, Sliders, Climate/Fan).
+  - Milestone v2.0 is functionally complete.
 
 ## Continuity Checklist
 

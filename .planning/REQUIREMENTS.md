@@ -25,7 +25,7 @@ Requirements for the UI pivot and standards enforcement.
 
 - [x] **UI-10**: Migrate Dashboard layout and Panel shell to shadcn/ui
 - [x] **UI-11**: Migrate Entity Cards (PowerSwitch, SensorDisplay) to shadcn/ui
-- [ ] **UI-12**: Migrate Entity Dialogs, Light/Fan details, and Sliders to shadcn/ui
+- [x] **UI-12**: Migrate Entity Dialogs, Light/Fan details, and Sliders to shadcn/ui
 
 ## Future Requirements
 
@@ -53,7 +53,7 @@ Requirements for the UI pivot and standards enforcement.
 | DATA-04     | Phase 4 | Complete |
 | UI-10       | Phase 7 | Complete |
 | UI-11       | Phase 7 | Complete |
-| UI-12       | Phase 8 | Pending |
+| UI-12       | Phase 8 | Complete |
 
 **Coverage:**
 
