@@ -1,10 +1,10 @@
-import Panel from "./features/Panel.js";
-import { GlobalStyles, CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme.js";
-import { MuiLayerProvider } from "./common/MuiLayerProvider.js";
-import { useDarkMode } from "./common/hooks/useDarkMode.js";
-import "./index.css";
+import Panel from './features/Panel.js';
+import { GlobalStyles, CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme.js';
+import { MuiLayerProvider } from './common/MuiLayerProvider.js';
+import { useDarkMode } from './common/hooks/useDarkMode.js';
+import './index.css';
 
 export default function App() {
   useDarkMode();
