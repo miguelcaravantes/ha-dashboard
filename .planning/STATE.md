@@ -9,33 +9,27 @@
 ## Current Position
 
 - **Current Phase:** Phase 7: Core UI Migration
-- **Current Plan:** 02 (Migrate CardDashboard)
+- **Current Plan:** 03 (Refactor EntityCard and PowerSwitch)
 - **Status:** 🟢 ON TRACK
-- **Progress:** [██████████░░░░░░░░░░] 50% (Milestone v2.0)
+- **Progress:** [████████████░░░░░░░░] 60% (Milestone v2.0)
 
 ## Performance Metrics
 
-- **Type Safety:** 100% TSX (Strict Mode + No Assertions)
-- **Styling:** Tailwind v4 + shadcn/ui foundation established
-- **Linting:** ESLint Stylistic (No Prettier)
-- **Assertions:** 0% (DATA-04 verified)
+...
 
 ## Accumulated Context
 
 - **Decisions:**
-  - Pivoted to Hybrid Architecture using CSS Cascade Layers to manage MUI/Tailwind coexistence.
-  - Replacing Prettier with ESLint Stylistic for unified DX.
-  - Forbidding type assertions to force safer runtime logic.
-  - Established CSS Layer Order: `mui, base, components, utilities`.
-  - Wrapped MUI styles in `@layer mui` using custom Emotion Stylis plugin.
-  - Mapped shadcn/Tailwind variables to Home Assistant native CSS variables for seamless theming.
-  - Established h-16 as standard header and bottom nav height for the dashboard shell.
+  ...
   - Adopted Lucide icons as the primary replacement for MDI in the core UI.
+  - Implemented Optimistic UI updates for core interactive components (PowerSwitch).
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
   - Phase 5 completed: UI Infrastructure (Tailwind v4, shadcn init, MUI layering, Dark mode sync).
   - Phase 6: Merged into Phase 4.
   - Phase 7 Plan 01 completed: Migrated dashboard shell to shadcn/Tailwind.
+  - Phase 7 Plan 02 completed: Migrated CardDashboard grid.
+  - Phase 7 Plan 03 completed: Refactored EntityCard and PowerSwitch to shadcn.
 
 ## Continuity Checklist
 
@@ -49,5 +43,5 @@
 - [ ] Phase 7: Core UI Migration
   - [x] Plan 01: Migrate Panel shell
   - [x] Plan 02: Migrate CardDashboard
-  - [ ] Plan 03: Migrate EntityPage
+  - [x] Plan 03: Refactor EntityCard and PowerSwitch
   - [ ] Plan 04: Finalize transition
