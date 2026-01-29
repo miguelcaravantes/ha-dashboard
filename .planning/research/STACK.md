@@ -1,101 +1,130 @@
 # Technology Stack
 
-**Project:** React Home Assistant Dashboard - Modernization
-**Researched:** Jan 27, 2026
+**Project:** ha-dashboard v2.0 Migration
+**Researched:** 2026-01-28
 **Confidence:** HIGH
 
-## Recommended Stack Additions & Changes
+## Recommended Stack Additions
 
-### Core Framework (Modernization)
+### UI Framework (Pivot)
 
-| Technology     | Version   | Purpose     | Action                                                             |
-| -------------- | --------- | ----------- | ------------------------------------------------------------------ |
-| **Vite**       | `^7.0.0`  | Build Tool  | **Upgrade** from v6. Required for React 19 support and faster HMR. |
-| **React**      | `^19.0.0` | UI Library  | **Upgrade** from v18. Enables Actions and `useOptimistic`.         |
-| **React DOM**  | `^19.0.0` | UI Renderer | **Upgrade** to match React core.                                   |
-| **TypeScript** | `^5.7.0`  | Language    | **Add**. Critical for "Strict TS" requirement.                     |
+| Technology       | Version     | Purpose          | Why Recommended                                                                              |
+| ---------------- | ----------- | ---------------- | -------------------------------------------------------------------------------------------- |
+| **shadcn/ui**    | 3.7.0 (CLI) | Component System | Modern, accessible component architecture. v3 CLI supports Tailwind v4 and React 19.         |
+| **Tailwind CSS** | 4.1.x       | Utility Styling  | v4 provides a CSS-first approach, zero-config setup via Vite plugin, and faster compilation. |
+| **Lucide React** | 0.474.0+    | Iconography      | Standard icon set for shadcn/ui; lightweight and tree-shakable.                              |
 
-### UI & Styling
+### Linting & Formatting (Stylistic Pivot)
 
-| Technology              | Version    | Purpose    | Action                                                                      |
-| ----------------------- | ---------- | ---------- | --------------------------------------------------------------------------- |
-| **@mui/material**       | `^6.0.0`   | Components | **Upgrade** from v5.10. Modern styling engine, better performance.          |
-| **@mui/icons-material** | `^6.0.0`   | Icons      | **Add**. Replaces `mdi-material-ui`. Official support, better tree-shaking. |
-| **@emotion/react**      | `^11.14.0` | Styling    | **Upgrade**. Peer dependency for MUI v6.                                    |
-| **@emotion/styled**     | `^11.14.0` | Styling    | **Upgrade**. Peer dependency for MUI v6.                                    |
+| Library                      | Version | Purpose         | Why Recommended                                                                          |
+| ---------------------------- | ------- | --------------- | ---------------------------------------------------------------------------------------- |
+| **@stylistic/eslint-plugin** | 5.7.1   | Stylistic Rules | Official replacement for deprecated ESLint stylistic rules. Enables removal of Prettier. |
+| **typescript-eslint**        | 8.x     | TS Linting      | Essential for strict typing and `no-non-null-assertion` enforcement.                     |
 
-### Legacy Cleanup (Removals)
+### Supporting Libraries
 
-| Library                    | Replacement                         | Rationale                                                                                                              |
-| -------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `mdi-material-ui`          | `@mui/icons-material`               | Package is effectively unmaintained (latest tag v4, irregular v7 updates). Switch to official MUI icons for stability. |
-| `awesome-debounce-promise` | `use-debounce` or `lodash.debounce` | Unmaintained (7+ years). React 19 concurrency safe alternatives required.                                              |
+| Library                   | Version | Purpose         | When to Use                                                              |
+| ------------------------- | ------- | --------------- | ------------------------------------------------------------------------ |
+| **@tailwindcss/vite**     | 4.x     | Vite 7 Plugin   | Required for Tailwind v4 integration in Vite 7.                          |
+| **clsx / tailwind-merge** | latest  | Class Utilities | Standard for managing conditional Tailwind classes in shadcn components. |
+| **next-themes**           | latest  | Dark Mode       | Simplest way to manage dark mode state in Vite/React apps.               |
 
-### Development Tooling (New)
+## Development Tools
 
-| Tool                    | Version   | Purpose                                               |
-| ----------------------- | --------- | ----------------------------------------------------- |
-| **typescript-eslint**   | `^8.0.0`  | **Add**. Required for strict TS linting.              |
-| **vite-plugin-checker** | `^0.8.0`  | **Add**. Runs TS checks in Vite overlay.              |
-| **@types/node**         | `^22.0.0` | **Add**. Type definitions for Node.js (config files). |
-| **@types/react**        | `^19.0.0` | **Add**. React 19 type definitions.                   |
-| **@types/react-dom**    | `^19.0.0` | **Add**. React DOM 19 type definitions.               |
+| Tool                     | Purpose           | Notes                                                            |
+| ------------------------ | ----------------- | ---------------------------------------------------------------- |
+| **shadcn CLI**           | Init & Components | Use `pnpm dlx shadcn@latest` for the newest registry support.    |
+| **ESLint 9 Flat Config** | Linting Engine    | Already in project; must be updated to include stylistic plugin. |
 
-## Configuration Requirements
+## Installation
 
-### 1. TypeScript Strict Mode (`tsconfig.json`)
+```bash
+# Core & Supporting
+pnpm add tailwindcss @tailwindcss/vite lucide-react clsx tailwind-merge next-themes
 
-Must be created with `strict: true`.
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
+# Dev dependencies (ESLint Stylistic & TS)
+pnpm add -D @stylistic/eslint-plugin
 ```
 
-### 2. Vite 7 Config (`vite.config.ts`)
+## Legacy Cleanup (Removals)
 
-Update `vite.config.js` to `vite.config.ts` and ensure React plugin is configured.
+| Avoid / Remove             | Why                                                           | Use Instead               |
+| -------------------------- | ------------------------------------------------------------- | ------------------------- |
+| **prettier**               | Project requirement: Enforce stylistic rules via ESLint only. | @stylistic/eslint-plugin  |
+| **eslint-plugin-prettier** | No longer needed once Prettier is removed.                    | Stylistic rules directly. |
+| **shadcn-ui**              | Deprecated package name.                                      | `shadcn` (CLI v3+)        |
+
+## Integration with Existing Stack
+
+### Vite 7 + Tailwind v4
+
+Tailwind v4 is integrated as a Vite plugin. This replaces the need for `postcss.config.js`.
 
 ```typescript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+// vite.config.ts
+import tailwindcss from '@tailwindcss/vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    // ...existing plugins
+    tailwindcss(),
+  ],
 });
 ```
 
-## Migration Notes
+### MUI v7 Coexistence
 
-1.  **MUI v6 Migration**:
-    - Run codemods if available, but v5 -> v6 is mostly additive.
-    - Check `ThemeProvider` usage for deprecated theme variables.
-2.  **Icon Migration**:
-    - `import { Icon } from 'mdi-material-ui'` -> `import Icon from '@mui/icons-material/Icon'`.
-    - Verify icon names; most standard Material icons match, but community ones might be missing. If a specific MDI icon is missing in MUI, import it from `@mdi/js` and use `<SvgIcon>`.
+Tailwind v4 should be scoped using CSS layers to ensure MUI v7 (Emotion/Material UI) styles take precedence or are managed correctly.
+
+```css
+/* src/index.css */
+@import 'tailwindcss';
+
+@layer base, mui, components, utilities;
+
+@layer mui {
+  /* MUI styles will naturally live here or outside Tailwind's specific utility layer */
+}
+```
+
+### ESLint 9 Flat Config (Stylistic)
+
+Update `eslint.config.js` to import and apply stylistic rules.
+
+```javascript
+import stylistic from '@stylistic/eslint-plugin';
+
+export default [
+  // ... existing configs
+  {
+    plugins: {
+      '@stylistic': stylistic,
+    },
+    rules: {
+      ...stylistic.configs['recommended-flat'].rules,
+      '@typescript-eslint/no-non-null-assertion': 'error',
+      // project specific overrides
+    },
+  },
+];
+```
+
+## Version Compatibility
+
+| Package      | Compatible With     | Notes                                               |
+| ------------ | ------------------- | --------------------------------------------------- |
+| shadcn@3.7.0 | Tailwind v4.0+      | Native support for CSS-first config.                |
+| React 19     | MUI v7 & shadcn     | Both ecosystems are fully compatible with React 19. |
+| Node 22      | Vite 7 / Tailwind 4 | Verified environment support.                       |
 
 ## Sources
 
-- [React 19 Upgrade Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide)
-- [MUI Installation](https://mui.com/material-ui/getting-started/installation/)
-- [Vite Releases](https://github.com/vitejs/vite/releases)
+- [shadcn/ui Docs] — Vite Installation guide (verified Tailwind v4 support).
+- [Tailwind CSS v4 Docs] — CSS-first configuration and Vite plugin details.
+- [ESLint Stylistic Docs] — Manual migration for Flat Config v9.
+- [NPM Registry] — Version verification (2026-01-28).
+
+---
+
+_Stack research for: ha-dashboard v2.0 Migration_
+_Researched: 2026-01-28_

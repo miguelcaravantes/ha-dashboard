@@ -1,78 +1,93 @@
-# Feature Landscape
+# Feature Landscape: v2.0 Shadcn Migration (Features Dimension)
 
-**Domain:** Home Assistant Dashboard Modernization
-**Researched:** Jan 2026
-**Focus:** Foundation (Vite 7, React 19, Strict TS, MUI v6)
+**Domain:** Home Assistant Dashboard
+**Researched:** 2026-01-28
+**Focus:** Feature parity and migration from MUI to shadcn/ui
+
+## Home Assistant Feature Mapping
+
+Mapping existing MUI-based features to shadcn/ui equivalents.
+
+| MUI Feature        | shadcn/ui Replacement | Complexity | Notes                                                                                                  |
+| ------------------ | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------ |
+| **Entity Card**    | `Card` component      | Medium     | Requires recreation of MUI's elevation, ripple effects, and state-based styling.                       |
+| **Power Switch**   | `Switch` + `Card`     | Low        | Radix-based switch for reliable touch interaction.                                                     |
+| **Light Control**  | `Slider` + `Popover`  | High       | Brightness via Slider. Color via custom Popover + `react-colorful`. Requires debouncing service calls. |
+| **Fan Control**    | `Slider` + `Select`   | Medium     | Speed via Slider (percentage) or Select (preset modes). Requires mapping modes.                        |
+| **Sensor Display** | `Card` + `Badge`      | Low        | Use Badges for state/unit display.                                                                     |
+| **Grid Layout**    | Tailwind Grid (v4)    | Medium     | Replaces `MuiGrid`. Requires mapping breakpoints (sm/md/lg) and column counts.                         |
+| **Quick Actions**  | `Button` (variants)   | Low        | Standardized Button variants (ghost, outline, primary).                                                |
 
 ## Table Stakes
 
-These are the baseline expectations for a modern React application in 2026. Failure to implement these results in technical debt immediately upon delivery.
+Baseline expectations for the v2.0 dashboard. Missing these will result in a regression from v1.0.
 
-| Feature                  | Why Expected                                                                                                      | Complexity           | Notes                                                                                     |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------- |
-| **Strict Type Safety**   | Prevents "undefined is not an object" errors common in dynamic HA entities.                                       | High (initial setup) | Requires `strict: true`, `noUncheckedIndexedAccess`. All HA entities must be typed.       |
-| **Instant HMR**          | Developers expect <100ms updates. Vite 7 delivers this via Rolldown/Rust tooling.                                 | Low (native to Vite) | Critical for tweaking dashboard layouts efficiently.                                      |
-| **CSS Variable Theming** | MUI v6 moves to CSS vars for theming. Enables instant light/dark mode switching without React context re-renders. | Medium               | Replaces legacy JS-based theme providers.                                                 |
-| **Responsive Grid v2**   | MUI v6 standardizes Grid v2. Essential for dashboard cards that resize on mobile/tablet.                          | Low                  | Must use `Grid2` component, not legacy `Grid`.                                            |
-| **React Actions**        | React 19 standard for handling form/interaction state (`useActionState`).                                         | Medium               | Replaces manual `useState` for loading/error states in mutations (e.g., toggling lights). |
+| Feature                | Why Expected                                 | Complexity | Notes                                           |
+| ---------------------- | -------------------------------------------- | ---------- | ----------------------------------------------- |
+| **State Sync**         | Components must reflect real-time HA state.  | Low        | Already handled by `HassProvider`.              |
+| **Unified Dark Mode**  | Consistent dark theme across all components. | Low        | Using CSS variables and `next-themes`.          |
+| **Touch Optimization** | Large tap targets for wall-mounted tablets.  | Medium     | Adjusting Shadcn defaults for larger hit areas. |
+| **Unit Persistence**   | Sensors must display units (%, °C, LUX).     | Low        | Simple string interpolation from HA state.      |
 
 ## Differentiators
 
-Features that leverage the new stack to provide superior Developer Experience (DX) or User Experience (UX) compared to legacy dashboards.
+Features that leverage the shadcn/ui ecosystem for superior UX/DX compared to MUI.
 
-| Feature                  | Value Proposition                                                                                                               | Complexity         | Notes                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | ------------------ | ----------------------------------------------------------- |
-| **React Compiler**       | **Performance by default.** Automatically memoizes components and values. Eliminates manual `useMemo`/`useCallback`.            | Low (build config) | React 19 feature. Removes performance footguns.             |
-| **Zero-Runtime Styles**  | **Faster TTI.** MUI v6 (via Pigment CSS) extracts styles at build time. No style injection lag on low-end tablets.              | High (migration)   | Requires avoiding dynamic JS interpolation in styles.       |
-| **Typed Entity Hooks**   | **Dev Speed.** `useEntity('light.living_room')` auto-completes available entities and return types.                             | High (setup)       | Leverages Strict TS to validate entity IDs at compile time. |
-| **Concurrent Rendering** | **Smoothness.** React 19 keeps the UI responsive (typing, scrolling) while heavy data updates (HA state) process in background. | Medium             | Native to React 19 but requires avoiding blocking effects.  |
-| **Container Queries**    | **Responsive Components.** Styles based on component size, not viewport. Perfect for dashboard cards.                           | Medium             | Supported in MUI v6 theme.                                  |
+| Feature                  | Value Proposition                                     | Complexity | Notes                                                   |
+| ------------------------ | ----------------------------------------------------- | ---------- | ------------------------------------------------------- |
+| **Tailwind 4 Native**    | Blazing fast styling, no runtime CSS-in-JS overhead.  | Medium     | Significant performance gain on low-power tablets.      |
+| **Direct Customization** | Components in `src/components/ui/` are easily edited. | Low        | No more fighting with `sx` or `styled()`.               |
+| **Micro-interactions**   | Framer Motion integration for state changes.          | Low        | Smooth transitions when lights toggle or values update. |
+| **Smaller Bundle**       | Significant reduction in JS sent to the client.       | Medium     | Faster initial load and better memory usage.            |
 
 ## Anti-Features
 
-Practices to explicitly avoid during the modernization process. These are "modern legacy" patterns that the new stack aims to eliminate.
+Features/Patterns to explicitly avoid during the v2.0 migration.
 
-| Anti-Feature                  | Why Avoid                                                                           | What to Do Instead                                                   |
-| ----------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| **Manual Memoization**        | React 19 Compiler handles this. `useMemo` clutters code and is often wrong.         | Trust the Compiler. Only optimize when profiled.                     |
-| **`makeStyles` / `styled`**   | Legacy runtime CSS-in-JS (Emotion/JSS) is slow and blocks the main thread.          | Use MUI `sx` prop (compiler-optimized) or CSS Modules / Pigment CSS. |
-| **`any` for Entities**        | Defeats the purpose of migration. Causes runtime crashes when entities are missing. | Use `HassEntity` generics or unknown with guards.                    |
-| **Default Exports**           | Makes refactoring and tree-shaking harder.                                          | Use Named Exports for all components.                                |
-| **Barrel Files (`index.ts`)** | Slows down Vite HMR and tests by importing unused modules.                          | Import directly or keep barrels minimal/types-only.                  |
-| **`ListItem` Props**          | `button`, `autoFocus`, `disabled` removed in MUI v6.                                | Use `ListItemButton` component.                                      |
+| Anti-Feature             | Why Avoid                                     | What to Do Instead                                         |
+| ------------------------ | --------------------------------------------- | ---------------------------------------------------------- |
+| **Universal Card**       | Creating one "God Card" for all entity types. | Domain-specific cards (LightCard, FanCard, SensorCard).    |
+| **Deep SX Prop**         | Using `sx` for layout or complex styling.     | Use Tailwind utility classes directly.                     |
+| **Manual DOM Refs**      | Accessing HA state via global window or DOM.  | Always consume through `useHass` hook from `HassProvider`. |
+| **Inline Magic Numbers** | Hardcoding colors or spacing in components.   | Use CSS variables defined in `@layer base`.                |
 
 ## Feature Dependencies
 
 ```mermaid
 graph TD
-    A[Vite 7 Build System] --> B[React 19 Runtime]
-    A --> C[MUI v6 Assets]
-    B --> D[React Compiler]
-    C --> E[CSS Variables Theme]
-    F[Strict TS Config] --> G[Typed Entity Hooks]
-    E --> H[Dashboard Layout]
-    G --> H
+    HP[HassProvider] --> LC[LightControl]
+    HP --> FC[FanControl]
+    HP --> EC[EntityCard]
+    HP --> SD[SensorDisplay]
+
+    TW[Tailwind v4] --> LC
+    TW --> FC
+    TW --> EC
+
+    SUI[shadcn/ui] --> LC
+    SUI --> FC
+    SUI --> EC
+
+    RC[react-colorful] --> LC
 ```
 
-## Modernization Behavior Expectations
+## MVP Recommendation
 
-### How Strict TS Works Here
+For the v2.0 migration, prioritize:
 
-- **Behavior:** The compiler will yell at you if you try to access `state.attributes.brightness` without checking if `brightness` exists or if `state` is defined.
-- **Benefit:** Catches "light is off (null brightness)" bugs at compile time, preventing runtime White Screens of Death.
+1. **Basic Toggle Card:** Switch + Card + Lucide Icon (PowerSwitch).
+2. **Sensor Display:** Card + Badge (SensorDisplay).
+3. **Brightness Control:** Simple Slider integration.
+4. **Grid Migration:** Replacing MUI Grid with Tailwind `grid-cols`.
 
-### How MUI v6 Works Here
+Defer to post-v2.0:
 
-- **Behavior:** Theming is done via `var(--mui-palette-primary-main)`. Changing a theme is just updating a CSS class on `<body>` or root, not a React tree re-render.
-- **Benefit:** No "white flash" when switching themes; instant performance on cheap wall-mounted tablets.
-
-### How Vite 7 Works Here
-
-- **Behavior:** Cold start is near-instant. Dependencies are pre-bundled with esbuild/Rolldown.
-- **Benefit:** Devs don't wait 30s for the dashboard to start.
+- **RGB Color Picker:** Use a placeholder or simple Select until `react-colorful` integration is polished.
+- **Complex Charts:** Keep existing MUI/Recharts for history graphs until a Shadcn/Chart alternative is selected.
 
 ## Sources
 
-- [Vite 7 Roadmap/Features](https://github.com/vitejs/vite) (High Confidence)
-- [React 19 Actions & Compiler Docs](https://react.dev/blog/2024/02/15/react-labs-what-we-have-been-working-on-february-2024) (High Confidence)
-- [MUI v6 / Pigment CSS Introduction](https://mui.com/blog/material-ui-v6-is-out/) (Medium Confidence)
+- [shadcn/ui Components](https://ui.shadcn.com/docs/components/)
+- [Radix UI Primitives](https://www.radix-ui.com/primitives)
+- [Home Assistant Frontend API](https://developers.home-assistant.io/docs/frontend/)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs/v4-beta)

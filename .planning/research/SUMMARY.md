@@ -1,130 +1,147 @@
 # Project Research Summary
 
-**Project:** React Home Assistant Dashboard - Modernization
-**Domain:** Smart Home / Frontend Engineering
-**Researched:** Jan 27, 2026
+**Project:** ha-dashboard v2.0 Migration
+**Domain:** Home Assistant Dashboard (React/Vite/Tailwind/Shadcn)
+**Researched:** 2026-01-28
 **Confidence:** HIGH
 
 ## Executive Summary
 
-The React Home Assistant Dashboard project is a modernization effort to upgrade an existing dashboard to a state-of-the-art stack. Research indicates a "Micro-Frontend" architecture where the React application runs as a custom web element (`<react-panel>`) injected into Home Assistant. This approach leverages the parent application's authentication and WebSocket connection while providing a modern development environment.
+The ha-dashboard v2.0 migration represents a strategic shift from a traditional Material UI (MUI) architecture to a modern, performance-first stack leveraging React 19, Vite 7, Tailwind CSS v4, and shadcn/ui. This modernization is driven by the need for better performance on wall-mounted tablets, reduced bundle sizes, and a more maintainable, utility-first styling system that avoids the runtime overhead of CSS-in-JS.
 
-The recommended stack is a significant leap forward, adopting Vite 7, React 19, and MUI v6, underpinned by strict TypeScript. This combination offers superior developer experience (instant HMR) and runtime performance (React Compiler, no shadow DOM overhead). The strategy prioritizes a "Leaf-up" migration to Strict TypeScript to prevent regressions and improve stability.
+The recommended approach focuses on an incremental migration strategy using a **Hybrid Layered Architecture**. By utilizing CSS Cascade Layers, the project will allow MUI and Tailwind to coexist without specificity conflicts, enabling a feature-by-feature transition. Simultaneously, the project will pivot its developer experience by replacing Prettier with `@stylistic/eslint-plugin` to unify formatting and linting into a single, high-performance toolchain.
 
-Key risks include the "Implicit Any" avalanche when enabling strict mode and version compatibility issues with Node.js and legacy packages like `mdi-material-ui`. Mitigation involves a phased migration: upgrading infrastructure first, then core libraries, and finally converting feature components incrementally while maintaining a working state.
+The primary risks involve CSS specificity wars during the hybrid phase, potential logic errors when removing non-null assertions to satisfy new strict linting rules, and formatting "flapping" if legacy tools like Prettier are not fully purged from the environment. These will be mitigated through strict infrastructure configuration (CSS layers, VSCode settings) and a systematic approach to type safety hardening.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The research prescribes a complete overhaul of the build and runtime environment to align with 2026 standards. The focus is on strict type safety and build performance.
+The stack pivots toward a CSS-variable-centric approach that maximizes React 19 and Tailwind v4 capabilities.
 
 **Core technologies:**
-- **Vite 7**: Build Tool — Replaces legacy Webpack/Vite 6 for instant HMR and strict TS support.
-- **React 19**: UI Library — Enables concurrent rendering features and the new React Compiler.
-- **MUI v6**: Component Library — Improved styling engine and "Grid v2" for responsive layouts.
-- **TypeScript 5.7+**: Language — Critical for "Strict Mode" to prevent runtime errors with HA entities.
+
+- **Tailwind CSS v4:** Styling — CSS-first approach with zero-config Vite integration and native cascade layers.
+- **shadcn/ui:** Component System — Accessible, customizable primitives that replace MUI components.
+- **@stylistic/eslint-plugin:** Linting/Formatting — Unified tool for stylistic and logic rules, replacing the need for Prettier.
+- **Vite 7:** Build Tool — Latest frontend tooling for optimal development speed and bundle performance.
 
 ### Expected Features
 
+Migration focuses on reaching parity with existing HA dashboard features while introducing performance differentiators.
+
 **Must have (table stakes):**
-- **Strict Type Safety** — Compile-time validation of Home Assistant entities to prevent "white screens of death."
-- **Instant HMR** — Sub-100ms updates during development.
-- **CSS Variables Theming** — Instant light/dark mode switching without React re-renders.
-- **Responsive Grid v2** — Standardized layout component replacing legacy Grid.
+
+- **State Sync:** Real-time reflection of Home Assistant entity states.
+- **Touch Optimization:** Large hit areas and reliable interaction for wall-mounted tablets.
+- **Unified Dark Mode:** Consistent theme using CSS variables and `next-themes`.
 
 **Should have (competitive):**
-- **React Actions** — Modern state handling for mutations (toggling lights).
-- **Typed Entity Hooks** — `useEntity('light.x')` with autocomplete.
-- **React Compiler** — Automatic memoization for performance.
+
+- **Tailwind 4 Native Performance:** Significant reduction in runtime style calculation overhead.
+- **Micro-interactions:** Smooth state transitions using Framer Motion.
+- **Direct Customization:** Easy editing of local `components/ui` files without `sx` prop complexity.
 
 **Defer (v2+):**
-- **Zero-Runtime Styles (Pigment CSS)** — Deferred to avoid complexity during initial migration.
+
+- **RGB Color Picker:** Defer complex color selection until `react-colorful` integration is stable.
+- **Complex Charts:** Retain existing Recharts/MUI implementations for history graphs temporarily.
 
 ### Architecture Approach
 
-The application functions as a Micro-Frontend injected into Home Assistant via a Custom Web Element.
+A Hybrid Layered Architecture that prioritizes CSS specificity management and incremental component replacement.
 
 **Major components:**
-1. **`<react-panel>` (Web Component)** — Entry point that receives the `hass` prop from Home Assistant.
-2. **`hassStore` (Singleton)** — A vanilla observable store that holds the global `hass` object, avoiding prop drilling.
-3. **`useHass` (Hook)** — Connects React components to the store using `useSyncExternalStore` for efficient updates.
+
+1. **CSS Cascade Layering:** Wraps MUI styles in a lower-priority layer to let Tailwind utilities take precedence.
+2. **Theme Bridge:** Maps Home Assistant CSS variables directly to shadcn/Tailwind tokens.
+3. **Component Wrappers:** Local UI components that mimic MUI high-level APIs to simplify feature migration.
 
 ### Critical Pitfalls
 
-1. **Implicit Any Avalanche** — Turning on `strict: true` globally breaks the build. **Avoid** by using `allowJs: true` and migrating file-by-file ("leaf-up" strategy).
-2. **Vite 7 Node Lockout** — Vite 7 requires Node 20.19+ or 22.12+. **Avoid** by upgrading CI/Dev environment first.
-3. **React 19 Ref Callbacks** — Implicit returns in ref callbacks cause TS errors. **Avoid** by fixing these patterns before enabling strict mode.
-4. **MUI Grid v2 Conflicts** — Mixing legacy `Grid` props with MUI v6 breaks layouts. **Avoid** by using codemods and auditing usage.
+1. **CSS Specificity Wars** — Prevented by using `StyledEngineProvider` and CSS Cascade Layers (`@layer mui`).
+2. **Formatting Flapping** — Prevented by explicitly removing Prettier and forcing VSCode settings to use ESLint.
+3. **Runtime Crashes from Assertion Removal** — Avoided by replacing `!` with proper type guards or functional assertions.
 
 ## Implications for Roadmap
 
 Based on research, suggested phase structure:
 
-### Phase 1: Infrastructure Foundation
-**Rationale:** The new stack requires a compatible runtime (Node) and build system (Vite 7) before any code changes can occur.
-**Delivers:** A working "Hello World" build with Vite 7 and TypeScript configuration in place (but loose).
-**Addresses:** Instant HMR, Vite 7 support.
-**Avoids:** Node.js Version Lockout.
+### Phase 1: Infrastructure & Linting Pivot
 
-### Phase 2: Core Modernization
-**Rationale:** The "God Object" (`hass` prop) handling needs to be modernized and typed before feature components can use it safely.
-**Delivers:** Upgraded React 19 / MUI v6 dependencies, typed `hassStore`, and a modernized `index.tsx` entry point.
-**Uses:** React 19, MUI v6, `home-assistant-types`.
-**Implements:** `hassStore` singleton pattern.
+**Rationale:** Establishing the foundation for styling and developer tools before migrating any UI components.
+**Delivers:** Tailwind v4/shadcn installation, ESLint Stylistic configuration, and removal of Prettier.
+**Addresses:** Formatting consistency and build tool readiness.
+**Avoids:** Pitfall 2 (Formatting Flapping).
 
-### Phase 3: Component Migration (Leaf-Up)
-**Rationale:** Feature components must be migrated incrementally to Strict TS to avoid the "Avalanche" pitfall.
-**Delivers:** Feature components converted to `.tsx` one by one, with proper entity typing and MUI v6 components.
-**Addresses:** Strict Type Safety, Responsive Grid v2.
-**Avoids:** Implicit Any Avalanche, Grid v2 Conflicts.
+### Phase 2: Hybrid Styling Foundation
 
-### Phase 4: Optimization & Cleanup
-**Rationale:** Once the codebase is fully typed and modern, we can enable advanced features and remove dead code.
-**Delivers:** Enabled React Compiler, removed legacy libs (`mdi-material-ui`, `awesome-debounce-promise`), strict linting.
-**Addresses:** Performance differentiators.
+**Rationale:** Setting up the coexistence layer ensures subsequent component migration doesn't break existing styles.
+**Delivers:** CSS Cascade Layer configuration and MUI `StyledEngineProvider` setup.
+**Uses:** Tailwind v4 layers and Vite 7 plugins.
+**Implements:** The Hybrid Layered Architecture.
+
+### Phase 3: Type Safety & Non-Null Assertion Hardening
+
+**Rationale:** Cleaning up non-null assertions (`!`) before major refactoring prevents logic errors from propagating.
+**Delivers:** Codebase-wide refactor of unsafe assertions and strict linting enforcement.
+**Avoids:** Pitfall 3 (Runtime Crashes).
+
+### Phase 4: Core Component Migration
+
+**Rationale:** Migrating high-volume, low-complexity components (Cards, Switches, Sensors) first to build momentum.
+**Delivers:** shadcn-based replacements for EntityCards and basic toggles.
+**Addresses:** Baseline features (State Sync, Touch Optimization).
+
+### Phase 5: Advanced Controls & Cleanup
+
+**Rationale:** Completing the migration of complex components and removing legacy dependencies.
+**Delivers:** Migration of Sliders, Popovers, and eventual removal of Material UI from the bundle.
+**Addresses:** Performance optimization (Bundle size reduction).
 
 ### Phase Ordering Rationale
 
-- **Infrastructure First:** You can't run Vite 7 without the right Node version.
-- **Core Second:** You can't type check feature components if the core `hass` object types aren't defined.
-- **Migration Third:** Doing this incrementally prevents a "broken build" state that lasts for weeks.
+- **Tooling First:** Ensuring the linting and styling infrastructure is solid avoids noisy diffs during the actual migration.
+- **Dependency Awareness:** CSS layers must be active before any Tailwind classes are applied to MUI-containing files.
+- **Risk Mitigation:** Type hardening occurs before component logic is rewritten to ensure a stable foundation.
 
 ### Research Flags
 
 Phases likely needing deeper research during planning:
-- **Phase 3 (Component Migration):** Needs specific investigation into complex custom cards that might rely on deprecated MUI v5 features or weird `hass` object structures.
+
+- **Phase 5 (Advanced Controls):** Complex popover positioning and debounced slider updates in shadcn may require deeper investigation into Radix primitives.
 
 Phases with standard patterns (skip research-phase):
-- **Phase 1 (Infrastructure):** Standard Vite/TS setup.
-- **Phase 2 (Core):** Standard library upgrades documented in release notes.
+
+- **Phase 1 (Infrastructure):** Standard shadcn/Tailwind v4 installation patterns are well-documented.
+- **Phase 4 (Core Migration):** Mapping MUI Cards to shadcn Cards is a straightforward replacement.
 
 ## Confidence Assessment
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Stack | HIGH | Official docs for React 19, Vite 7, and MUI v6 are clear. |
-| Features | HIGH | Table stakes are well-defined by modern standards. |
-| Architecture | HIGH | The Micro-Frontend pattern is standard for HA dashboards. |
-| Pitfalls | HIGH | Risks are well-documented in migration guides. |
+| Area         | Confidence | Notes                                                                          |
+| ------------ | ---------- | ------------------------------------------------------------------------------ |
+| Stack        | HIGH       | Tailwind v4 and shadcn are stable and compatible with React 19.                |
+| Features     | HIGH       | Feature mapping is clear; most HA interactions are standard UI patterns.       |
+| Architecture | HIGH       | CSS Cascade Layers are the standard industry solution for library coexistence. |
+| Pitfalls     | HIGH       | Specificity and formatting risks are well-known with established mitigations.  |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Community Icons:** The mapping from `mdi-material-ui` to `@mui/icons-material` might not be 1:1. Some icons might be missing and require `@mdi/js`.
-- **Theme Adaptation:** Exact mechanism for syncing HA theme (light/dark) to MUI theme needs verification during Phase 2.
+- **MUI Dialog/Portal Scoping:** Need to verify if Radix portals need specific container targeting for HA CSS variables to reach them.
+- **Performance Benchmarking:** Ideally, perform a baseline bundle size check before starting Phase 4 to track improvements.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- **Vite 7 Roadmap** — Verified Node.js requirements.
-- **React 19 Upgrade Guide** — Verified Ref callback changes and Compiler features.
-- **MUI v6 Migration Guide** — Verified Grid v2 and styling changes.
 
-### Secondary (MEDIUM confidence)
-- **Home Assistant Frontend Repo** — Logic for Custom Panel injection.
+- [shadcn/ui Docs] — Vite & Tailwind v4 installation guide.
+- [Tailwind CSS v4 Docs] — CSS Cascade Layers and Vite plugin integration.
+- [MUI Interoperability Guide] — Tailwind CSS v4 integration patterns.
+- [ESLint Stylistic Docs] — Migration from Prettier/Standard.
 
 ---
-*Research completed: Jan 27, 2026*
-*Ready for roadmap: yes*
+
+_Research completed: 2026-01-28_
+_Ready for roadmap: yes_

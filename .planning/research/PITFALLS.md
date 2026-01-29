@@ -1,93 +1,99 @@
-# Domain Pitfalls
+# Domain Pitfalls: Migration to Shadcn & ESLint Stylistic
 
-**Domain:** React Home Assistant Dashboard Modernization (Vite 7, React 19, MUI v6, Strict TS)
-**Researched:** Jan 27, 2026
+**Domain:** v2.0 Shadcn Migration & Linting Pivot (MUI -> Shadcn, Prettier -> ESLint Stylistic)
+**Researched:** 2026-01-28
 
 ## Critical Pitfalls
 
 Mistakes that cause rewrites, major regressions, or stalled migrations.
 
-### Pitfall 1: The "Implicit Any" Avalanche (TypeScript)
+### Pitfall 1: CSS Specificity Wars (MUI vs. Tailwind)
 
-**What goes wrong:** Enabling `noImplicitAny: true` (standard in Strict TS) on a codebase with hundreds of existing `.js`/`.jsx` files causes thousands of build errors, paralyzing the team.
-**Why it happens:** Legacy JavaScript relies on implicit types. Renaming files to `.ts`/`.tsx` exposes every missing type definition simultaneously.
-**Consequences:** Migration stalls; team turns off strict mode "temporarily" (forever); development velocity drops to zero.
+**What goes wrong:** MUI (via Emotion) injects styles at the bottom of the `<head>` by default. Since CSS specificity for MUI's component selectors is higher than Tailwind's utility classes, Tailwind classes applied to MUI components (during the bridge phase) may be ignored.
+**Why it happens:** Emotion's dynamic injection order and MUI's nested selectors (e.g., `.MuiSlider-thumb`).
+**Consequences:** Developers use `!important` everywhere, leading to a maintenance nightmare.
 **Prevention:**
 
-- **Strategy:** "Leaf-up" incremental migration. Start with shared components (atoms), then molecules, then pages.
-- **Config:** Use `allowJs: true` and `checkJs: false` in `tsconfig.json` initially. Migrate file-by-file.
-- **Tooling:** Use `tsc --noEmit` in CI to prevent regression on _new_ TS files while ignoring legacy JS.
+- Use `StyledEngineProvider` with `injectFirst` in the root of the app.
+- Configure Tailwind's `important` selector (e.g., `important: '#root'`) to boost utility specificity.
+  **Detection:** Styles not applying in dev tools despite classes being present on the element.
+  **Phase:** Phase 1 (Infrastructure Setup).
 
-### Pitfall 2: React 19 Ref Callback Type Rejections
+### Pitfall 2: Formatting "Flapping" (Prettier vs. ESLint Stylistic)
 
-**What goes wrong:** React 19 + TypeScript rejects implicit returns in `ref` callbacks.
-**Why it happens:** Old pattern `<div ref={c => instance = c} />` implicitly returns the instance. React 19 cleanup functions feature means TS now expects `void` or a cleanup function. Returning an instance is a type error.
-**Consequences:** Build fails across many components using refs.
+**What goes wrong:** If Prettier remains in the environment (e.g., in VSCode settings or husky hooks) while ESLint Stylistic is introduced, the code will constantly "flap" between two formatting styles.
+**Why it happens:** IDEs often have "Format on Save" bound to Prettier by default.
+**Consequences:** Massive, noisy diffs in every PR; CI failures that are hard to debug.
 **Prevention:**
 
-- **Fix:** Change to block body: `<div ref={c => { instance = c }} />`.
-- **Codemod:** Run `npx react-codemod no-implicit-ref-callback-return` (or equivalent) before Strict TS enforcement.
+- Explicitly uninstall `prettier` and remove `.prettierrc`.
+- Use a `.vscode/settings.json` file in the repo to force `editor.defaultFormatter` to `dbaeumer.vscode-eslint`.
+- Add a pre-commit hook that only runs `eslint --fix`.
+  **Detection:** Files changing formatting back and forth upon save.
+  **Phase:** Phase 1 (Infrastructure Setup).
 
-### Pitfall 3: Vite 7 Node.js Version Lockout
+### Pitfall 3: Runtime Crashes from Removing Non-Null Assertions (`!`)
 
-**What goes wrong:** CI/CD pipelines fail immediately upon Vite 7 upgrade.
-**Why it happens:** Vite 7 drops support for Node 18 (EOL). Requires Node 20.19+ or 22.12+.
-**Consequences:** Blocked deployment.
-**Prevention:** Upgrade Node.js in Dockerfiles, GitHub Actions, and developer machines _before_ touching `package.json`.
-
-### Pitfall 4: The "Grid v2" & Pigment CSS Mismatch
-
-**What goes wrong:** Upgrading to `@mui/material` v6 but keeping v5 `Grid` props (`xs`, `sm`) or mixing legacy Emotion styled components with new Pigment CSS patterns.
-**Why it happens:** MUI v6 stabilized `Grid2` (uses `size={{ xs: 12 }}`) and moves toward zero-runtime CSS.
-**Consequences:** Layouts break silently; `spacing` prop logic changes; potential double-loading of CSS engines (Emotion + Pigment).
+**What goes wrong:** Blindly removing `!` assertions to satisfy a new lint rule without adding proper runtime checks.
+**Why it happens:** Developers treat the lint error as a "syntax fix" rather than a logic requirement.
+**Consequences:** `undefined is not an object` errors in production for things that were previously "guaranteed" only by the developer's knowledge.
 **Prevention:**
 
-- **Audit:** Grep for `<Grid` usage. Use MUI codemods.
-- **CSS Engine:** Stick to Emotion adapter for MUI v6 initially. Don't migrate to Pigment CSS in the same phase as the v6 upgrade.
+- Use "Search and Replace" with caution.
+- Replace `!` with `?? throw new Error(...)` or early returns/type guards.
+- Prioritize refactoring `useContext` and `useRef` to use custom hooks that handle the `null` state internally.
+  **Detection:** New Sentry/logging errors after the linting rollout.
+  **Phase:** Phase 2 (Type Safety Hardening).
+
+---
 
 ## Moderate Pitfalls
 
 Mistakes that cause delays or technical debt.
 
-### Pitfall 5: The Context "Empty Object" Trap
+### Pitfall 1: The "Composition Explosion"
 
-**What goes wrong:** Using `createContext({})` with an empty default object (seen in `src/common/HassContext.js`).
-**Why it happens:** In Strict TS, accessing properties on `{}` is a compile error (`Property 'user' does not exist on type '{}'`).
-**Prevention:**
+**What goes wrong:** Migrating from MUI (high-level components) to Shadcn (low-level primitives) leads to a massive increase in boilerplate in the application code.
+**Why it happens:** MUI's `<Select>` includes the trigger, list, and item logic. Shadcn's requires composing 5+ Radix components.
+**Prevention:** Create a "Bridge Library" or a local `components/ui/` wrapper that mimics the high-level API of the old MUI components during migration. Don't expose Radix primitives directly to feature folders yet.
+**Detection:** PRs for simple forms becoming 300+ lines long.
 
-- **Define Type:** `createContext<HassContextType | null>(null)`.
-- **Guard:** Create a custom hook `useHass()` that throws if context is null.
+### Pitfall 2: ESLint Performance Degradation
 
-### Pitfall 6: Theme Object Mutation
+**What goes wrong:** Moving formatting logic into ESLint makes the linting process significantly slower, especially in large files.
+**Why it happens:** ESLint is a full AST parser and rule engine; Prettier is a specialized, fast formatter.
+**Prevention:** Use `eslint-plugin-unused-imports` and `@stylistic` rules selectively. Avoid running the full formatter on every file in the dev server; keep it to the IDE and CI.
+**Detection:** "Save" taking >500ms in the IDE.
 
-**What goes wrong:** Modifying the theme object after creation (e.g., `theme.palette.background.default = 'black'` in `App.jsx`).
-**Why it happens:** Legacy JS pattern. TS treats theme as Readonly or infers immutable types.
-**Prevention:** Move logic _inside_ `createTheme()` using conditional spread or variables.
+---
 
-### Pitfall 7: `forwardRef` Zombie Code
+## Minor Pitfalls
 
-**What goes wrong:** Continuing to use `forwardRef` wrapper when React 19 supports `ref` as a prop.
-**Prevention:** It's technical debt. Use a codemod to strip `forwardRef` from functional components to simplify the strict TS typing.
+Mistakes that cause annoyance but are fixable.
 
-### Pitfall 8: Custom Element Typing (`react-panel`)
+### Pitfall 1: Inconsistent Shadow DOM / Portal behavior
 
-**What goes wrong:** TypeScript complains `Property 'react-panel' does not exist on type 'JSX.IntrinsicElements'`.
-**Why it happens:** `src/App.jsx` styles a custom element `react-panel`.
-**Prevention:** Add a `global.d.ts` extending `JSX.IntrinsicElements`.
+**What goes wrong:** Shadcn (Radix) portals components to the `body` by default. If MUI was configured to portal to a specific container (for theme scoping), styles might break for Modals/Selects.
+**Prevention:** Ensure the `ThemeProvider` (for MUI) and the CSS Variable root (for Shadcn) both cover the entire `document.body` or use a shared portal container.
+
+### Pitfall 2: Type Assertion Bypass via `any`
+
+**What goes wrong:** Developers forbidden from using `as` might revert to `any` to "shut up" the compiler.
+**Prevention:** Enable `no-explicit-any` alongside the forbidden type assertion rule.
+
+---
 
 ## Phase-Specific Warnings
 
-| Phase Topic                 | Likely Pitfall           | Mitigation                                                       |
-| --------------------------- | ------------------------ | ---------------------------------------------------------------- |
-| **Infrastructure (Vite 7)** | CI Node version mismatch | Upgrade Node to v22+ first.                                      |
-| **Strict TS**               | "The Big Bang" migration | Migrate `src/common` first, then leaf components. Use `allowJs`. |
-| **React 19**                | Ref callback types       | Fix implicit returns in refs _before_ turning on Strict TS.      |
-| **UI Framework (MUI v6)**   | Grid2 & CSS Conflict     | Use codemods for Grid; delay Pigment CSS adoption.               |
-| **Core**                    | `HassContext` typing     | Define shape of Hass object early; avoid `any`.                  |
+| Phase Topic        | Likely Pitfall           | Mitigation                                                                |
+| ------------------ | ------------------------ | ------------------------------------------------------------------------- |
+| **Infrastructure** | Prettier/ESLint Flapping | Force VSCode settings via `.vscode/settings.json`.                        |
+| **Styles/UI**      | Specificity Wars         | Use `StyledEngineProvider injectFirst`.                                   |
+| **Type Safety**    | Runtime crashes          | Mandatory code review for assertion removals; use Zod for API boundaries. |
 
 ## Sources
 
-- React 19 Release Notes (React Blog)
-- Vite Migration Guide (v6 -> v7)
-- MUI v6 Migration Guide & Grid2 docs
-- Project Codebase Analysis (`App.jsx`, `HassContext.js`)
+- [MUI Documentation: Tailwind CSS Integration](https://mui.com/material-ui/guides/interoperability/#tailwind-css)
+- [ESLint Stylistic Migration Guide](https://eslint.style/guide/migration)
+- [Shadcn UI Docs](https://ui.shadcn.com/)
+- [TypeScript Handbook: Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)

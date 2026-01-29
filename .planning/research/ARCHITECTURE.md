@@ -1,156 +1,131 @@
-# Architecture Patterns
+# Architecture Patterns: Shadcn/ui Migration
 
-**Domain:** React Home Assistant Dashboard (Custom Panel)
-**Researched:** Jan 27 2026
-**Target:** Vite 7, React 19, MUI v6, Strict TS
+**Domain:** React Home Assistant Dashboard (v2.0)
+**Researched:** 2026-01-28
+**Target:** React 19, Vite 7, Tailwind CSS v4, shadcn/ui
 
 ## Recommended Architecture
 
-The application follows a **Micro-Frontend** pattern via a Custom Web Element (`<react-panel>`). It is injected into Home Assistant's frontend and shares the main HA WebSocket connection.
+The v2.0 architecture pivots from a JS-centric component library (MUI) to a CSS-variable-centric utility-first approach (Tailwind/Shadcn). During the migration, a **Hybrid Layered Architecture** will be used to ensure both libraries coexist without style bleeding or specificity wars.
 
-### System Diagram
+### Hybrid CSS Layering (Tailwind 4)
 
-```mermaid
-graph TD
-    HA[Home Assistant Core] -->|Injects 'hass' prop| WC[<react-panel> Web Component]
-    WC -->|Updates| Store[hassStore (Vanilla Observable)]
-    Store -->|Subscribes| Hook[useHass (useSyncExternalStore)]
-    Hook -->|Provides Data| App[React App Root]
-    App -->|Renders| Feat[Feature Components]
-```
+Tailwind 4's native support for CSS Cascade Layers is the core of our coexistence strategy. We wrap MUI's Emotion-generated styles in a lower-priority layer and Tailwind utilities in a higher-priority layer.
 
-### Component Boundaries
+```css
+/* global.css */
+@layer mui, base, components, utilities;
 
-| Component       | Type  | Responsibility                                    | Modernization Changes                                     |
-| --------------- | ----- | ------------------------------------------------- | --------------------------------------------------------- |
-| `src/index.tsx` | Entry | Defines Web Component, creates Root, handles HMR. | **Convert to TS.** Switch to `createRoot`. Add HMR logic. |
-| `hassStore`     | State | Singleton holding the `hass` object (God Object). | **Strictly Type** with `HomeAssistant` interface.         |
-| `useHass`       | Hook  | Connects React components to the store.           | **Strict Return Type.** Remove unused `useContext`.       |
-| `App.tsx`       | View  | Root component, Routing (if any), Theme Provider. | **Add MUI v6 `ThemeProvider`.**                           |
-| `features/*`    | UI    | Domain-specific cards (Lights, Sensors).          | **Migrate to MUI v6.** **Add Strict TS.**                 |
+@import 'tailwindcss';
 
-### Data Flow
-
-1.  **Ingest:** Home Assistant sets the `.hass` property on the `<react-panel>` DOM node.
-2.  **Store:** The setter triggers `hassStore.setState(newValue)`.
-3.  **Propagate:** `useSyncExternalStore` in `useHass` detects the change and triggers a re-render.
-4.  **Render:** Components consume `hass` via `useHass()` to get entity states.
-
-**Why this pattern?**
-It avoids Prop Drilling the massive `hass` object and decouples the React tree updates from the imperative DOM property updates.
-
-## Modernization Strategy
-
-### 1. Build System (Vite 7)
-
-Switch from generic "App" build to "Library" mode to ensure a clean, single-entry output compatible with HA's resource loader.
-
-**Config Pattern:**
-
-```typescript
-// vite.config.ts
-export default defineConfig({
-  build: {
-    lib: {
-      entry: 'src/index.tsx',
-      formats: ['es'],
-      fileName: 'ha-dashboard',
-    },
-    rollupOptions: {
-      // Externalize React if loading from HA (optional, usually bundled for stability)
-      // For now: Bundle everything to avoid runtime conflicts.
-    },
-  },
-});
-```
-
-### 2. Typing Strategy (Strict TS)
-
-The `hass` object is complex. Do not define it manually.
-
-- **Connection:** Use `home-assistant-js-websocket` for connection types.
-- **Structure:** Use `home-assistant-types` (Community) or `HomeAssistant` interface copied from frontend source.
-
-**Implementation:**
-
-```typescript
-import { HomeAssistant } from 'home-assistant-types'; // Recommended source
-
-interface HassStore {
-  state: HomeAssistant | undefined;
-  subscribe: (callback: () => void) => () => void;
-  getSnapshot: () => HomeAssistant | undefined;
+/* Wrap MUI styles in the mui layer */
+@layer mui {
+  /* This is handled by StyledEngineProvider enableCssLayer in React */
 }
 ```
 
-### 3. UI Framework (MUI v6)
+### Component Boundaries (v2.0)
 
-**No Shadow DOM:**
-The current architecture renders directly into the Custom Element (`this`).
+| Component          | Responsibility                           | Migration Status                                        |
+| ------------------ | ---------------------------------------- | ------------------------------------------------------- |
+| `MUI Component`    | Legacy features not yet migrated.        | Wrap in `StyledEngineProvider` with CSS layers enabled. |
+| `Shadcn Component` | New/Migrated features.                   | Uses Tailwind utilities; overrides MUI if coincident.   |
+| `Theme Bridge`     | Syncs HA CSS variables to Shadcn tokens. | Active listener on `hass` object changes.               |
 
-- **Pros:** Simplifies MUI integration (styles inject into `<head>`).
-- **Cons:** Global HA styles might bleed in.
-- **Decision:** **Keep No Shadow DOM** for this milestone. It reduces complexity. Use specific class names if conflicts arise.
+### Data & Theme Flow
 
-**Integration:**
+1. **HA Variables:** Home Assistant provides variables like `--primary-color`.
+2. **Tailwind Bridge:** Our `global.css` maps these to Shadcn variables:
+   ```css
+   :root {
+     --background: var(--primary-background-color);
+     --foreground: var(--primary-text-color);
+     --primary: var(--primary-color);
+     /* ... */
+   }
+   ```
+3. **React 19 Rendering:** Components use `cn()` utility to merge classes.
 
-- Wrap `<App />` with `<ThemeProvider theme={theme}><CssBaseline />`.
-- Ensure `theme` adapts to HA's dark/light mode if possible (read from `hass.selectedTheme` or `prefers-color-scheme`).
+## Coexistence Strategy
 
-## Patterns to Follow
+### 1. Specificity Management
 
-### Pattern 1: The "Hass Hook" Access
+To keep the app functional during migration:
 
-**What:** Always use `useHass()` to access state. Never pass `hass` down as props.
-**When:** In any feature component needing entity data.
-**Example:**
+- **Enable CSS Layers in MUI:**
+  ```tsx
+  <StyledEngineProvider enableCssLayer>
+    <GlobalStyles styles="@layer mui, base, components, utilities;" />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </StyledEngineProvider>
+  ```
+- This ensures that a Tailwind class like `p-4` (utility layer) will always win over a MUI default padding (mui layer), regardless of selector complexity.
 
-```typescript
-const { states } = useHass();
-const entity = states['light.living_room'];
-```
+### 2. Portal Handling
 
-### Pattern 2: Entity ID Safety
+Shadcn (Radix) uses Portals for Dialogs/Popovers. In a Custom Element context:
 
-**What:** Use a typed helper or constants for Entity IDs if possible, or at least validate existence.
-**When:** Accessing `states[id]`.
-**Example:**
+- Ensure `Radix` portals are configured to render inside the `<react-panel>` container to inherit the Tailwind scope if one is applied.
+- By default, Radix renders at the end of `body`. Since we aren't using Shadow DOM, this works, but we must ensure `global.css` is truly global.
 
-```typescript
-const entity = states[ENTITY_ID];
-if (!entity) return <Unavailable />;
-```
+## Theme Injection (HA -> Tailwind)
+
+We will avoid JS-based theme calculation where possible.
+
+- **Approach:** Map HA CSS variables to Shadcn tokens in the `@theme` block of Tailwind 4.
+- **Dynamic Updates:** Since HA updates variables on the `html` or `:host` element, Tailwind's `var()` references will update automatically without a React re-render.
+
+## Order of Operations: Styling & Linting
+
+To minimize codebase noise:
+
+1. **Linting Transition (Immediate):**
+   - Remove `prettier`.
+   - Install `@stylistic/eslint-plugin`.
+   - Run `eslint --fix` once. This establishes the "Stylistic" baseline.
+2. **Infrastructure (v2.0 Foundation):**
+   - Install Tailwind 4 and Shadcn CLI.
+   - Configure CSS Layers.
+3. **Component Migration (Incremental):**
+   - Migrate one MUI component at a time.
+   - Delete MUI imports only when a file is 100% migrated.
+
+## No-Assertion Migration Strategy
+
+The "no-assertion" policy removes the use of `!` (non-null assertion) to improve runtime safety in React 19.
+
+- **Enforcement:** Enable `@typescript-eslint/no-non-null-assertion` as an error.
+- **Pattern:** Replace `entity!` with:
+
+  ```typescript
+  // 1. Optional chaining
+  const state = entity?.state;
+
+  // 2. Type guards (Recommended for HA entities)
+  if (!entity) return null;
+
+  // 3. Functional assertions
+  const entity = assertExists(states[id], `Entity ${id}`);
+  ```
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Context Duplication (Dead Code)
+### Anti-Pattern 1: "Important" Overrides
 
-**What:** Creating a React Context (`HassContext`) that mirrors the `hassStore`.
-**Why bad:** Redundant. `useSyncExternalStore` is more efficient for high-frequency updates (like sensor changes).
-**Fix:** Delete `src/common/HassContext.js` as it is unused.
+**What:** Using `!important` in Tailwind classes to beat MUI.
+**Why bad:** Creates a specificity arms race.
+**Instead:** Use CSS Cascade Layers (`@layer mui`).
 
-### Anti-Pattern 2: Destructuring "God Object" in Props
+### Anti-Pattern 2: Manual Variable Sync in JS
 
-**What:** Passing `props.hass` to every child.
-**Why bad:** Causes full-tree re-renders on _any_ state change (which happens every second in HA).
-**Instead:** Pass only necessary data (e.g., `entityId`) and let the child `useHass()` + selector (if optimized) or just access what it needs.
-
-## Scalability Considerations
-
-| Concern                | Impact                                            | Mitigation                                                                                                                                                       |
-| ---------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Render Performance** | `hass` updates frequently (time, sensor changes). | `useSyncExternalStore` is good, but basic usage re-renders on _every_ update. **Future Phase:** Implement selectors in `useHass` (e.g., `useEntity('light.x')`). |
-| **Bundle Size**        | React + MUI is heavy (~300kb+).                   | Use Vite 7 tree-shaking. Ensure only used icons (`mdi-material-ui`) are imported.                                                                                |
-
-## Build Order
-
-1.  **Clean:** Remove `HassContext` and unused imports.
-2.  **Tooling:** Update `vite.config.ts` (Vite 7, Lib mode).
-3.  **Strict TS:** Rename `.js/.jsx` to `.ts/.tsx`. Fix strict errors in `index.tsx` and `useHass.ts` first.
-4.  **MUI v6:** Upgrade dependencies. Wrap App in ThemeProvider. Fix breaking changes in components.
+**What:** Using `useEffect` to read CSS variables and set React state.
+**Why bad:** Causes unnecessary re-renders.
+**Instead:** Reference the CSS variables directly in Tailwind's theme config.
 
 ## Sources
 
-- [Home Assistant JS Websocket (Types)](https://github.com/home-assistant/home-assistant-js-websocket)
-- [MUI v6 Release Notes](https://mui.com/blog/material-ui-v6-is-out/)
-- Existing Codebase Analysis (`src/index.jsx`, `src/common/hooks/useHass.js`)
+- [MUI Tailwind v4 Integration Guide](https://mui.com/material-ui/integrations/tailwindcss/tailwindcss-v4/)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs/v4-beta)
+- [ESLint Stylistic Migration Guide](https://eslint-stylistic.github.io/guide/migration)
