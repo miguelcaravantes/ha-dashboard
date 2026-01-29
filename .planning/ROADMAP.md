@@ -8,7 +8,13 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Goal:** Establish a unified stylistic and strict typing foundation by consolidating tools and enforcing assertion rules.
 
-- **Requirements:** TOOL-01, TOOL-02, TOOL-03
+**Plans:** 3 plans
+
+- [ ] 04-01-PLAN.md — Prettier Purge & Stylistic Setup
+- [ ] 04-02-PLAN.md — Type Guard Infrastructure & Hook Refactor
+- [ ] 04-03-PLAN.md — Codebase-wide Type Hardening (DATA-04)
+
+- **Requirements:** TOOL-01, TOOL-02, TOOL-03, DATA-04
 - **Dependencies:** None (foundation for v2.0)
 - **Success Criteria:**
   1. Prettier is fully removed from the project and IDE configuration.
@@ -28,11 +34,11 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
   3. CSS Cascade Layers (`@layer mui`) successfully prevent MUI specificity from overriding Tailwind utilities.
   4. Dashboard theme responds correctly to Home Assistant dark mode CSS variables.
 
-### Phase 6: Type Safety Hardening
+### Phase 6: Type Safety Hardening (Merged into Phase 4)
 
-**Goal:** Resolve all existing type assertion violations to ensure a stable, logic-driven foundation before major UI refactoring.
+**Goal:** Resolved in Phase 4. Resolving all existing type assertion violations to ensure a stable, logic-driven foundation before major UI refactoring.
 
-- **Requirements:** DATA-04
+- **Requirements:** DATA-04 (Completed in Phase 4)
 - **Dependencies:** Phase 4
 - **Success Criteria:**
   1. Codebase contains zero instances of `as` or `<Type>` assertions.
@@ -67,6 +73,6 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 | ----- | -------------------- | ------- | -------- |
 | 4     | Tooling & Standards  | Pending | 0%       |
 | 5     | UI Infrastructure    | Pending | 0%       |
-| 6     | Type Hardening       | Pending | 0%       |
+| 6     | Type Hardening       | Merged  | 100%     |
 | 7     | Core UI Migration    | Pending | 0%       |
 | 8     | Complex UI Migration | Pending | 0%       |
