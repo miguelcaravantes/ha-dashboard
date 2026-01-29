@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Menu as MenuIcon,
   Home as HomeIcon,
   Heart as HeartIcon,
-} from 'lucide-react';
-import { Button } from '../components/ui/button.js';
-import EntityPage from './EntityPage.js';
-import ProfileImg from './ProfileImg.js';
-import CardDashboard from './CardDashboard.js';
-import { isObject } from '../common/utils/typeGuards.js';
+} from "lucide-react";
+import { Button } from "../components/ui/button.js";
+import EntityPage from "./EntityPage.js";
+import ProfileImg from "./ProfileImg.js";
+import CardDashboard from "./CardDashboard.js";
+import { isObject } from "../common/utils/typeGuards.js";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -26,20 +26,20 @@ export default function Panel() {
 
   const handleMenuClick = () => {
     const parent = window.parent;
-    if (isObject(parent) && 'customPanel' in parent) {
+    if (isObject(parent) && "customPanel" in parent) {
       const customPanel = parent.customPanel;
-      if (isObject(customPanel) && 'parentNode' in customPanel) {
+      if (isObject(customPanel) && "parentNode" in customPanel) {
         const p1 = customPanel.parentNode;
-        if (isObject(p1) && 'parentNode' in p1) {
+        if (isObject(p1) && "parentNode" in p1) {
           const p2 = p1.parentNode;
-          if (isObject(p2) && 'offsetParent' in p2) {
+          if (isObject(p2) && "offsetParent" in p2) {
             const op = p2.offsetParent;
-            if (isObject(op) && typeof op.querySelector === 'function') {
-              const ha = op.querySelector('home-assistant');
+            if (isObject(op) && typeof op.querySelector === "function") {
+              const ha = op.querySelector("home-assistant");
               if (ha instanceof HTMLElement) {
                 ha.shadowRoot
-                  ?.querySelector('home-assistant-main')
-                  ?.dispatchEvent(new Event('hass-toggle-menu'));
+                  ?.querySelector("home-assistant-main")
+                  ?.dispatchEvent(new Event("hass-toggle-menu"));
               }
             }
           }
@@ -52,7 +52,7 @@ export default function Panel() {
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Top Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 max-w-screen-2xl items-center mx-auto px-4">
+        <div className="flex h-16 w-full items-center px-4 md:px-8">
           <Button
             variant="ghost"
             size="icon"
@@ -69,7 +69,7 @@ export default function Panel() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
               <Button
-                variant={value === 0 ? 'secondary' : 'ghost'}
+                variant={value === 0 ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setValue(0)}
                 className="gap-2"
@@ -78,7 +78,7 @@ export default function Panel() {
                 <span>Home</span>
               </Button>
               <Button
-                variant={value === 1 ? 'secondary' : 'ghost'}
+                variant={value === 1 ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setValue(1)}
                 className="gap-2"
@@ -97,7 +97,7 @@ export default function Panel() {
 
       {/* Main Content */}
       <main className="flex-1 pb-16 md:pb-0">
-        <div className="container max-w-screen-2xl mx-auto">
+        <div className="w-full max-w-screen-2xl mx-auto px-4 md:px-6">
           <TabPanel value={value} index={0}>
             <CardDashboard />
           </TabPanel>
@@ -111,7 +111,7 @@ export default function Panel() {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 h-16 border-t bg-background flex items-center justify-around">
         <button
           onClick={() => setValue(0)}
-          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 0 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 0 ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
         >
           <HomeIcon className="h-6 w-6" />
           <span className="text-[10px] font-medium uppercase tracking-wider">
@@ -120,7 +120,7 @@ export default function Panel() {
         </button>
         <button
           onClick={() => setValue(1)}
-          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 1 ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+          className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${value === 1 ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}
         >
           <HeartIcon className="h-6 w-6" />
           <span className="text-[10px] font-medium uppercase tracking-wider">
