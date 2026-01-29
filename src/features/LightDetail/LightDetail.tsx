@@ -4,9 +4,15 @@ import {
   AdaptiveDialogContent,
   AdaptiveDialogHeader,
   AdaptiveDialogTitle,
-} from "@/components/ui/adaptive-dialog";
-import { Switch } from "@/components/ui/switch";
-import LightBrightness from "./LightBrightness.js";
+} from "../../components/ui/adaptive-dialog.js";
+import { Switch } from "../../components/ui/switch.js";
+import { Slider } from "../../components/ui/slider.js";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "../../components/ui/tabs.js";
 import LightColor from "./LightColor.js";
 import useLightDetail from "./useLightDetail.js";
 import useEntity from "../../common/hooks/useEntity.js";
@@ -27,10 +33,15 @@ export default function LightDetail({
   const { isGroup, name, state, toggle } = useEntity(entityId);
   const {
     doesSupportColor,
+    doesSupportColorTemp,
     doesSupportBrightness,
     brightness,
+    colorTemp,
+    minMireds,
+    maxMireds,
     handleColorChange,
     handleBrightnessChange,
+    handleColorTempChange,
     isPending,
   } = useLightDetail(entityId);
 
@@ -41,6 +52,47 @@ export default function LightDetail({
       await toggle();
     });
   };
+
+  const renderBrightnessSlider = () => (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">Brightness</span>
+        <span className="text-muted-foreground text-sm">
+          {Math.round((brightness / 255) * 100)}%
+        </span>
+      </div>
+      <Slider
+        value={[brightness]}
+        max={255}
+        step={1}
+        onValueChange={(val) => handleBrightnessChange(val[0] ?? 0)}
+        disabled={isPending}
+      />
+    </div>
+  );
+
+  const renderColorTempSlider = () => (
+    <div className="space-y-4 pt-4">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium">Temperature</span>
+        <span className="text-muted-foreground text-sm">
+          {colorTemp > 0 ? Math.round(1000000 / colorTemp) : 0}K
+        </span>
+      </div>
+      <Slider
+        value={[colorTemp]}
+        min={minMireds}
+        max={maxMireds}
+        step={1}
+        onValueChange={(val) => handleColorTempChange(val[0] ?? minMireds)}
+        disabled={isPending}
+      />
+    </div>
+  );
+
+  const showTabs = doesSupportColor && doesSupportColorTemp;
+  const showColorOnly = doesSupportColor && !doesSupportColorTemp;
+  const showWhiteOnly = !doesSupportColor && doesSupportColorTemp;
 
   return (
     <AdaptiveDialog open={open} onOpenChange={onOpenChange}>
@@ -57,16 +109,29 @@ export default function LightDetail({
         </AdaptiveDialogHeader>
 
         <div className="flex flex-col gap-6 py-4">
-          {doesSupportColor && (
-            <LightColor onChange={handleColorChange} disabled={isPending} />
+          {doesSupportBrightness && renderBrightnessSlider()}
+
+          {showTabs && (
+            <Tabs defaultValue="color" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="color">Color</TabsTrigger>
+                <TabsTrigger value="white">White</TabsTrigger>
+              </TabsList>
+              <TabsContent value="color" className="pt-4">
+                <LightColor onChange={handleColorChange} disabled={isPending} />
+              </TabsContent>
+              <TabsContent value="white">{renderColorTempSlider()}</TabsContent>
+            </Tabs>
           )}
-          {doesSupportBrightness && (
-            <LightBrightness
-              value={brightness}
-              onChange={handleBrightnessChange}
-              disabled={isPending}
-            />
+
+          {showColorOnly && (
+            <div className="pt-4">
+              <LightColor onChange={handleColorChange} disabled={isPending} />
+            </div>
           )}
+
+          {showWhiteOnly && renderColorTempSlider()}
+
           {isGroup && <LightGroup entityId={entityId} />}
         </div>
       </AdaptiveDialogContent>

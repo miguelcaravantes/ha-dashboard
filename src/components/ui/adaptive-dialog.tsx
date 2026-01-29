@@ -23,6 +23,8 @@ import {
 
 interface AdaptiveDialogProps extends React.ComponentProps<typeof Dialog> {
   children: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const AdaptiveDialogContext = React.createContext<{ isDesktop: boolean }>({
