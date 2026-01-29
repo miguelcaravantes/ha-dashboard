@@ -1,4 +1,4 @@
-import { useTransition } from 'react';
+import { useTransition } from "react";
 import {
   Dialog,
   Toolbar,
@@ -6,14 +6,14 @@ import {
   Switch,
   DialogContent as MuiDialogContent,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 
-import useEntity, { actionTypes } from '../common/hooks/useEntity.js';
-import { styled } from '@mui/material/styles';
-import FanDetail from './FanDetail.js';
-import { Tune as TuneIcon } from 'mdi-material-ui';
-import LightDetail from './LightDetail/LightDetail.js';
-import type { KnownEntityId } from '../types/entities.js';
+import useEntity, { actionTypes } from "../common/hooks/useEntity.js";
+import { styled } from "@mui/material/styles";
+import FanDetail from "./FanDetail.js";
+import { Tune as TuneIcon } from "mdi-material-ui";
+import LightDetail from "./LightDetail/LightDetail.js";
+import type { KnownEntityId } from "../types/entities.js";
 
 const Root = styled(Dialog)`
   backdrop-filter: blur(5px);
@@ -35,7 +35,6 @@ const domainDetailMap: Record<
   string,
   React.ComponentType<{ entityId: KnownEntityId }>
 > = {
-  light: LightDetail,
   fan: FanDetail,
 };
 
@@ -70,7 +69,7 @@ const DialogToolbar = ({
       </IconButton>
       {showToggle && (
         <Switch
-          checked={state === 'on'}
+          checked={state === "on"}
           onChange={handleToggle}
           color="primary"
           disabled={isPending}
@@ -96,6 +95,16 @@ export default function EntityDialog(props: EntityDialogProps) {
   const handleClose = () => {
     onClose?.();
   };
+
+  if (open && domain === "light") {
+    return (
+      <LightDetail
+        entityId={entityId}
+        open={open}
+        onOpenChange={(isOpen) => !isOpen && handleClose()}
+      />
+    );
+  }
 
   return (
     <Root maxWidth="xs" onClose={handleClose} open={open}>
