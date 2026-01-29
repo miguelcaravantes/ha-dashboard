@@ -8,32 +8,35 @@
 
 ## Current Position
 
-- **Current Phase:** Phase 7: Core UI Migration
-- **Current Plan:** Completed 07-04 (Final UI Polishing)
+- **Current Phase:** Phase 8: Complex UI Migration
+- **Current Plan:** Initializing Phase 8 context
 - **Status:** 🟢 ON TRACK
-- **Progress:** [██████████████░░░░░░] 70% (Milestone v2.0)
+- **Progress:** [████████████░░░░░░░░] 60% (Milestone v2.0)
 
 ## Performance Metrics
 
-...
+- **Type Safety:** 100% TSX (Strict Mode + No Assertions)
+- **Styling:** Tailwind v4 + shadcn/ui (Core Shell & Grid complete)
+- **Linting:** ESLint Stylistic (No Prettier)
+- **Assertions:** 0% (DATA-04 verified)
 
 ## Accumulated Context
 
 - **Decisions:**
-  ...
-  - Adopted Lucide icons as the primary replacement for MDI in the core UI.
-  - Implemented Optimistic UI updates for core interactive components (PowerSwitch).
-  - Adopted a stacked layout for SensorDisplay to improve information density.
-  - Integrated shadcn Skeleton component for better UX during entity loading.
-  - Mapped card background and borders to native Home Assistant CSS variables for seamless theme integration.
+  - Pivoted to Hybrid Architecture using CSS Cascade Layers to manage MUI/Tailwind coexistence.
+  - Replacing Prettier with ESLint Stylistic for unified DX.
+  - Forbidding type assertions to force safer runtime logic.
+  - Established CSS Layer Order: `mui, base, components, utilities`.
+  - Wrapped MUI styles in `@layer mui` using custom Emotion Stylis plugin.
+  - Mapped shadcn/Tailwind variables to Home Assistant native CSS variables for seamless theming.
+  - Established Top Header + Bottom Nav shell pattern.
+  - Standardized on Icon-first entity cards with stacked sensor values.
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
-  - Phase 5 completed: UI Infrastructure (Tailwind v4, shadcn init, MUI layering, Dark mode sync).
+  - Phase 5 completed: UI Infrastructure setup.
+  - Phase 7 completed: Core UI Migration (Shell, Grid, Switch, Sensor).
   - Phase 6: Merged into Phase 4.
-  - Phase 7 Plan 01 completed: Migrated dashboard shell to shadcn/Tailwind.
-  - Phase 7 Plan 02 completed: Migrated CardDashboard grid.
-  - Phase 7 Plan 03 completed: Refactored EntityCard and PowerSwitch to shadcn.
-  - Phase 7 Plan 04 completed: Finalized UI polishing and stacked SensorDisplay.
+  - Next: Phase 8: Complex UI Migration (Dialogs, Sliders, Climate/Fan).
 
 ## Continuity Checklist
 
@@ -44,8 +47,5 @@
 - [x] Phase 5: Initialize shadcn/ui
 - [x] Phase 5: Implement MUI Layering
 - [x] Phase 5: Synchronize Dark Mode with HA
-- [x] Phase 7: Core UI Migration
-  - [x] Plan 01: Migrate Panel shell
-  - [x] Plan 02: Migrate CardDashboard
-  - [x] Plan 03: Refactor EntityCard and PowerSwitch
-  - [x] Plan 04: Finalize transition
+- [x] Phase 7: Core UI Migration (Shell, Grid, Switch, Sensor)
+- [ ] Phase 8: Complex UI Migration (Dialogs, Sliders, Climate/Fan)

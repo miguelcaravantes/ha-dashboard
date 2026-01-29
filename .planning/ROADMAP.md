@@ -59,10 +59,10 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Plans:** 4 plans
 
-- [ ] 07-01-PLAN.md — Dashboard Shell & Navigation
-- [ ] 07-02-PLAN.md — Responsive Grid Migration
-- [ ] 07-03-PLAN.md — PowerSwitch Card Refactor
-- [ ] 07-04-PLAN.md — SensorDisplay & UI Polishing
+- [x] 07-01-PLAN.md — Dashboard Shell & Navigation
+- [x] 07-02-PLAN.md — Responsive Grid Migration
+- [x] 07-03-PLAN.md — PowerSwitch Card Refactor
+- [x] 07-04-PLAN.md — SensorDisplay & UI Polishing
 
 - **Requirements:** UI-10, UI-11
 - **Dependencies:** Phase 5, Phase 6
@@ -89,5 +89,5 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 | 4     | Tooling & Standards  | Complete | 100%     |
 | 5     | UI Infrastructure    | Complete | 100%     |
 | 6     | Type Hardening       | Merged   | 100%     |
-| 7     | Core UI Migration    | Pending  | 0%       |
+| 7     | Core UI Migration    | Complete | 100%     |
 | 8     | Complex UI Migration | Pending  | 0%       |
