@@ -8,9 +8,15 @@ A custom React-based dashboard for Home Assistant, integrated as a Custom Panel.
 
 Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
 
-## Current State: v1.0 Shipped
+## Current Milestone: v2.0 Shadcn Migration
 
-The foundation is fully modernized. The application runs on React 19, MUI v7, and is 100% strict TypeScript.
+**Goal:** Pivot UI to shadcn/ui and enforce strict stylistic/typing standards.
+
+**Target features:**
+
+- **ESLint Stylistic**: Full formatting control via ESLint, removing Prettier.
+- **Strict Typing**: Forbidden type assertions (`@typescript-eslint/consistent-type-assertions: never`).
+- **Shadcn/UI**: Modern UI components with unified Dark Theme.
 
 ## Requirements
 
@@ -25,7 +31,10 @@ The foundation is fully modernized. The application runs on React 19, MUI v7, an
 
 ### Active
 
-- [ ] **Planning Next Milestone** — Use `/gsd-new-milestone` to define goals.
+- [ ] **ESLint Stylistic Integration** — Replace Prettier with ESLint Stylistic plugins.
+- [ ] **No-Assertion Enforcement** — Error on `as` and `<Type>` assertions, fixing all violations.
+- [ ] **Shadcn/UI Foundation** — Initialize shadcn/ui and configure dark theme.
+- [ ] **UI Component Migration** — Migrate existing MUI components to shadcn/ui.
 
 ### Out of Scope
 

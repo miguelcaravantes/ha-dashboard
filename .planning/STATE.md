@@ -12,12 +12,12 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 
 ## Current Position
 
-**Phase:** 4 of 4 (Optimization - Cancelled)
-**Plan:** Not started
-**Status:** Ready to plan next milestone
-**Last activity:** 2026-01-28 — v1.0 milestone complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-01-28 — Milestone v2.0 started
 
-**Progress:** [██████████] 100%
+Progress: ░░░░░░░░░░ 0%
 
 ## Accumulated Context
 
@@ -26,6 +26,8 @@ See: .planning/PROJECT.md (updated 2026-01-28)
 - **v1.0 Success:** Full transition to Vite 7, React 19, and Strict TypeScript.
 - **Architecture:** `HassProvider` provides a stable, typed bridge to Home Assistant.
 - **Responsiveness:** Standardized on CSS Container Queries for component-level adaptability.
+- **UI Pivot:** Decided to migrate from MUI to shadcn/ui for v2.0.
+- **Stylistic Shift:** Moving formatting to ESLint Stylistic and forbidding type assertions.
 
 ### Blockers
 
