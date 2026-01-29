@@ -1,14 +1,23 @@
-import { useState, useTransition } from 'react';
-import { styled } from '@mui/material/styles';
-import { Slider, Switch, Typography, Box } from '@mui/material';
-import useEntity from '../common/hooks/useEntity.js';
-import { useHass } from '../common/hooks/useHass.js';
-import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from '../constants.js';
-import _AwesomeDebouncePromise from 'awesome-debounce-promise';
-import _useConstant from 'use-constant';
-import type { KnownEntityId } from '../types/entities.js';
+import { useState, useTransition } from "react";
+import { Fan as FanIcon } from "lucide-react";
+import _AwesomeDebouncePromise from "awesome-debounce-promise";
+import _useConstant from "use-constant";
 
-import { isNumber, hasDefault } from '../common/utils/typeGuards.js';
+import {
+  AdaptiveDialog,
+  AdaptiveDialogContent,
+  AdaptiveDialogHeader,
+  AdaptiveDialogTitle,
+} from "@/components/ui/adaptive-dialog";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { cn } from "@/lib/utils";
+
+import useEntity from "../common/hooks/useEntity.js";
+import { useHass } from "../common/hooks/useHass.js";
+import { FAN_SUPPORT_SET_SPEED, FAN_SUPPORT_OSCILLATE } from "../constants.js";
+import type { KnownEntityId } from "../types/entities.js";
+import { isNumber, hasDefault } from "../common/utils/typeGuards.js";
 
 const awesomeDebounce = hasDefault<unknown>(_AwesomeDebouncePromise)
   ? _AwesomeDebouncePromise.default
@@ -17,24 +26,25 @@ const useConstantHook = hasDefault<unknown>(_useConstant)
   ? _useConstant.default
   : _useConstant;
 
-const Root = styled('div')({
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-});
-
 interface FanDetailProps {
   entityId: KnownEntityId;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export default function FanDetail({ entityId }: FanDetailProps) {
+export default function FanDetail({
+  entityId,
+  open,
+  onOpenChange,
+}: FanDetailProps) {
   const { callService } = useHass();
-  const { stateObj, supportedFeatures } = useEntity(entityId);
+  const { stateObj, supportedFeatures, name, state, toggle } =
+    useEntity(entityId);
   const [isPending, startTransition] = useTransition();
 
   const attributes = stateObj?.attributes || {};
   const oscillating =
-    typeof attributes.oscillating === 'boolean'
+    typeof attributes.oscillating === "boolean"
       ? attributes.oscillating
       : undefined;
   const percentageStep = isNumber(attributes.percentage_step)
@@ -53,18 +63,18 @@ export default function FanDetail({ entityId }: FanDetailProps) {
     (supportedFeatures ?? 0) & FAN_SUPPORT_OSCILLATE,
   );
 
-  const handleChangeOscillation = () => {
+  const handleChangeOscillation = (checked: boolean) => {
     startTransition(async () => {
-      await callService('fan', 'oscillate', {
+      await callService("fan", "oscillate", {
         entity_id: entityId,
-        oscillating: !oscillating,
+        oscillating: checked,
       });
     });
   };
 
   const updatePercentage = useConstantHook(() =>
     awesomeDebounce(async (percentageValue: number) => {
-      await callService('fan', 'set_percentage', {
+      await callService("fan", "set_percentage", {
         entity_id: entityId,
         percentage: percentageValue,
       });
@@ -78,38 +88,90 @@ export default function FanDetail({ entityId }: FanDetailProps) {
     });
   };
 
+  const [isTogglePending, startToggleTransition] = useTransition();
+
+  const handleToggle = () => {
+    startToggleTransition(async () => {
+      await toggle();
+    });
+  };
+
+  const isOn = state === "on";
+
   return (
-    <Root sx={{ opacity: isPending ? 0.7 : 1 }}>
-      {doesSupportOscillate && (
-        <>
-          <Typography variant="h6">Oscillate:</Typography>
+    <AdaptiveDialog open={open} onOpenChange={onOpenChange}>
+      <AdaptiveDialogContent className="max-w-md">
+        <AdaptiveDialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <AdaptiveDialogTitle className="text-xl font-semibold">
+            {name}
+          </AdaptiveDialogTitle>
           <Switch
-            checked={oscillating ?? false}
-            onChange={handleChangeOscillation}
-            disabled={isPending}
+            checked={isOn}
+            onCheckedChange={handleToggle}
+            disabled={isPending || isTogglePending}
           />
-        </>
-      )}
-      {doesSupportSpeed && (
-        <>
-          <Typography variant="h6">Speed:</Typography>
-          <Box sx={{ px: 3, width: '100%' }}>
-            <Slider
-              min={0}
-              max={100}
-              step={percentageStep ?? 1}
-              value={localPercentage}
-              valueLabelDisplay="auto"
-              onChange={(_e, value) => {
-                if (isNumber(value)) {
-                  handleSpeedChange(value);
-                }
-              }}
-              disabled={isPending}
-            />
-          </Box>
-        </>
-      )}
-    </Root>
+        </AdaptiveDialogHeader>
+
+        <div
+          className={cn(
+            "flex flex-col gap-6 py-4",
+            (isPending || isTogglePending) && "opacity-70",
+          )}
+        >
+          <div className="flex justify-center py-8">
+            <div
+              className={cn(
+                "rounded-full bg-muted p-6 transition-all duration-1000",
+                isOn && "bg-primary/10",
+              )}
+            >
+              <FanIcon
+                className={cn(
+                  "h-24 w-24 text-muted-foreground transition-all duration-1000",
+                  isOn && "text-primary animate-spin",
+                )}
+                style={{ animationDuration: "3s" }}
+              />
+            </div>
+          </div>
+
+          {doesSupportSpeed && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Speed</span>
+                <span className="text-muted-foreground text-sm">
+                  {Math.round(localPercentage)}%
+                </span>
+              </div>
+              <Slider
+                min={0}
+                max={100}
+                step={percentageStep ?? 1}
+                value={[localPercentage]}
+                onValueChange={(val: number[]) => {
+                  if (isNumber(val[0])) {
+                    handleSpeedChange(val[0]);
+                  }
+                }}
+                disabled={isPending}
+              />
+            </div>
+          )}
+
+          {doesSupportOscillate && (
+            <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <span className="text-sm font-medium">Oscillate</span>
+              </div>
+              <Switch
+                checked={oscillating ?? false}
+                onCheckedChange={handleChangeOscillation}
+                disabled={isPending}
+              />
+            </div>
+          )}
+        </div>
+      </AdaptiveDialogContent>
+    </AdaptiveDialog>
   );
 }

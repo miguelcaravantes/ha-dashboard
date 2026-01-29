@@ -34,9 +34,7 @@ const DialogContent = styled(MuiDialogContent)`
 const domainDetailMap: Record<
   string,
   React.ComponentType<{ entityId: KnownEntityId }>
-> = {
-  fan: FanDetail,
-};
+> = {};
 
 interface DialogToolbarProps {
   title: string | undefined;
@@ -99,6 +97,16 @@ export default function EntityDialog(props: EntityDialogProps) {
   if (open && domain === "light") {
     return (
       <LightDetail
+        entityId={entityId}
+        open={open}
+        onOpenChange={(isOpen) => !isOpen && handleClose()}
+      />
+    );
+  }
+
+  if (open && domain === "fan") {
+    return (
+      <FanDetail
         entityId={entityId}
         open={open}
         onOpenChange={(isOpen) => !isOpen && handleClose()}
