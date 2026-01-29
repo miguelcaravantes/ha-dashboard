@@ -1,24 +1,24 @@
-import type { HomeAssistant } from "../../types/home-assistant.js";
-import type { EntityId, HassEntity } from "../../types/entities.js";
+import type { HomeAssistant } from '../../types/home-assistant.js';
+import type { EntityId, HassEntity } from '../../types/entities.js';
 
 /**
  * Checks if a value is a string.
  */
 export const isString = (val: unknown): val is string =>
-  typeof val === "string";
+  typeof val === 'string';
 
 /**
  * Checks if a value is a number and not NaN.
  */
 export const isNumber = (val: unknown): val is number =>
-  typeof val === "number" && !isNaN(val);
+  typeof val === 'number' && !isNaN(val);
 
 /**
  * Checks if a value is a valid Home Assistant EntityId (domain.object_id).
  */
 export const isEntityId = (val: unknown): val is EntityId => {
   if (!isString(val)) return false;
-  return val.includes(".") && val.split(".").length === 2;
+  return val.includes('.') && val.split('.').length === 2;
 };
 
 /**
@@ -31,7 +31,7 @@ export const isDefined = <T>(val: T | undefined | null): val is T =>
  * Checks if a value is an object and not null.
  */
 export const isObject = (val: unknown): val is Record<string, unknown> =>
-  typeof val === "object" && val !== null;
+  typeof val === 'object' && val !== null;
 
 /**
  * Checks if a value looks like a HomeAssistant object.
@@ -39,11 +39,11 @@ export const isObject = (val: unknown): val is Record<string, unknown> =>
 export const isHass = (val: unknown): val is HomeAssistant => {
   if (!isObject(val)) return false;
   return (
-    "states" in val &&
-    "services" in val &&
-    "config" in val &&
-    "callService" in val &&
-    typeof val.callService === "function"
+    'states' in val &&
+    'services' in val &&
+    'config' in val &&
+    'callService' in val &&
+    typeof val.callService === 'function'
   );
 };
 
@@ -90,4 +90,4 @@ export const hasColorTemp = (
  * Checks if a value has a 'default' property (common for CJS/ESM interop).
  */
 export const hasDefault = <T>(val: unknown): val is { default: T } =>
-  isObject(val) && "default" in val;
+  isObject(val) && 'default' in val;

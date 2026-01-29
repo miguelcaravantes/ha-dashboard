@@ -3,14 +3,12 @@ import type { HomeAssistant } from '../types/home-assistant.js';
 interface HassStore {
   setState: (newState: HomeAssistant) => void;
   subscribe: (listener: () => void) => () => void;
-  getSnapshot: () => HomeAssistant;
-  getServerSnapshot: () => HomeAssistant;
+  getSnapshot: () => HomeAssistant | undefined;
+  getServerSnapshot: () => HomeAssistant | undefined;
 }
 
-function createStore(
-  initialState: HomeAssistant = {} as HomeAssistant,
-): HassStore {
-  let state = initialState;
+function createStore(): HassStore {
+  let state: HomeAssistant | undefined;
   const listeners = new Set<() => void>();
 
   function setState(newState: HomeAssistant) {

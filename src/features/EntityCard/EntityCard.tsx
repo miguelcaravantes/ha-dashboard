@@ -66,7 +66,7 @@ const actions: Record<string, ComponentType<ActionProps>> = {
   [SENSOR]: SensorDisplay,
 };
 
-const randomColors = [
+const randomColors: Color[] = [
   red,
   purple,
   deepPurple,
@@ -94,12 +94,12 @@ function EntityCardInner({
   const { state, name, domain, icon, openMoreInfo } = entity;
   const [modalOpen, setModalOpen] = useState(false);
   const title = customTitle || name;
-  const color = useMemo(
-    () =>
-      (entityId && colorProp) ??
-      randomColors[Math.floor(Math.random() * randomColors.length)],
-    [entityId, colorProp],
-  ) as Color;
+  const color = useMemo(() => {
+    if (entityId && colorProp) return colorProp;
+    const randomColor =
+      randomColors[Math.floor(Math.random() * randomColors.length)];
+    return randomColor || grey;
+  }, [entityId, colorProp]);
 
   const handleIconClick = useCallback(
     () =>

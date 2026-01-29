@@ -1,5 +1,6 @@
 import { Slider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { isNumber } from '../../common/utils/typeGuards.js';
 
 const StyledSlider = styled(Slider)(({ theme }) => ({
   color:
@@ -40,7 +41,11 @@ const LightBrightness = ({
       step={15}
       value={value}
       valueLabelDisplay="auto"
-      onChange={(_e, newValue) => onChange(newValue as number)}
+      onChange={(_e, newValue) => {
+        if (isNumber(newValue)) {
+          onChange(newValue);
+        }
+      }}
       disabled={disabled ?? false}
     />
   </>

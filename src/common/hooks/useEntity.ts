@@ -167,12 +167,12 @@ export default function useEntity<T extends HassEntity = HassEntity>(
     hassStore.subscribe,
     hassStore.getSnapshot,
     hassStore.getServerSnapshot,
-    (snapshot: HomeAssistant) => {
-      const state = snapshot.states[entityId];
+    (snapshot: HomeAssistant | undefined) => {
+      const state = snapshot?.states[entityId];
       // Use a type guard to narrow to T without using 'as'
       const isT = (s: HassEntity | undefined): s is T | undefined => true;
       return {
-        callService: snapshot.callService,
+        callService: snapshot?.callService,
         stateObj: isT(state) ? state : undefined,
       };
     },

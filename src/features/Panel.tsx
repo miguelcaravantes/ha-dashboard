@@ -21,6 +21,7 @@ import EntityPage from './EntityPage.js';
 import ProfileImg from './ProfileImg.js';
 import CardDashboard from './CardDashboard.js';
 import React, { useState } from 'react';
+import { isObject } from '../common/utils/typeGuards.js';
 
 const Container = styled('div')(({ theme }) => ({
   width: '100%',
@@ -65,26 +66,28 @@ export default function Panel() {
   };
 
   const handleMenuClick = () => {
-    const customPanel = (
-      window as Window &
-        typeof globalThis & {
-          parent: {
-            customPanel?: {
-              parentNode: { parentNode: { offsetParent: HTMLElement } };
-            };
-          };
+    const parent = window.parent;
+    if (isObject(parent) && 'customPanel' in parent) {
+      const customPanel = parent.customPanel;
+      if (isObject(customPanel) && 'parentNode' in customPanel) {
+        const p1 = customPanel.parentNode;
+        if (isObject(p1) && 'parentNode' in p1) {
+          const p2 = p1.parentNode;
+          if (isObject(p2) && 'offsetParent' in p2) {
+            const op = p2.offsetParent;
+            if (isObject(op) && typeof op.querySelector === 'function') {
+              const ha = op.querySelector('home-assistant');
+              if (ha instanceof HTMLElement) {
+                ha.shadowRoot
+                  ?.querySelector('home-assistant-main')
+                  ?.dispatchEvent(new Event('hass-toggle-menu'));
+              }
+            }
+          }
         }
-    ).parent?.customPanel;
-    if (customPanel) {
-      const ha = customPanel.parentNode.parentNode.offsetParent?.querySelector(
-        'home-assistant',
-      ) as HTMLElement | null;
-      ha?.shadowRoot
-        ?.querySelector('home-assistant-main')
-        ?.dispatchEvent(new Event('hass-toggle-menu'));
+      }
     }
   };
-
   return (
     <Container>
       <Header position="static" color="default">

@@ -5,6 +5,7 @@ import Icon from '../Icon.js';
 import { styled } from '@mui/material/styles';
 import EntityDialog from '../EntityDialog.js';
 import type { KnownEntityId } from '../../types/entities.js';
+import { isEntityId } from '../../common/utils/typeGuards.js';
 
 const Root = styled('div')({
   display: 'flex',
@@ -12,8 +13,8 @@ const Root = styled('div')({
   flexDirection: 'column',
 });
 
-function Child({ entityId }: { entityId: string }) {
-  const { icon, name } = useEntity(entityId as KnownEntityId);
+function Child({ entityId }: { entityId: KnownEntityId }) {
+  const { icon, name } = useEntity(entityId);
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <div>
@@ -21,7 +22,7 @@ function Child({ entityId }: { entityId: string }) {
         <Icon icon={icon} /> {name}
       </Button>
       <EntityDialog
-        entityId={entityId as KnownEntityId}
+        entityId={entityId}
         open={modalOpen}
         onClose={() => setModalOpen(false)}
       />
@@ -34,9 +35,9 @@ export default function LightGroup({ entityId }: { entityId: KnownEntityId }) {
   return (
     <Root>
       <Typography variant="h6">Group:</Typography>
-      {groupEntities?.map((e) => (
-        <Child key={e} entityId={e} />
-      ))}
+      {groupEntities?.map((e) =>
+        isEntityId(e) ? <Child key={e} entityId={e} /> : null,
+      )}
     </Root>
   );
 }

@@ -1,6 +1,7 @@
 import { useHass } from '../common/hooks/useHass.js';
 import { Avatar } from '@mui/material';
 import type { HassEntity } from '../types/entities.js';
+import { isString } from '../common/utils/typeGuards.js';
 
 const isPerson = ([entityId]: [string, HassEntity]) =>
   entityId.startsWith('person.');
@@ -21,8 +22,12 @@ export default function ProfileImg() {
   if (!personEntry) return null;
   const person = personEntry[1];
 
-  const imageUrl = person.attributes.entity_picture as string | undefined;
-  const name = (person.attributes.friendly_name as string) || '';
+  const imageUrl = isString(person.attributes.entity_picture)
+    ? person.attributes.entity_picture
+    : undefined;
+  const name = isString(person.attributes.friendly_name)
+    ? person.attributes.friendly_name
+    : '';
   const initial = name.substring(0, 1).toUpperCase();
 
   return (
