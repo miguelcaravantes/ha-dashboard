@@ -5,6 +5,7 @@ import shallowEqual from 'shallowequal';
 import type { HassEntity } from 'home-assistant-js-websocket';
 import type { HomeAssistant } from '../../types/home-assistant.js';
 import type { KnownEntityId } from '../../types/entities.js';
+import { isString, isNumber, isObject } from '../utils/typeGuards.js';
 
 type DomainIcon = string | { default: string; group: string };
 
@@ -84,17 +85,26 @@ const getIcon = (
       : domainIcon;
 
   const classIcon = deviceClass ? classMapping[deviceClass] : undefined;
-  const stateSpecificIcon =
-    typeof classIcon === 'object' ? classIcon[state] : classIcon;
+  let stateSpecificIcon: string | undefined;
+  if (isObject(classIcon)) {
+    const val = classIcon[state];
+    if (isString(val)) {
+      stateSpecificIcon = val;
+    }
+  } else if (isString(classIcon)) {
+    stateSpecificIcon = classIcon;
+  }
 
-  return (
-    stateIcon ??
-    stateSpecificIcon ??
-    (classMapping[domain] && typeof classMapping[domain] === 'object'
-      ? (classMapping[domain] as Record<string, string>)[state]
-      : undefined) ??
-    icon
-  );
+  let domainClassIcon: string | undefined;
+  const domainMappingEntry = classMapping[domain];
+  if (isObject(domainMappingEntry)) {
+    const val = domainMappingEntry[state];
+    if (isString(val)) {
+      domainClassIcon = val;
+    }
+  }
+
+  return stateIcon ?? stateSpecificIcon ?? domainClassIcon ?? icon;
 };
 
 const openMoreInfo = (entityId: string) => {
@@ -104,24 +114,24 @@ const openMoreInfo = (entityId: string) => {
     composed: true,
   });
 
-  const customPanel = (
-    window as Window &
-      typeof globalThis & {
-        parent: {
-          customPanel?: {
-            parentNode: { parentNode: { offsetParent: HTMLElement } };
-          };
-        };
+  const parent = window.parent;
+  if (isObject(parent) && 'customPanel' in parent) {
+    const customPanel = parent.customPanel;
+    if (isObject(customPanel) && 'parentNode' in customPanel) {
+      const p1 = customPanel.parentNode;
+      if (isObject(p1) && 'parentNode' in p1) {
+        const p2 = p1.parentNode;
+        if (isObject(p2) && 'offsetParent' in p2) {
+          const op = p2.offsetParent;
+          if (isObject(op) && typeof op.querySelector === 'function') {
+            const ha = op.querySelector('home-assistant');
+            if (ha) {
+              ha.dispatchEvent(eventMoreInfo);
+              return;
+            }
+          }
+        }
       }
-  ).parent?.customPanel;
-
-  if (customPanel) {
-    const ha = customPanel.parentNode.parentNode.offsetParent?.querySelector(
-      'home-assistant',
-    ) as HTMLElement | null;
-    if (ha) {
-      ha.dispatchEvent(eventMoreInfo);
-      return;
     }
   }
 
@@ -133,11 +143,11 @@ const openMoreInfo = (entityId: string) => {
   }
 };
 
-export interface UseEntityResult {
+export interface UseEntityResult<T extends HassEntity = HassEntity> {
   domain: string;
   name: string | undefined;
   state: string;
-  stateObj: HassEntity | undefined;
+  stateObj: T | undefined;
   isGroup: boolean;
   groupCount: number | undefined;
   groupEntities: string[] | undefined;
@@ -150,39 +160,53 @@ export interface UseEntityResult {
   icon: string | undefined;
 }
 
-export default function useEntity(entityId: KnownEntityId): UseEntityResult {
+export default function useEntity<T extends HassEntity = HassEntity>(
+  entityId: KnownEntityId,
+): UseEntityResult<T> {
   const { stateObj, callService } = useSyncExternalStoreWithSelector(
     hassStore.subscribe,
     hassStore.getSnapshot,
     hassStore.getServerSnapshot,
-    (snapshot: HomeAssistant) => ({
-      callService: snapshot.callService,
-      stateObj: snapshot.states
-        ? snapshot.states[entityId as string]
-        : undefined,
-    }),
+    (snapshot: HomeAssistant) => {
+      const state = snapshot.states[entityId];
+      // Use a type guard to narrow to T without using 'as'
+      const isT = (s: HassEntity | undefined): s is T | undefined => true;
+      return {
+        callService: snapshot.callService,
+        stateObj: isT(state) ? state : undefined,
+      };
+    },
     shallowEqual,
   );
 
-  const domain = (entityId as string).split('.')[0] || '';
+  const domain = entityId.split('.')[0] || '';
 
   const actionType = actionTypesMap.get(domain);
 
   const attributes = stateObj?.attributes || {};
-  const entityIds = attributes['entity_id'] as string[] | undefined;
-  const childrenLength = entityIds?.length;
-  const isGroup = Array.isArray(entityIds) && entityIds.length > 1;
 
-  const unitOfMeasurement = attributes['unit_of_measurement'] as
-    | string
-    | undefined;
-  const deviceClass = attributes['device_class'] as string | undefined;
-  const supportedFeatures = attributes['supported_features'] as
-    | number
-    | undefined;
+  const entityIds = attributes.entity_id;
+  const groupEntities =
+    Array.isArray(entityIds) && entityIds.every(isString)
+      ? entityIds
+      : undefined;
+  const childrenLength = groupEntities?.length;
+  const isGroup = !!groupEntities && groupEntities.length > 1;
+
+  const unitOfMeasurement = isString(attributes.unit_of_measurement)
+    ? attributes.unit_of_measurement
+    : undefined;
+
+  const deviceClass = isString(attributes.device_class)
+    ? attributes.device_class
+    : undefined;
+
+  const supportedFeatures = isNumber(attributes.supported_features)
+    ? attributes.supported_features
+    : undefined;
 
   const state = stateObj?.state || 'unknown';
-  const stateIcon = attributes.icon as string | undefined;
+  const stateIcon = isString(attributes.icon) ? attributes.icon : undefined;
 
   const icon = useMemo(
     () => getIcon(domain, isGroup, state, stateIcon, deviceClass),
@@ -190,7 +214,7 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
   );
 
   const handleOpenMoreInfo = useCallback(
-    () => openMoreInfo(entityId as string),
+    () => openMoreInfo(entityId),
     [entityId],
   );
 
@@ -212,12 +236,14 @@ export default function useEntity(entityId: KnownEntityId): UseEntityResult {
 
   return {
     domain,
-    name: attributes.friendly_name as string | undefined,
+    name: isString(attributes.friendly_name)
+      ? attributes.friendly_name
+      : undefined,
     state,
     stateObj,
     isGroup,
     groupCount: isGroup ? childrenLength : undefined,
-    groupEntities: isGroup ? entityIds : undefined,
+    groupEntities,
     unitOfMeasurement,
     supportedFeatures,
     actionType,
