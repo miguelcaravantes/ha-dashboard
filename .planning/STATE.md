@@ -9,9 +9,9 @@
 ## Current Position
 
 - **Current Phase:** Phase 8: Complex UI Migration
-- **Current Plan:** 01 (UI Infrastructure) Completed
+- **Current Plan:** 02 (Light Detail Migration) Completed
 - **Status:** 🟢 ON TRACK
-- **Progress:** [█████████████░░░░░░░] 65% (Milestone v2.0)
+- **Progress:** [██████████████░░░░░░] 70% (Milestone v2.0)
 
 ## Performance Metrics
 
@@ -33,13 +33,15 @@
   - Standardized on Icon-first entity cards with stacked sensor values.
   - **New:** Adopted `AdaptiveDialog` pattern (Drawer on mobile, Dialog on desktop) with `backdrop-blur-sm`.
   - **New:** Standardized on thick, touch-optimized Sliders (24px thumb, 8px track).
+  - **New:** Light Detail uses "Presets Only" color strategy (Grid of circles) + "White" tab for Temperature.
 - **Session Continuity:**
   - Phase 4 completed: Tooling removal and new rule enforcement.
   - Phase 5 completed: UI Infrastructure setup.
   - Phase 7 completed: Core UI Migration (Shell, Grid, Switch, Sensor).
   - Phase 6: Merged into Phase 4.
   - Phase 8 Plan 01 completed: UI Infrastructure (Dialogs, Sliders).
-  - Next: Phase 8 Plan 02: Light Detail View Migration.
+  - Phase 8 Plan 02 completed: Light Detail View Migration.
+  - Next: Phase 8 Plan 03: Fan & Climate Detail Migration.
 
 ## Continuity Checklist
 
