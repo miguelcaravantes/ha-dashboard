@@ -1,9 +1,9 @@
-import { createRoot, type Root } from "react-dom/client";
-import "./index.css";
-import App from "./App.js";
-import { HassProvider } from "./common/HassProvider.js";
-import { hassStore } from "./common/hassStore.js";
-import type { HomeAssistant } from "./types/home-assistant.js";
+import { createRoot, type Root } from 'react-dom/client';
+import './index.css';
+import App from './App.js';
+import { HassProvider } from './common/HassProvider.js';
+import { hassStore } from './common/hassStore.js';
+import type { HomeAssistant } from './types/home-assistant.js';
 
 class ReactWrapper extends HTMLElement {
   private root: Root | undefined;
@@ -26,6 +26,6 @@ class ReactWrapper extends HTMLElement {
   }
 }
 
-if (!customElements.get("react-panel")) {
-  customElements.define("react-panel", ReactWrapper);
+if (!customElements.get('react-panel')) {
+  customElements.define('react-panel', ReactWrapper);
 }
