@@ -46,11 +46,11 @@ Requirements for the UI pivot and standards enforcement.
 | TOOL-01     | Phase 4 | Pending |
 | TOOL-02     | Phase 4 | Pending |
 | TOOL-03     | Phase 4 | Pending |
-| DATA-04     | Phase 6 | Pending |
 | UI-06       | Phase 5 | Pending |
 | UI-07       | Phase 5 | Pending |
 | UI-08       | Phase 5 | Pending |
 | UI-09       | Phase 5 | Pending |
+| DATA-04     | Phase 6 | Pending |
 | UI-10       | Phase 7 | Pending |
 | UI-11       | Phase 7 | Pending |
 | UI-12       | Phase 8 | Pending |

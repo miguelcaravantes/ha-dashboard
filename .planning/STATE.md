@@ -1,38 +1,38 @@
-# Project State
-
-**Project:** React Home Assistant Dashboard - Modernization
-**Core Value:** Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
+# Project State: ha-dashboard
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-01-28)
-
-**Core value:** Provide a modern, type-safe, and performant interface for controlling Home Assistant entities.
-**Current focus:** Planning next milestone
+- **Core Value:** Modern, type-safe, performant Home Assistant interface.
+- **Current Milestone:** v2.0 Shadcn Migration
+- **Target Architecture:** Hybrid Layered Architecture (MUI + Tailwind v4 + shadcn/ui)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-01-28 — Milestone v2.0 started
+- **Current Phase:** Phase 4: Tooling & Standards
+- **Current Plan:** Initializing v2.0 Roadmap
+- **Status:** 🟢 ON TRACK
+- **Progress:** [░░░░░░░░░░░░░░░░░░░░] 0% (Milestone v2.0)
 
-Progress: ░░░░░░░░░░ 0%
+## Performance Metrics
+
+- **Type Safety:** 100% TSX (Strict Mode enabled)
+- **Styling:** Transitioning to Tailwind v4 / shadcn
+- **Linting:** Migrating to ESLint Stylistic (No Prettier)
+- **Assertions:** Targeted 0% (DATA-04 pending)
 
 ## Accumulated Context
 
-### Decisions Summary
+- **Decisions:**
+  - Pivoted to Hybrid Architecture using CSS Cascade Layers to manage MUI/Tailwind coexistence.
+  - Replacing Prettier with ESLint Stylistic for unified DX.
+  - Forbidding type assertions to force safer runtime logic.
+- **Session Continuity:**
+  - Milestone v1.0 completed (Phases 1-3).
+  - Starting Phase 4: Tooling removal and new rule enforcement.
 
-- **v1.0 Success:** Full transition to Vite 7, React 19, and Strict TypeScript.
-- **Architecture:** `HassProvider` provides a stable, typed bridge to Home Assistant.
-- **Responsiveness:** Standardized on CSS Container Queries for component-level adaptability.
-- **UI Pivot:** Decided to migrate from MUI to shadcn/ui for v2.0.
-- **Stylistic Shift:** Moving formatting to ESLint Stylistic and forbidding type assertions.
+## Continuity Checklist
 
-### Blockers
-
-- **None** — System is in a stable, green state.
-
----
-
-_Last updated: 2026-01-28_
+- [ ] Phase 4: Purge Prettier and configure Stylistic
+- [ ] Phase 4: Enable strict assertion rules
+- [ ] Phase 5: Setup Tailwind v4 and CSS Layers
+- [ ] Phase 6: Refactor DATA-04 violations
