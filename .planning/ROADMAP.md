@@ -57,6 +57,13 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Goal:** Transition the primary layout and high-volume entity components to shadcn/ui.
 
+**Plans:** 4 plans
+
+- [ ] 07-01-PLAN.md — Dashboard Shell & Navigation
+- [ ] 07-02-PLAN.md — Responsive Grid Migration
+- [ ] 07-03-PLAN.md — PowerSwitch Card Refactor
+- [ ] 07-04-PLAN.md — SensorDisplay & UI Polishing
+
 - **Requirements:** UI-10, UI-11
 - **Dependencies:** Phase 5, Phase 6
 - **Success Criteria:**
