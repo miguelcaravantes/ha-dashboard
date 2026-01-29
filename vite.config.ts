@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
+  base: "/",
   server: {
     port: 8080,
     host: true,
@@ -11,16 +12,16 @@ export default defineConfig({
     hmr: false,
   },
   build: {
-    target: 'esnext',
+    target: "esnext",
     // generate manifest.json in outDir
-    assetsDir: './',
+    assetsDir: "./",
     rollupOptions: {
       // overwrite default .html entry
-      input: 'src/index.tsx',
+      input: "src/index.tsx",
       output: {
-        entryFileNames: '[name].js',
+        entryFileNames: "[name].js",
       },
     },
   },
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
 });
