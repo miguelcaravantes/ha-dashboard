@@ -1,5 +1,6 @@
 import type { UseEntityResult } from "../../common/hooks/useEntity.js";
 import { type Color } from "@mui/material";
+import { cn } from "@/lib/utils.js";
 
 interface SensorDisplayProps {
   entity: UseEntityResult;
@@ -11,16 +12,19 @@ const SensorDisplay = ({
   entity: { state, unitOfMeasurement },
   className,
 }: SensorDisplayProps) => (
-  <div className="p-1 text-[1.5em]">
-    <span className={className}>
-      {state !== "unavailable" ? (
-        <>
-          {state}
-          {unitOfMeasurement}
-        </>
-      ) : (
-        <div className="text-[1rem]">Unavailable</div>
+  <div className="flex flex-col items-end leading-none">
+    {unitOfMeasurement && (
+      <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 mb-0.5">
+        {unitOfMeasurement}
+      </span>
+    )}
+    <span
+      className={cn(
+        "text-2xl font-black tracking-tight tabular-nums",
+        className,
       )}
+    >
+      {state !== "unavailable" ? state : "—"}
     </span>
   </div>
 );
