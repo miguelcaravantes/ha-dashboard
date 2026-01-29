@@ -16,10 +16,10 @@ Requirements for the UI pivot and standards enforcement.
 
 ### UI Infrastructure
 
-- [ ] **UI-06**: Integrate Tailwind CSS v4 using the `@tailwindcss/vite` plugin
-- [ ] **UI-07**: Initialize shadcn/ui and configure the component registry
-- [ ] **UI-08**: Implement unified Dark Theme mapped to Home Assistant CSS variables
-- [ ] **UI-09**: Configure CSS Cascade Layers to manage MUI v7 and Tailwind v4 coexistence
+- [x] **UI-06**: Integrate Tailwind CSS v4 using the `@tailwindcss/vite` plugin
+- [x] **UI-07**: Initialize shadcn/ui and configure the component registry
+- [x] **UI-08**: Implement unified Dark Theme mapped to Home Assistant CSS variables
+- [x] **UI-09**: Configure CSS Cascade Layers to manage MUI v7 and Tailwind v4 coexistence
 
 ### Component Migration
 
@@ -46,10 +46,10 @@ Requirements for the UI pivot and standards enforcement.
 | TOOL-01     | Phase 4 | Complete |
 | TOOL-02     | Phase 4 | Complete |
 | TOOL-03     | Phase 4 | Complete |
-| UI-06       | Phase 5 | Pending |
-| UI-07       | Phase 5 | Pending |
-| UI-08       | Phase 5 | Pending |
-| UI-09       | Phase 5 | Pending |
+| UI-06       | Phase 5 | Complete |
+| UI-07       | Phase 5 | Complete |
+| UI-08       | Phase 5 | Complete |
+| UI-09       | Phase 5 | Complete |
 | DATA-04     | Phase 4 | Complete |
 | UI-10       | Phase 7 | Pending |
 | UI-11       | Phase 7 | Pending |

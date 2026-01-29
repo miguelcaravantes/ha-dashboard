@@ -29,10 +29,10 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 
 **Plans:** 4 plans
 
-- [ ] 05-01-PLAN.md — Tailwind v4 Core Setup
-- [ ] 05-02-PLAN.md — MUI Cascade Layering
-- [ ] 05-03-PLAN.md — Shadcn/UI registry initialization
-- [ ] 05-04-PLAN.md — Dark Mode sync
+- [x] 05-01-PLAN.md — Tailwind v4 Core Setup
+- [x] 05-02-PLAN.md — MUI Cascade Layering
+- [x] 05-03-PLAN.md — Shadcn/UI registry initialization
+- [x] 05-04-PLAN.md — Dark Mode sync
 
 - **Requirements:** UI-06, UI-07, UI-08, UI-09
 - **Dependencies:** Phase 4
@@ -80,7 +80,7 @@ This roadmap outlines the strategic pivot from Material UI to shadcn/ui and Tail
 | Phase | Goal                 | Status   | Progress |
 | ----- | -------------------- | -------- | -------- |
 | 4     | Tooling & Standards  | Complete | 100%     |
-| 5     | UI Infrastructure    | Pending  | 0%       |
+| 5     | UI Infrastructure    | Complete | 100%     |
 | 6     | Type Hardening       | Merged   | 100%     |
 | 7     | Core UI Migration    | Pending  | 0%       |
 | 8     | Complex UI Migration | Pending  | 0%       |
